@@ -48,10 +48,13 @@ def _get_first(fields, tag):
 
 
 def _extract_doi(fields):
+    # MEDLINE often emits the PII variant of LID/AID before the DOI variant
+    # (e.g. ScienceDirect/Cell Press records); scan every value, not just the
+    # first one, so the DOI is not silently dropped.
     for tag in ("LID", "AID"):
-        val = _get_first(fields, tag)
-        if val and "[doi]" in val:
-            return val.replace(" [doi]", "")
+        for val in fields.get(tag, []):
+            if val and "[doi]" in val:
+                return val.replace(" [doi]", "")
     return ""
 
 
