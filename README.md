@@ -9,8 +9,6 @@
   <tr>
     <td align="center">
       <b></b><br>
-
-      <img width="400" alt="75f8d41ef756245038e548a4c9c165b2" src="https://github.com/user-attachments/assets/8f534d6a-ecc5-4825-a252-95b8a47ca674" />
     </td>
     <td align="center">
       <b>个人微信</b><br>
