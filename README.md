@@ -26,7 +26,7 @@
     </td>
     <td align="center">
       <b>Agent科研交流群</b><br>
-      <img width="500" alt="Agent科研交流群" src="https://github.com/user-attachments/assets/32b7464d-584f-4cd1-b797-8c062ded3ee5" />
+      <img width="500" alt="Agent科研交流群" src="https://github.com/user-attachments/assets/28d1886a-69be-46bc-a1cb-777d7510ddab" />
     </td>
   </tr>
 </table>
