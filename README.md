@@ -281,8 +281,7 @@ description: >-
 ## 如果内容对你有帮助，欢迎随缘支持一下
 
 ---
-
 <div align="center">
-<img width="320" alt="知识星球" src="https://github.com/user-attachments/assets/d39a6259-3da8-410b-aa61-c7c1e51e48db" />
+<img width="320" alt="知识星球" src="https://github.com/user-attachments/assets/6bd53184-8e41-41cf-a4fc-bc2edd74d81c" />
 </div>
 
