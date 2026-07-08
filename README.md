@@ -18,75 +18,9 @@
   </p>
 </div>
 
----
 
-- Hello everyone, I am Yizhe Yuan, the founder of `nature-skills`. Thank you for
-  following this project. We have published many video tutorials on Douyin; you
-  can search by topic name to find them, and I sincerely hope they help you.
-- If you have a concrete need, please open an issue. If we think the request is
-  meaningful and feasible, we will try to move it forward. Pull requests are also
-  welcome; please follow the contribution format later in this document so that
-  reviews and merges can be handled efficiently.
-- `nature-skills` collects general-purpose research skills for AI scholars
-  worldwide. It is an early form of a "skill journal": the goal is not empty
-  storytelling, but solving real domain problems.
-- Knowledge Planet: `Nature Skills` and the philosophy behind it.
 
-## Main Contributors
-
-- **Yizhe Yuan**: founder of `nature-skills`.
-- **Xin-Rui Ma**: second contributor, PhD student at the School of Civil
-  Engineering, Southeast University, focusing on deep learning and agent-assisted
-  research for structural design.
-  - GitHub: [Travisma2233](https://github.com/Travisma2233)
-  - Email: [travisma2233@gmail.com](mailto:travisma2233@gmail.com)
-  - Google Scholar: [Xin-Rui Ma](https://scholar.google.com/citations?user=CDydADoAAAAJ&hl=en)
-  - ResearchGate: [Xin-Rui Ma](https://www.researchgate.net/profile/Xin-Rui-Ma?ev=hdr_xprf)
-
-# Some Personal Views
-
-- Recently, I noticed that the Nature Skills design has drawn attention from
-  Google DeepMind and has been referenced by them. They drew on its citation
-  system, script ideas, and skill-design philosophy to launch Science Skills. To
-  be honest, this makes me pleased: when leading international AI institutions
-  begin to draw inspiration from our work, it means original ideas from Chinese
-  developers are being seen by the world. This is not a feeling of loss from
-  being copied, but a sign of Chinese strength taking root in open source and
-  naturally growing outward.
-- The focus of our skill design has never been to require every user to fully
-  master the whole philosophy. The point is that the philosophy itself can be
-  understood and reused by machines. If you want to create a new skill or adapt
-  this system to your own field, you can give the Nature Skills GitHub repository
-  to Codex and let it learn the design pattern, then help you create or modify a
-  skill. This is how ideas become operational rather than remaining oral
-  explanations.
-- The real value of Nature Skills may not be limited to any individual module.
-  It may be that the project has quietly opened a new door: many people realize
-  for the first time that Codex or other agents can operate a local computer for
-  research. I have been fortunate to witness and accompany many people through
-  this shift in research workflow. When they say, "so research can be done this
-  way," that break in understanding and liberation of thought matters more to me
-  than the skills themselves. This is not merely the success of a tool, but the
-  beginning of a new way of thinking spreading among people.
-- In practice, almost every useful tool can be distilled into a standardized
-  process, and standardized processes can be packaged as reusable skills.
-
-<table>
-  <tr>
-    <td align="center">
-      <b>Follow Douyin for video tutorials</b><br>
-      <img width="300" alt="Douyin tutorials" src="https://github.com/user-attachments/assets/37d4b0b6-3d22-4492-bb01-c0d9bae5a9e0" />
-    </td>
-    <td align="center">
-      <b>Knowledge Planet 50 CNY/year</b><br>
-      <img width="300" alt="Knowledge Planet" src="https://github.com/user-attachments/assets/7a7e467a-59d4-4514-9b42-eefd01bf9591" />
-    </td>
-    <td align="center">
-      <b>Agent Research Community</b><br>
-      <img width="300" alt="Agent Research Community" src="https://github.com/user-attachments/assets/28d1886a-69be-46bc-a1cb-777d7510ddab" />
-    </td>
-  </tr>
-</table>
+> **Credit**: This project is forked from [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills), originally created by **Yizhe Yuan** and **Xin-Rui Ma**. This fork provides an English-only version of the skill library.
 
 ---
 
@@ -118,7 +52,7 @@ Clone the repository to a stable path:
 ```bash
 mkdir -p ~/ai-skills
 cd ~/ai-skills
-git clone https://github.com/Yuan1z0825/nature-skills.git
+git clone https://github.com/chrimerss/nature-skills.git
 ```
 
 Recommended method: create a Claude Code subagent wrapper for the skills you use
@@ -181,7 +115,7 @@ top-level skill directory under `skills/` and verifies the copied contents with
 `diff`. It does not overwrite unrelated Codex skills.
 
 ```bash
-git clone https://github.com/Yuan1z0825/nature-skills.git
+git clone https://github.com/chrimerss/nature-skills.git
 cd nature-skills
 scripts/update-codex-skills.sh --pull
 ```
@@ -213,7 +147,7 @@ You can also ask Codex to install the repository for you:
 
 ```text
 Install Codex skills from this repository:
-https://github.com/Yuan1z0825/nature-skills.git
+https://github.com/chrimerss/nature-skills.git
 
 Clone the repository, run scripts/update-codex-skills.sh --pull, and then run
 scripts/update-codex-skills.sh --check to verify the installation. Keep complete
@@ -224,7 +158,7 @@ To install only one skill, specify the skill name:
 
 ```text
 Install only nature-reader from this repository:
-https://github.com/Yuan1z0825/nature-skills.git
+https://github.com/chrimerss/nature-skills.git
 
 If the skill needs shared files, install skills/_shared as well.
 ```
@@ -291,10 +225,6 @@ For manual or other-agent use:
    assets, and required `skills/_shared/` files.
 3. If the target agent has its own format requirements, adjust the frontmatter
    and body structure.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Yuan1z0825/nature-skills&type=Date&cache_bust=2026-06-07T16)](https://star-history.com/#Yuan1z0825/nature-skills&Date)
 
 ## Skill Index
 
