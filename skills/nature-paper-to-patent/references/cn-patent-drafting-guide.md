@@ -1,4 +1,4 @@
-# Chinese Invention Patent Drafting Guide
+# Invention Patent Drafting Guide
 
 ## Contents
 
@@ -103,7 +103,7 @@ Propose only figures supported by available information, such as:
 - training and inference flow;
 - data-processing flow.
 
-Mark missing drawings as `[待补图]`.
+Mark missing drawings as `[TO BE ADDED: drawing required]`.
 
 ### Detailed Embodiments
 

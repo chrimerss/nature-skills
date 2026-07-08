@@ -17,13 +17,13 @@ Best when the contribution is organisation and synthesis of existing knowledge. 
 
 ## Default slide structure (adapt, do not force)
 
-1. 标题页
-2. 为什么这个主题现在重要
-3. 概念框架 / 全局地图
-4-6. 主题 1-3（每个主题一张证据/示意）
-7. 争议 / 未解决的问题
-8. 作者的综合观点
-9. 未来方向
-10. 总结
+1. Title slide
+2. Why this topic matters now
+3. Conceptual framework / global map
+4-6. Themes 1-3 (one evidence/schematic slide per theme)
+7. Controversies / unresolved questions
+8. Author's synthesis
+9. Future directions
+10. Summary
 
 A review deck leans more text- and schematic-led than a primary-research deck, but still avoid dense bullet pages: use a conceptual framework diagram as the spine, and give each theme one clear visual or schematic. Attribute key ideas to their original sources, not to the review alone.

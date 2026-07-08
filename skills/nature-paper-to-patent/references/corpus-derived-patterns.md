@@ -2,7 +2,7 @@
 
 ## Scope
 
-These heuristics were derived from five paired research-paper and Chinese-patent examples covering robotic grasping, battery health estimation, industrial fault detection, surface defect detection, and remote-sensing biomass estimation.
+These heuristics were derived from five paired research-paper and patent examples covering robotic grasping, battery health estimation, industrial fault detection, surface defect detection, and remote-sensing biomass estimation.
 
 They describe recurring drafting choices. They do not establish patentability or legal sufficiency.
 

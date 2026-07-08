@@ -11,7 +11,7 @@ from pathlib import Path
 
 STEP_PATTERN = re.compile(r"\bS\s*(\d+)\b", re.IGNORECASE)
 ASCII_ID = re.compile(r"^[A-Za-z][A-Za-z0-9_-]*$")
-VAGUE_FINAL_RESULT = re.compile(r"(技术结果|处理结果|最终结果)")
+VAGUE_FINAL_RESULT = re.compile(r"\b(technical result|processing result|final result)\b", re.IGNORECASE)
 
 
 def normalize_step(value: str) -> str:
@@ -76,9 +76,9 @@ def validate_figure(
         if extra:
             errors.append(f"complete claim flow contains extra steps: {extra}")
 
-    figure_token = f"图{figure.get('number')}"
-    if not any(figure_token in str(description) for description in descriptions):
-        errors.append(f"figure description does not reference {figure_token}")
+    num = figure.get("number")
+    if not any(re.search(rf"\b(Fig\.?|Figure)\s*{num}\b", str(description), re.IGNORECASE) for description in descriptions):
+        errors.append(f"figure description does not reference Fig. {num}")
 
     id_set = set(ids)
     incoming = {node_id: 0 for node_id in ids}
@@ -185,7 +185,7 @@ def anchor(box: tuple[int, int, int, int], side: str) -> tuple[float, float]:
 def render(figure: dict) -> str:
     positions, width, height = layout(figure)
     orientation = figure.get("orientation", "vertical")
-    title = f"图{figure['number']} {figure.get('title', '方法流程图')}"
+    title = f"Fig. {figure['number']} {figure.get('title', 'Method Flowchart')}"
     parts = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
@@ -198,7 +198,7 @@ def render(figure: dict) -> str:
         "</defs>",
         '<rect width="100%" height="100%" fill="#fff"/>',
         f'<text x="{width / 2}" y="28" text-anchor="middle" '
-        'font-family="SimSun, Songti SC, serif" font-size="20">'
+        'font-family="Arial, Helvetica, sans-serif" font-size="20">'
         f"{html.escape(title)}</text>",
     ]
 
@@ -218,7 +218,7 @@ def render(figure: dict) -> str:
         if label:
             parts.append(
                 f'<text x="{(x1 + x2) / 2 + 8}" y="{(y1 + y2) / 2 - 8}" '
-                'font-family="SimSun, Songti SC, serif" font-size="16">'
+                'font-family="Arial, Helvetica, sans-serif" font-size="16">'
                 f"{html.escape(label)}</text>"
             )
 
@@ -234,7 +234,7 @@ def render(figure: dict) -> str:
             parts.append(
                 f'<text x="{x + box_width / 2}" y="{start_y + index * 24}" '
                 'text-anchor="middle" dominant-baseline="middle" '
-                'font-family="SimSun, Songti SC, serif" font-size="18">'
+                'font-family="Arial, Helvetica, sans-serif" font-size="18">'
                 f"{html.escape(line)}</text>"
             )
 
@@ -246,9 +246,11 @@ def load_font(size: int):
     from PIL import ImageFont
 
     candidates = (
-        Path(r"C:\Windows\Fonts\simsun.ttc"),
-        Path(r"C:\Windows\Fonts\msyh.ttc"),
-        Path(r"C:\Windows\Fonts\simhei.ttf"),
+        Path(r"C:\Windows\Fonts\arial.ttf"),
+        Path(r"C:\Windows\Fonts\calibri.ttf"),
+        Path(r"C:\Windows\Fonts\segoeui.ttf"),
+        Path(r"/System/Library/Fonts/Helvetica.ttc"),
+        Path(r"/System/Library/Fonts/Supplemental/Arial.ttf"),
     )
     for candidate in candidates:
         if candidate.exists():
@@ -270,7 +272,7 @@ def render_png(figure: dict, output: Path) -> None:
     def point(value: float) -> int:
         return int(round(value * scale))
 
-    title = f"图{figure['number']} {figure.get('title', '方法流程图')}"
+    title = f"Fig. {figure['number']} {figure.get('title', 'Method Flowchart')}"
     title_box = draw.textbbox((0, 0), title, font=title_font)
     title_x = (width * scale - (title_box[2] - title_box[0])) / 2
     draw.text((title_x, point(8)), title, fill="black", font=title_font)

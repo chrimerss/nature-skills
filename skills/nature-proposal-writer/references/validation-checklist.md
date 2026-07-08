@@ -1,58 +1,52 @@
 # Gate 3 — Auto-Validation Checklist
 
-研究文本完成后自动检查的清单。每项必须通过，不通过标注缺失项。
+Automated checklist to run after the research text is drafted. Every item must pass; mark missing items when they fail.
 
-## 必检项
+## Mandatory Checks
 
-### 引用完整性
-- [ ] 每个事实性 claim 有 citation
-- [ ] 所有 citation 在参考文献列表中存在
-- [ ] 所有参考文献在正文中被引用
-- [ ] 关键数值/参数有出处（腐蚀速率、温度、组成等）
+### Citation Completeness
+- [ ] Every factual claim has a citation
+- [ ] All citations exist in the reference list
+- [ ] All listed references are cited in the main text
+- [ ] Key numerical values/parameters have sources (corrosion rate, temperature, composition, etc.)
 
-### 方法可复现性
-- [ ] 材料/试剂有品牌、纯度、批号（如适用）
-- [ ] 设备有型号和关键参数
-- [ ] 实验条件完整：温度、时间、气氛、压力
-- [ ] 重复次数明确
-- [ ] 统计方法注明
-- [ ] 异常值剔除标准定义
+### Method Reproducibility
+- [ ] Materials/reagents include brand, purity, and batch number (if applicable)
+- [ ] Equipment includes model and key parameters
+- [ ] Experimental conditions are complete: temperature, time, atmosphere, pressure
+- [ ] Number of replicates is explicitly stated
+- [ ] Statistical methods are specified
+- [ ] Outlier exclusion criteria are defined
 
-### 术语定义
-- [ ] 所有缩写首次出现有全称
-- [ ] 领域特定术语首次出现有定义或引用来源
-- [ ] 变量/符号有说明
+### Terminology & Definitions
+- [ ] All abbreviations are expanded on first use
+- [ ] Domain-specific terms are defined or cited on first use
+- [ ] Variables/symbols are explained
 
-### 逻辑链
-- [ ] Introduction 提出的问题在 Discussion 有回应
-- [ ] 每个目标/假设有对应的实验/分析来验证
-- [ ] 结论不超出数据支持范围
-- [ ] "本研究首次"等 novelty claim 有文献支撑
+### Logical Chain
+- [ ] Questions raised in the Introduction are addressed in the Discussion
+- [ ] Every objective/hypothesis has corresponding experiments/analyses for verification
+- [ ] Conclusions do not exceed the scope supported by data
+- [ ] Novelty claims such as "for the first time" are backed by literature
 
-### 图表
-- [ ] 编号连续
-- [ ] 交叉引用正确
-- [ ] 每个图/表有标题
-- [ ] 坐标轴有标签和单位
-- [ ] 图例清晰
+### Figures & Tables
+- [ ] Numbering is consecutive
+- [ ] Cross-references are correct
+- [ ] Every figure/table has a title
+- [ ] Axes have labels and units
+- [ ] Legends are clear
 
-### 格式
-- [ ] 参考文献格式一致
-- [ ] 数字/单位格式统一（如 °C vs ℃ vs deg C）
-- [ ] 化学式上下标正确（MgCl₂ 不是 MgCl2）
+### Formatting
+- [ ] Reference formatting is consistent
+- [ ] Number/unit formats are uniform (e.g., °C vs deg C)
+- [ ] Chemical formulas have correct subscripts/superscripts (e.g., MgCl₂ not MgCl2)
 
-## 估值方式
+### Language & Grammar
+- [ ] Spelling and grammar checked
+- [ ] Tense consistency (past tense for Methods and Results; present/mixed for Discussion)
 
-- 每项通过 = ✅
-- 缺失但可快速补 = ⚠️ + 注明缺失项
-- 结构性缺失 = ❌ → 不通过，定向回退
+## Evaluation Methodology
 
-## 与中文/英文的差异
-
-英文论文额外检查：
-- [ ] 拼写和语法
-- [ ] 时态一致性（Methods 用过去式，Results 用过去式，Discussion 可混合）
-
-中文论文额外检查：
-- [ ] "的"字冗余（连续多个"的"）
-- [ ] 欧化句式（过长的定语从句）
+- All items pass = ✅
+- Missing but quickly fixable = ⚠️ + note missing items
+- Structural missing items = ❌ → Fail, targeted rollback

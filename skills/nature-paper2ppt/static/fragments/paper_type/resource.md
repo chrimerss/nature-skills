@@ -16,16 +16,16 @@ Best when the contribution is a resource that must be shown to be well-built and
 
 ## Default slide structure (adapt, do not force)
 
-1. 标题页
-2. 研究背景：为什么需要这个资源
-3. 资源概览：规模、覆盖、特点
-4. 样本 / 队列 / 数据设计
-5. 生成与质量控制流程（full-width 流程图）
-6. 主要图谱 / landscape
-7-8. 关键发现 / 示例洞见
-9. 验证与可复现性
-10. 访问、复用与许可
-11. 局限性与边界
-12. 总结
+1. Title slide
+2. Background: why this resource is needed
+3. Resource overview: scale, coverage, features
+4. Sample / cohort / data design
+5. Generation and quality control workflow (full-width workflow diagram)
+6. Main landscape / map
+7-8. Key findings / example insights
+9. Validation and reproducibility
+10. Access, reuse, and licensing
+11. Limitations and boundaries
+12. Summary
 
 The landscape/map slide is usually the hero figure — let it own the page. Keep access details (accession numbers, URLs, licences) accurate and consistent.

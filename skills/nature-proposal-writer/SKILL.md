@@ -3,7 +3,7 @@ name: researchwrite
 description: |
   Proposal-first scientific writing pipeline. Three modes (compose/revise/hybrid) with four-layer QA pipeline. Enforces evidence-before-prose, argument-before-sections, and contracts-before-paragraphs.
 version: 1.0.0
-author: 十五 (JL Lab)
+author: JL Lab
 license: MIT
 metadata:
   hermes:
@@ -11,125 +11,125 @@ metadata:
     related_skills: [brainstorming, professor, avoid-ai-writing, docx]
 ---
 
-# researchwrite — proposal-first 科研写作 pipeline
+# researchwrite — Proposal-First Scientific Writing Pipeline
 
-受 autonovel（状态机+打分）、professor（动态专家）、brainstorming（入口追问）、anti-AI-writing（语言清理）启发的科研写作状态机。**不是通用"帮我写论文"prompt。**
+A scientific writing state machine inspired by autonovel (state machine + scoring), professor (dynamic expert persona), brainstorming (entry-point follow-up questioning), and anti-AI-writing (language cleanup). **This is NOT a generic "write a paper for me" prompt.**
 
-## 核心原则
+## Core Principles
 
-1. **证据先于文字** — 起草前必须建立或读取 `research_canon` 和 `evidence_table`
-2. **论证先于章节** — 写正文前必须完成 `argument_map`
-3. **契约先于段落** — 每节需要 purpose / allowed claims / forbidden claims / inputs / validation
-4. **范围先于完备** — 如果是分阶段写作，先锁定阶段边界
-5. **动态专家，不设固定池** — 用 `professor` 按失败模式召唤对应专家
-6. **内容先于语言** — 诊断科学逻辑后再做 anti-slop / 语言打磨
-7. **不自动升级事实** — 永远不把 "may indicate" 改成 "proves"，除非有证据支撑
-8. **删除胜于解释** — 当某主张不可行，直接删除。正文干净，解释留给答辩
-9. **该停就停** — 平台期、专家冲突、证据缺失是停止理由，不是润色理由
+1. **Evidence Before Prose** — Must establish or read `research_canon` and `evidence_table` before drafting.
+2. **Argument Before Sections** — Must complete `argument_map` before writing main body text.
+3. **Contracts Before Paragraphs** — Each section requires defined purpose / allowed claims / forbidden claims / inputs / validation.
+4. **Scope Before Completeness** — If writing in stages, lock down stage boundaries first.
+5. **Dynamic Experts (No Fixed Pool)** — Use `professor` to summon domain experts tailored to specific failure modes.
+6. **Content Before Language** — Diagnose scientific logic before performing anti-slop / language polishing.
+7. **No Automatic Fact Upgrades** — Never upgrade "may indicate" to "proves" without supporting evidence.
+8. **Deletion Over Explanation** — When a claim is unfeasible, delete it directly. Keep text clean; leave explanations for oral defense.
+9. **Stop When Appropriate** — Plateaus, expert conflicts, and missing evidence are reasons to stop, not reasons to polish.
 
-## 模式分派
+## Mode Dispatch
 
-| 输入 | 模式 |
+| Input | Mode |
 |---|---|
-| 题目、方向、模糊想法 | `compose` — 加载 `references/compose-mode.md` |
-| 已有段落/章节/完整 proposal | `revise` — 加载 `references/revise-mode.md` |
-| 已有草稿 + 扩写/补写/重构 | `hybrid` — 加载 `references/hybrid-mode.md` |
+| Title, research direction, vague ideas | `compose` — Load `references/compose-mode.md` |
+| Existing paragraphs/sections/complete proposal | `revise` — Load `references/revise-mode.md` |
+| Existing draft + expansion/supplement/refactor | `hybrid` — Load `references/hybrid-mode.md` |
 
-模糊时推断默认模式。只在选择会改变工作流时才问用户。
+Infer the default mode when ambiguous. Only ask the user when the choice would alter the workflow.
 
-## 项目结构
+## Project Structure
 
-**工作目录**：`<outputs>/researchwrite/<project-slug>/`
+**Working Directory**: `<outputs>/researchwrite/<project-slug>/`
 
-**标准文件**：
+**Standard Files**:
 
 ```
-00_scope.md              写作任务边界
-01_research_canon.md     硬事实和约束
-02_evidence_table.md      claim → evidence 映射表
-03_argument_map.md        论证架构
-04_section_contracts.md   每节的 purpose / inputs / allowed & forbidden claims
-05_style_guide.md         风格、术语、禁用表达
-state.json                项目状态（mode、round、scores、technical_debts）
-sources/                  用户材料、文献、数据
-drafts/                   草稿和分节文件
-revision_briefs/          修订简报
-qa_logs/                  诊断、专家审查、anti-slop、打分记录
-exports/                  最终输出（.md + .docx）
+00_scope.md              Writing task boundaries
+01_research_canon.md     Hard facts and constraints
+02_evidence_table.md      claim → evidence mapping table
+03_argument_map.md        Argumentation architecture
+04_section_contracts.md   Section purpose / inputs / allowed & forbidden claims
+05_style_guide.md         Style, terminology, forbidden expressions
+state.json                Project state (mode, round, scores, technical_debts)
+sources/                  User materials, literature, data
+drafts/                   Drafts and section files
+revision_briefs/          Revision briefs
+qa_logs/                  Diagnostics, expert review, anti-slop, scoring logs
+exports/                  Final output (.md + .docx)
 ```
 
-新建项目时从 `templates/` 取空模板。`references/worked-example-quaternary-proposal.md` 提供了基于通用材料科学领域的完整填写示例。
+When creating a new project, take empty templates from `templates/`. `references/worked-example-quaternary-proposal.md` provides a complete filling example based on materials science.
 
-## Reference 文件索引
+## Reference File Index
 
-公开版本包含四个关键 reference：
+The public release contains four key references:
 
-| Reference | 用途 |
+| Reference | Purpose |
 |---|------|
-| `references/evaluation-rubric.md` | 8 维 × 4 锚点评分体系 + 评分流程 |
-| `references/stopping-rules.md` | 迭代循环终止条件 |
-| `references/foundation-files.md` | 建立 foundation 五文件 |
-| `references/validation-checklist.md` | 自动校验清单 |
+| `references/evaluation-rubric.md` | 8 dimensions × 4 anchor scoring system + scoring workflow |
+| `references/stopping-rules.md` | Iteration loop stopping conditions |
+| `references/foundation-files.md` | Establishing the five foundation files |
+| `references/validation-checklist.md` | Automated validation checklist |
 
-> 完整 reference 文件（compose/revise/hybrid 模式详解、专家分派、导出归档、综述框架等 12 份）未包含在公开版本中。如需获取，请通过 [GitHub issue](https://github.com/Jiahao8595/research-pipeline/issues) 或邮件联系作者。
+> Complete reference files (detailed explanations of compose/revise/hybrid modes, expert dispatch, export archiving, review frameworks, etc., 12 files total) are not included in the public release. Contact the author via [GitHub issue](https://github.com/Jiahao8595/research-pipeline/issues) or email if needed.
 
-## 运行交付
+## Execution Delivery
 
-每次运行结束时输出：
+Output at the end of each run:
 
-1. 当前文件路径或修订后文本
-2. 当前分数/状态
-3. 剩余风险
-4. 一条建议的下一步
+1. Current file path or revised text
+2. Current score/status
+3. Remaining risks
+4. One recommended next step
 
-## QA Mode — 四层质量保障 Pipeline
+## QA Mode — Four-Layer Quality Assurance Pipeline
 
-当用户说"审查这段/跑 QA/检查方案/过 pipeline"时，进入 QA 模式。
+Enter QA mode when the user asks to "review this section / run QA / check proposal / pass pipeline".
 
-### 情境挡位
+### Context Gears
 
-| 挡位 | 适用场景 | 阈值 |
+| Gear | Applicable Scenario | Threshold |
 |------|---------|------|
-| `paper` | 投稿论文 | 7.0 |
-| `proposal` | 研究方案/开题 | 7.0 |
-| `internal` | 内部汇报/周报 | 5.0 |
-| `quick` | 快速扫读 | 无 |
+| `paper` | Journal submission | 7.0 |
+| `proposal` | Research proposal | 7.0 |
+| `internal` | Internal report / weekly report | 5.0 |
+| `quick` | Quick scan | None |
 
-### Pipeline 顺序（先内容后语言）
+### Pipeline Sequence (Content First, Language Second)
 
 ```
-Gate 2: professor Convener（内容层）
-  ├── 论文 → 方法论专家 + 领域专家
-  ├── proposal → 可行性专家 + 创新性专家
-  └── 文献reviews → 覆盖面专家 + 批判深度专家
+Gate 2: professor Convener (Content Layer)
+  ├── Paper → Methodology Expert + Domain Expert
+  ├── Proposal → Feasibility Expert + Innovation Expert
+  └── Literature reviews → Coverage Expert + Critical Depth Expert
   │
   ▼
-Gate 1: avoid-ai-writing 模式 detect-only
-  └── 只对英文有效，中文跳过或降级为手工扫读
+Gate 1: avoid-ai-writing mode detect-only
+  └── Applies to English drafts; for L2/non-native drafts, perform manual structural scan
   │
   ▼
-Gate 3: auto-validation（格式/完整性层）
-  └── 每个 claim 有 citation？方法可复现？编号连续？
+Gate 3: auto-validation (Format / Completeness Layer)
+  └── Every claim has citation? Method reproducible? Consecutive numbering?
   │
   ▼
-Gate 4: 评分阈值（分维度打分）
-  ├── 总分≥阈值 → 通过 ✅
-  └── 总分<阈值 → 按低分维度定向回退（不超过 3 轮）
+Gate 4: Scoring Threshold (Dimension-based scoring)
+  ├── Total score ≥ threshold → Pass ✅
+  └── Total score < threshold → Targeted rollback based on low-scoring dimensions (max 3 rounds)
 ```
 
-**Gate 2 在 Gate 1 之前** — 避免改了句子后被专家打回重写。
+**Gate 2 precedes Gate 1** — Avoid rewriting sentences only to have them rejected by experts later.
 
-### 使用方法
+### Usage Examples
 
 ```
-用户: "用 researchwrite 审查这段 discussion，paper 挡位"
-  → 自动走 Gate 2 → Gate 1 → Gate 3 → Gate 4
-  → 返回审查报告 + 定向修改建议
+User: "Review this discussion section using researchwrite, paper gear"
+  → Automatically run Gate 2 → Gate 1 → Gate 3 → Gate 4
+  → Return review report + targeted revision suggestions
 
-用户: "快速扫一下这个邮件"
-  → 走 quick 挡位，只标记 P0 问题
+User: "Quickly scan this email"
+  → Run quick gear, mark P0 issues only
 ```
 
-## 配置你的研究域
+## Configure Your Research Domain
 
-首次使用告诉 agent 你的研究背景，agent 会调用 `professor` 建立领域专家知识。后续写作中专家审查会基于你的领域。
+On first use, tell the agent your research background. The agent will invoke `professor` to establish domain expert knowledge. Subsequent expert reviews during writing will be tailored to your domain.

@@ -1,40 +1,38 @@
-# `nature-reader` 技能
+# `nature-reader` Skill
 
-`nature-reader` 是以 Markdown 为核心的全文论文阅读工作流。
+`nature-reader` is a Markdown-centric full-paper reading and processing workflow.
 
-## 功能
+## Features
 
-`nature-reader` 可以把 PDF、DOI、arXiv 链接、出版社 HTML 页面或粘贴的手稿文本转化为完整 Markdown 阅读材料，包含：
+`nature-reader` converts PDFs, DOIs, arXiv links, publisher HTML pages, or pasted manuscript text into complete Markdown reading materials, including:
 
-- 段落级原文与中文翻译，并以正文形式呈现。
-- 提取出的图和表，放在首次实质性讨论它们的位置附近。
-- 原始图注和中文图注翻译。
-- 稳定的页码与文本块锚点，便于回溯来源。
-- 紧凑图像裁剪和完整文档 source map。
+- Paragraph-level source-grounded text presented in a clean prose format.
+- Extracted figures and tables placed near their first substantive discussion in the text.
+- Original captions and structured annotations.
+- Stable page and text block anchors for traceability.
+- Tight image cropping and a comprehensive document source map.
 
-## 主要产物
+## Main Artifacts
 
 - `paper.md`
 - `source_map.json`
-- `translation_notes.md`
+- `processing_notes.md`
 - `assets/`
 
-`reader.html` 可以作为二级预览生成，但该技能默认以 Markdown 为中心，不默认生成交互式问答面板。
+`reader.html` can be generated as a secondary preview, but this skill is Markdown-centric by default and does not generate an interactive QA panel by default.
 
-## 触发短语
+## Trigger Phrases
 
-当用户提出以下需求时使用该技能：
+Use this skill when the user requests:
 
-- 全文翻译
-- 原文对照
-- 中英文对照
-- 图文对应
-- 图表提取
-- 翻译解读
-- 全文 Markdown
+- Full paper reading
+- Paper analysis
+- Figure/table extraction
+- Literature reading
+- Full-text Markdown conversion
 - paper md
 - source-grounded reading notes
 
-## 注意事项
+## Notes
 
-不要把该技能用于摘要、关键词列表或只做引用检索的任务。一旦触发，默认产物应是带有可见 `Original` / `中文` 对照和图表卡片的 `paper.md`，不能只输出中文摘要。
+Do not use this skill for abstract-only summaries, keyword lists, or simple citation searches. When triggered, the default output must be a structured `paper.md` with visible block anchors and figure/table cards, never just an abstract summary.

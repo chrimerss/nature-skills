@@ -1,20 +1,20 @@
-"""配置向导模块。
+"""Configuration wizard module.
 
-7 步交互式配置流程，供 AI 调用。
-每一步返回一个 prompt 给用户，并接收用户输入进行校验。
+7-step interactive configuration flow for AI invocation.
+Each step returns a prompt to the user and receives user input for validation.
 
-使用方式（AI 调用）：
+Usage (AI invocation):
     from wizard import Wizard
     w = Wizard()
     # Step 1
-    prompt = w.start()                # 返回给用户的提问
-    # 用户回答后
+    prompt = w.start()                # Prompt returned to user
+    # After user answers
     result = w.handle_step1(user_input)
     # result = {"next": "step2"|"retry"|"done", "prompt": str, "data": dict}
 
-也支持非交互式直接构建：
+Also supports non-interactive direct construction:
     w = Wizard()
-    w.configure_from_preset("上海交通大学")  # 预设学校一键配置
+    w.configure_from_preset("SJTU")  # One-click preset configuration
 """
 
 from __future__ import annotations
@@ -63,7 +63,7 @@ def infer_access_from_url(url: str) -> dict[str, Any]:
                 "auth_type": "cas",
                 "sso_domain": "cas.whu.edu.cn" if host.startswith("whu.") else host,
                 "institution_hint": host.split(".", 1)[0] if "." in host else None,
-                "notes": "资源聚合门户；先从该入口进入，必要时由门户跳转到统一身份认证。",
+                "notes": "Resource aggregation portal; enter through this portal first, redirecting to unified authentication if necessary.",
             }
         )
     elif "/authserver/login" in path or host.startswith("cas."):
@@ -78,27 +78,27 @@ def infer_access_from_url(url: str) -> dict[str, Any]:
                 "auth_type": "cas",
                 "sso_domain": host,
                 "institution_hint": hint,
-                "notes": "CAS 登录入口；若 service 指向资源聚合平台，后续应回到该平台继续进入数据库。",
+                "notes": "CAS login entry; if service points to resource aggregation platform, return there to access databases.",
             }
         )
     elif "ezproxy" in host or "libproxy" in host:
-        result.update({"entry_type": "ezproxy", "auth_type": "custom", "notes": "图书馆远程访问代理入口。"})
+        result.update({"entry_type": "ezproxy", "auth_type": "custom", "notes": "Library remote access proxy entry."})
     elif "webvpn" in host or "vpn" in host:
-        result.update({"entry_type": "webvpn", "auth_type": "custom", "notes": "WebVPN 入口。"})
+        result.update({"entry_type": "webvpn", "auth_type": "custom", "notes": "WebVPN entry."})
     elif "shibboleth" in path or "carsi" in host:
-        result.update({"entry_type": "carsi", "auth_type": "sso", "notes": "CARSI/Shibboleth 机构认证入口。"})
+        result.update({"entry_type": "carsi", "auth_type": "sso", "notes": "CARSI/Shibboleth institutional authentication entry."})
 
     return result
 
 
 class Wizard:
-    """配置向导状态机。
+    """Configuration wizard state machine.
 
-    状态流转：
-        step1 (学校名) ->
-            命中预设 -> step4 (数据库确认) -> step6 (自检) -> step7 (保存)
-            未命中 -> step2 (CARSI自查) -> step3 (SSO域名) -> step4 -> step6 -> step7
-                                                   或 step5 (EZproxy) -> step6 -> step7
+    State transitions:
+        step1 (institution name) ->
+            matched preset -> step4 (database confirmation) -> step6 (self-check) -> step7 (save)
+            not matched -> step2 (CARSI check) -> step3 (SSO domain) -> step4 -> step6 -> step7
+                                                   or step5 (EZproxy) -> step6 -> step7
     """
 
     def __init__(self) -> None:
@@ -106,24 +106,24 @@ class Wizard:
         self.data: dict[str, Any] = {}
         self.matched_preset: Optional[dict[str, Any]] = None
 
-    # ===== Step 1: 询问学校名称 =====
+    # ===== Step 1: Ask for institution name =====
     def start(self) -> str:
-        """返回首步提问。"""
+        """Return initial prompt."""
         self.state = "step1"
         return (
-            "你好！我是文献下载助手。首次使用需要先配置你的图书馆资源入口（只需一次）。\n\n"
-            "请先发你平时进入图书馆电子资源/数据库的平台链接。\n"
-            "可以是资源门户、数据库列表、Web of Science 入口、某个数据库详情页，"
-            "或跳转到统一身份认证的登录链接。\n\n"
-            "我会先根据链接判断 CAS/CARSI/EZproxy/WebVPN/聚合门户等授权路径；"
-            "学校预设只作为后续补充和兜底。"
+            "Hello! I am the literature download assistant. First-time use requires configuring your library resource entry (only once).\n\n"
+            "Please send the platform link you normally use to access library electronic resources/databases.\n"
+            "It can be a resource portal, database list, Web of Science entry, a database details page, "
+            "or a login link that redirects to unified identity authentication.\n\n"
+            "I will first determine the authorization path (CAS/CARSI/EZproxy/WebVPN/aggregation portal) based on the link; "
+            "institution presets serve as a supplementary fallback."
         )
 
     def handle_step1(self, user_input: str) -> dict[str, Any]:
-        """处理资源入口链接；非 URL 输入按旧的学校名预设兜底。"""
+        """Process resource entry link; non-URL input falls back to institution preset lookup."""
         value = user_input.strip()
         if not value:
-            return {"next": "retry", "prompt": "输入不能为空，请粘贴图书馆电子资源或数据库入口链接："}
+            return {"next": "retry", "prompt": "Input cannot be empty. Please paste your library electronic resource or database entry link:"}
 
         if "://" in value or "." in value:
             inferred = infer_access_from_url(value)
@@ -133,7 +133,7 @@ class Wizard:
             self.data["auth_type"] = inferred["auth_type"]
             self.data["sso_domain"] = inferred["sso_domain"]
             self.data["carsi_entry"] = inferred["resource_entry"]
-            self.data["libraries"] = ["Web of Science", "ScienceDirect", "Springer", "IEEE Xplore", "知网", "ACS"]
+            self.data["libraries"] = ["Web of Science", "ScienceDirect", "Springer", "IEEE Xplore", "CNKI", "ACS"]
             self.data["notes"] = inferred.get("notes", "")
             self.data["discovery"] = {"resource_entry_url": inferred["resource_entry"]}
             if inferred["entry_type"] == "resource_portal":
@@ -145,15 +145,15 @@ class Wizard:
             return {
                 "next": "step4",
                 "prompt": (
-                    "已根据资源链接识别授权路径：\n"
-                    f"  入口类型：{inferred['entry_type']}\n"
-                    f"  认证类型：{inferred['auth_type']}\n"
-                    f"  SSO 域名：{inferred['sso_domain']}\n"
-                    f"  资源入口：{inferred['resource_entry']}\n\n"
-                    "确认先使用这组配置吗？\n"
-                    "  1. 确认，继续自检\n"
-                    "  2. 我想调整数据库清单\n"
-                    "  3. 改用学校名/预设重新配置"
+                    "Authorization path identified from resource link:\n"
+                    f"  Entry type: {inferred['entry_type']}\n"
+                    f"  Auth type: {inferred['auth_type']}\n"
+                    f"  SSO domain: {inferred['sso_domain']}\n"
+                    f"  Resource entry: {inferred['resource_entry']}\n\n"
+                    "Confirm using this configuration first?\n"
+                    "  1. Confirm, proceed to self-check\n"
+                    "  2. I want to adjust the database list\n"
+                    "  3. Reconfigure using institution name/preset"
                 ),
                 "data": {"inferred": inferred},
             }
@@ -162,16 +162,16 @@ class Wizard:
 
         ok, msg = validate_school_name(name)
         if not ok:
-            return {"next": "retry", "prompt": f"{msg}，请重新输入资源链接或学校名称："}
+            return {"next": "retry", "prompt": f"{msg}. Please re-enter the resource link or institution name:"}
 
-        # 查预设库
+        # Check preset library
         preset = match_school(name)
         if preset:
             self.matched_preset = preset
             self.data["school_name"] = preset["name"]
             self.data["source"] = "preset"
 
-            # 预填预设库的配置
+            # Pre-fill preset config
             auth = preset.get("auth", {})
             self.data["auth_type"] = auth.get("type", "cas")
             self.data["sso_domain"] = auth.get("sso_domain", "")
@@ -183,38 +183,38 @@ class Wizard:
             return {
                 "next": "step4",
                 "prompt": (
-                    f"已匹配到预设学校：{preset['name']}\n"
-                    f"  认证类型：{auth.get('type', '未知')}\n"
-                    f"  SSO 域名：{auth.get('sso_domain', '未知')}\n"
-                    f"  CARSI 入口：{auth.get('carsi_entry', '未配置')}\n"
-                    f"  预设数据库：{', '.join(preset.get('libraries', []))}\n\n"
-                    "确认使用以上配置吗？\n"
-                    "  1. 确认，直接完成配置\n"
-                    "  2. 我想调整数据库清单\n"
-                    "  3. 这不是我的学校，重新输入"
+                    f"Matched preset institution: {preset['name']}\n"
+                    f"  Auth type: {auth.get('type', 'Unknown')}\n"
+                    f"  SSO domain: {auth.get('sso_domain', 'Unknown')}\n"
+                    f"  CARSI entry: {auth.get('carsi_entry', 'Not configured')}\n"
+                    f"  Preset databases: {', '.join(preset.get('libraries', []))}\n\n"
+                    "Confirm using the above configuration?\n"
+                    "  1. Confirm, complete configuration directly\n"
+                    "  2. I want to adjust the database list\n"
+                    "  3. This is not my institution, re-enter"
                 ),
                 "data": {"matched": preset["name"]},
             }
 
-        # 未命中预设，进入自助填写
+        # Not matched, enter manual fill
         self.data["school_name"] = name
         self.data["source"] = "manual"
         self.state = "step2"
         return {
             "next": "step2",
             "prompt": (
-                f"未在预设库中匹配到「{name}」，进入自助配置向导。\n\n"
-                "Step 2: 你的学校/单位是否接入 CARSI 联邦认证？\n"
-                "（CARSI 是高校统一身份认证联邦，查询入口：https://www.carsi.edu.cn/）\n\n"
-                "  1. 是，已接入 CARSI\n"
-                "  2. 否 / 不清楚，走图书馆远程访问（EZproxy）\n"
-                "  3. 都没有，我用 VPN 连校园网"
+                f"'{name}' not found in presets, entering manual configuration wizard.\n\n"
+                "Step 2: Is your institution connected to CARSI federation authentication?\n"
+                "(CARSI is the unified identity authentication federation for universities, lookup: https://www.carsi.edu.cn/)\n\n"
+                "  1. Yes, connected to CARSI\n"
+                "  2. No / unsure, use library remote access (EZproxy)\n"
+                "  3. Neither, I use VPN to connect to campus network"
             ),
         }
 
-    # ===== Step 2: CARSI 自查 =====
+    # ===== Step 2: CARSI check =====
     def handle_step2(self, user_input: str) -> dict[str, Any]:
-        """处理 CARSI 选择。"""
+        """Process CARSI selection."""
         choice = user_input.strip()
         if choice == "1":
             self.data["use_carsi"] = True
@@ -222,10 +222,10 @@ class Wizard:
             return {
                 "next": "step2b",
                 "prompt": (
-                    "请粘贴贵校的 CARSI 入口 URL。\n"
-                    "（可在 https://www.carsi.edu.cn/ 成员机构列表中找到，"
-                    "通常是 https://xxx.edu.cn/idp/shibboleth 形式）\n\n"
-                    "如果找不到，输入「跳过」留空，后续可手动补充。"
+                    "Please paste your institution's CARSI entry URL.\n"
+                    "(Found in member list at https://www.carsi.edu.cn/, "
+                    "usually in the form https://xxx.edu.cn/idp/shibboleth)\n\n"
+                    "If you cannot find it, enter 'skip' to leave blank and add later."
                 ),
             }
         elif choice == "2":
@@ -234,10 +234,10 @@ class Wizard:
             return {
                 "next": "step3",
                 "prompt": (
-                    "你选择了图书馆远程访问（EZproxy）方式。\n\n"
-                    "Step 3: 请输入贵校统一身份认证域名。\n"
-                    "（通常是 id.xxx.edu.cn / cas.xxx.edu.cn / sso.xxx.edu.cn 形式，"
-                    "例如 id.tsinghua.edu.cn）"
+                    "You selected library remote access (EZproxy).\n\n"
+                    "Step 3: Please enter your institution's unified authentication domain.\n"
+                    "(Usually in the form id.xxx.edu.cn / cas.xxx.edu.cn / sso.xxx.edu.cn, "
+                    "for example id.tsinghua.edu.cn)"
                 ),
             }
         elif choice == "3":
@@ -247,35 +247,35 @@ class Wizard:
             return {
                 "next": "step3",
                 "prompt": (
-                    "好的，使用 VPN 方式。\n"
-                    "请先确保已连接校园 VPN，然后输入贵校统一身份认证域名。\n"
-                    "（通常是 id.xxx.edu.cn / cas.xxx.edu.cn 形式）"
+                    "Okay, using VPN mode.\n"
+                    "Please ensure you are connected to campus VPN, then enter your institution's unified authentication domain.\n"
+                    "(Usually in the form id.xxx.edu.cn / cas.xxx.edu.cn)"
                 ),
             }
-        return {"next": "retry", "prompt": "请输入 1、2 或 3："}
+        return {"next": "retry", "prompt": "Please enter 1, 2, or 3:"}
 
-    # ===== Step 2b: CARSI 入口 URL =====
+    # ===== Step 2b: CARSI entry URL =====
     def handle_step2b(self, user_input: str) -> dict[str, Any]:
-        """处理 CARSI 入口 URL 输入。"""
+        """Process CARSI entry URL input."""
         url = user_input.strip()
-        if url in ("跳过", "skip", ""):
+        if url in ("skip", ""):
             self.data["carsi_entry"] = ""
             self.state = "step3"
             return {
                 "next": "step3",
                 "prompt": (
-                    "已跳过 CARSI 入口（后续可补充）。\n\n"
-                    "Step 3: 请输入贵校统一身份认证域名。\n"
-                    "（通常是 id.xxx.edu.cn / cas.xxx.edu.cn / sso.xxx.edu.cn 形式）"
+                    "CARSI entry skipped (can be added later).\n\n"
+                    "Step 3: Please enter your institution's unified authentication domain.\n"
+                    "(Usually in the form id.xxx.edu.cn / cas.xxx.edu.cn / sso.xxx.edu.cn)"
                 ),
             }
 
-        # 校验
+        # Validation
         ok, msg = validate_carsi_entry(url)
         if not ok:
             return {
                 "next": "retry",
-                "prompt": f"{msg}\n\n请重新输入 CARSI 入口 URL，或输入「跳过」留空：",
+                "prompt": f"{msg}\n\nPlease re-enter CARSI entry URL, or enter 'skip' to leave blank:",
             }
 
         self.data["carsi_entry"] = url
@@ -283,41 +283,41 @@ class Wizard:
         return {
             "next": "step3",
             "prompt": (
-                f"CARSI 入口校验通过。\n\n"
-                "Step 3: 请输入贵校统一身份认证域名。\n"
-                "（通常是 id.xxx.edu.cn / cas.xxx.edu.cn / sso.xxx.edu.cn 形式）"
+                f"CARSI entry validated.\n\n"
+                "Step 3: Please enter your institution's unified authentication domain.\n"
+                "(Usually in the form id.xxx.edu.cn / cas.xxx.edu.cn / sso.xxx.edu.cn)"
             ),
         }
 
-    # ===== Step 3: SSO 域名 =====
+    # ===== Step 3: SSO domain =====
     def handle_step3(self, user_input: str) -> dict[str, Any]:
-        """处理 SSO 域名输入。"""
+        """Process SSO domain input."""
         domain = user_input.strip()
         if not domain:
-            return {"next": "retry", "prompt": "域名不能为空，请重新输入："}
+            return {"next": "retry", "prompt": "Domain cannot be empty, please re-enter:"}
 
         ok, msg = validate_sso_domain(domain)
         if not ok:
             return {
                 "next": "retry",
-                "prompt": f"{msg}\n\n请重新输入 SSO 域名（如 id.xxx.edu.cn）：",
+                "prompt": f"{msg}\n\nPlease re-enter SSO domain (e.g. id.xxx.edu.cn):",
             }
 
         self.data["sso_domain"] = domain.split("://")[-1].split("/")[0]
-        # 如果还没设 auth_type，默认 cas
+        # If auth_type not set, default to cas
         if "auth_type" not in self.data:
             self.data["auth_type"] = "cas"
 
-        # 如果走 EZproxy 路径
+        # If using EZproxy path
         if not self.data.get("use_carsi", True) and not self.data.get("use_vpn"):
             self.state = "step5"
             return {
                 "next": "step5",
                 "prompt": (
-                    f"SSO 域名校验通过：{msg}\n\n"
-                    "Step 5: 请输入贵校图书馆 EZproxy 登录地址。\n"
-                    "（提示：使用 EZproxy 前通常需先在图书馆网站开通「远程访问」权限）\n\n"
-                    "如果不确定，输入「跳过」可稍后补充。"
+                    f"SSO domain validated: {msg}\n\n"
+                    "Step 5: Please enter your institution library's EZproxy login address.\n"
+                    "(Tip: Using EZproxy usually requires enabling 'remote access' permissions on the library website first)\n\n"
+                    "If unsure, enter 'skip' to add later."
                 ),
             }
 
@@ -325,52 +325,52 @@ class Wizard:
         return {
             "next": "step4",
             "prompt": (
-                f"SSO 域名校验通过：{msg}\n\n"
-                "Step 4: 你常下载的数据库有哪些？\n"
-                f"可选：{', '.join(KNOWN_DATABASES[:10])} ...\n\n"
-                "请输入数据库名称，多个用逗号或空格分隔："
+                f"SSO domain validated: {msg}\n\n"
+                "Step 4: What databases do you frequently download from?\n"
+                f"Options: {', '.join(KNOWN_DATABASES[:10])} ...\n\n"
+                "Please enter database names, separated by commas or spaces:"
             ),
         }
 
-    # ===== Step 4: 数据库多选 =====
+    # ===== Step 4: Database multi-select =====
     def handle_step4(self, user_input: str) -> dict[str, Any]:
-        """处理数据库选择。"""
-        if user_input.strip() in ("确认", "1", "ok", "yes", "好"):
-            # 预设学校确认流程
+        """Process database selection."""
+        if user_input.strip().lower() in ("confirm", "1", "ok", "yes"):
+            # Preset confirmation flow
             if not self.data.get("libraries"):
-                return {"next": "retry", "prompt": "请输入数据库名称："}
+                return {"next": "retry", "prompt": "Please enter database names:"}
         else:
-            # 解析输入
+            # Parse input
             libs = [s.strip() for s in user_input.replace(",", " ").split() if s.strip()]
             if libs:
                 self.data["libraries"] = libs
 
         ok, msg = validate_libraries(self.data.get("libraries", []))
         if not ok:
-            return {"next": "retry", "prompt": f"{msg}，请重新输入："}
+            return {"next": "retry", "prompt": f"{msg}. Please re-enter:"}
 
         self.state = "step6"
         return {
             "next": "step6",
             "prompt": (
-                f"已记录 {len(self.data['libraries'])} 个数据库。\n\n"
-                "Step 6: 正在进行连通性自检..."
+                f"Recorded {len(self.data['libraries'])} databases.\n\n"
+                "Step 6: Performing connectivity self-check..."
             ),
         }
 
-    # ===== Step 5: EZproxy 地址 =====
+    # ===== Step 5: EZproxy address =====
     def handle_step5(self, user_input: str) -> dict[str, Any]:
-        """处理 EZproxy 地址输入。"""
+        """Process EZproxy address input."""
         url = user_input.strip()
-        if url in ("跳过", "skip", ""):
+        if url in ("skip", ""):
             self.data["ezproxy_url"] = None
             self.state = "step4"
             return {
                 "next": "step4",
                 "prompt": (
-                    "已跳过 EZproxy。\n\n"
-                    "Step 4: 你常下载的数据库有哪些？\n"
-                    "请输入数据库名称，多个用逗号或空格分隔："
+                    "EZproxy skipped.\n\n"
+                    "Step 4: What databases do you frequently download from?\n"
+                    "Please enter database names, separated by commas or spaces:"
                 ),
             }
 
@@ -378,7 +378,7 @@ class Wizard:
         if not ok:
             return {
                 "next": "retry",
-                "prompt": f"{msg}\n\n请重新输入 EZproxy 地址，或输入「跳过」：",
+                "prompt": f"{msg}\n\nPlease re-enter EZproxy address, or enter 'skip':",
             }
 
         self.data["ezproxy_url"] = url
@@ -386,25 +386,25 @@ class Wizard:
         return {
             "next": "step4",
             "prompt": (
-                f"EZproxy 校验通过：{msg}\n\n"
-                "Step 4: 你常下载的数据库有哪些？\n"
-                "请输入数据库名称，多个用逗号或空格分隔："
+                f"EZproxy validated: {msg}\n\n"
+                "Step 4: What databases do you frequently download from?\n"
+                "Please enter database names, separated by commas or spaces:"
             ),
         }
 
-    # ===== Step 6: 连通性自检 =====
+    # ===== Step 6: Connectivity self-check =====
     def handle_step6(self, user_input: str = "") -> dict[str, Any]:
-        """执行连通性自检。"""
-        # 延迟导入避免循环依赖
+        """Execute connectivity self-check."""
+        # Lazy import to avoid circular dependency
         from health_check import health_check, clear_cache
 
-        # 先保存临时配置再做自检
+        # Save temporary config before check
         try:
             temp_config = self._build_config()
         except ValueError as e:
-            return {"next": "retry", "prompt": f"配置构建失败：{e}"}
+            return {"next": "retry", "prompt": f"Configuration build failed: {e}"}
 
-        # 临时保存用于自检
+        # Save temporarily for self-check
         clear_cache()
         save_config(temp_config)
         result = health_check(force=True)
@@ -415,8 +415,8 @@ class Wizard:
             return {
                 "next": "step7",
                 "prompt": (
-                    f"连通性自检通过：\n{details_text}\n\n"
-                    "Step 7: 确认保存配置吗？\n  1. 确认保存\n  2. 重新配置"
+                    f"Connectivity self-check passed:\n{details_text}\n\n"
+                    "Step 7: Confirm saving configuration?\n  1. Confirm save\n  2. Reconfigure"
                 ),
             }
         else:
@@ -424,46 +424,46 @@ class Wizard:
             return {
                 "next": "step7",
                 "prompt": (
-                    f"连通性自检未完全通过：\n{details_text}\n\n"
+                    f"Connectivity self-check completed with warnings:\n{details_text}\n\n"
                     f"{suggestions}\n\n"
-                    "Step 7: 如何处理？\n"
-                    "  1. 仍然保存（可后续修正）\n"
-                    "  2. 重新配置"
+                    "Step 7: How to proceed?\n"
+                    "  1. Save anyway (can fix later)\n"
+                    "  2. Reconfigure"
                 ),
                 "data": {"warnings": result.get("details", [])},
             }
 
-    # ===== Step 7: 持久化 =====
+    # ===== Step 7: Persistence =====
     def handle_step7(self, user_input: str) -> dict[str, Any]:
-        """处理最终保存确认。"""
-        choice = user_input.strip()
-        if choice in ("2", "重新配置", "重新"):
+        """Process final save confirmation."""
+        choice = user_input.strip().lower()
+        if choice in ("2", "reconfigure", "redo", "reset"):
             delete_config()
             self.__init__()
             return {"next": "step1", "prompt": self.start()}
 
-        # 保存
+        # Save
         try:
             config = self._build_config()
-            # 附加警告（如有）
+            # Attach warnings (if any)
             if self.data.get("warnings"):
                 config["_warnings"] = self.data["warnings"]
             path = save_config(config)
             return {
                 "next": "done",
                 "prompt": (
-                    f"已为「{self.data['school_name']}」完成配置！\n"
-                    f"配置文件：{path}\n\n"
-                    "现在可以直接下载文献了。如需切换学校，随时说「换学校」或「/reconfig」。"
+                    f"Configuration completed for '{self.data['school_name']}'!\n"
+                    f"Config file: {path}\n\n"
+                    "You can now download literature directly. To switch institutions anytime, ask to 'reconfigure' or use /reconfig."
                 ),
                 "data": {"school": self.data["school_name"], "path": str(path)},
             }
         except ValueError as e:
-            return {"next": "retry", "prompt": f"保存失败：{e}\n请检查后重试："}
+            return {"next": "retry", "prompt": f"Save failed: {e}\nPlease check and try again:"}
 
-    # ===== 调度入口 =====
+    # ===== Dispatch entry point =====
     def handle(self, user_input: str) -> dict[str, Any]:
-        """根据当前状态调度到对应处理函数。"""
+        """Dispatch to corresponding handler based on current state."""
         handlers = {
             "step1": self.handle_step1,
             "step2": self.handle_step2,
@@ -480,15 +480,15 @@ class Wizard:
             return {"next": "step1", "prompt": self.start()}
         return handler(user_input)
 
-    # ===== 非交互式：预设学校一键配置 =====
+    # ===== Non-interactive: Preset school one-click configuration =====
     def configure_from_preset(self, school_name: str) -> dict[str, Any]:
-        """预设学校一键配置（非交互式）。
+        """One-click configuration from preset (non-interactive).
 
-        成功返回保存后的配置字典，失败抛 ValueError。
+        Returns saved config dict on success, raises ValueError on failure.
         """
         preset = match_school(school_name)
         if not preset:
-            raise ValueError(f"预设库中未找到「{school_name}」")
+            raise ValueError(f"'{school_name}' not found in preset library")
 
         auth = preset.get("auth", {})
         config = {
@@ -517,7 +517,7 @@ class Wizard:
         path = save_config(config)
         return {"config": config, "path": str(path)}
 
-    # ===== 非交互式：资源入口链接配置 =====
+    # ===== Non-interactive: Resource URL configuration =====
     def configure_from_resource_url(self, resource_url: str) -> dict[str, Any]:
         """Configure from a library resource portal or authentication URL."""
         inferred = infer_access_from_url(resource_url)
@@ -527,7 +527,7 @@ class Wizard:
         self.data["auth_type"] = inferred["auth_type"]
         self.data["sso_domain"] = inferred["sso_domain"]
         self.data["carsi_entry"] = inferred["resource_entry"]
-        self.data["libraries"] = ["Web of Science", "ScienceDirect", "Springer", "IEEE Xplore", "知网", "ACS"]
+        self.data["libraries"] = ["Web of Science", "ScienceDirect", "Springer", "IEEE Xplore", "CNKI", "ACS"]
         self.data["notes"] = inferred.get("notes", "")
         self.data["discovery"] = {"resource_entry_url": inferred["resource_entry"]}
         if inferred["entry_type"] == "resource_portal":
@@ -539,15 +539,15 @@ class Wizard:
         path = save_config(config)
         return {"config": config, "path": str(path), "inferred": inferred}
 
-    # ===== 内部：构建配置字典 =====
+    # ===== Internal: Build config dictionary =====
     def _build_config(self) -> dict[str, Any]:
-        """从向导收集的数据构建配置字典。"""
+        """Build configuration dictionary from data collected in wizard."""
         if not self.data.get("school_name"):
-            raise ValueError("学校名称未设置")
+            raise ValueError("Institution name not set")
         if not self.data.get("sso_domain"):
-            raise ValueError("SSO 域名未设置")
+            raise ValueError("SSO domain not set")
         if not self.data.get("libraries"):
-            raise ValueError("数据库清单未设置")
+            raise ValueError("Database list not set")
 
         return {
             "version": 1,
@@ -574,12 +574,12 @@ class Wizard:
 
 
 if __name__ == "__main__":
-    # 非交互式一键配置示例
+    # Non-interactive one-click configuration example
     w = Wizard()
     try:
-        result = w.configure_from_preset("交大")
-        print(f"配置成功：{result['config']['school']['name']}")
-        print(f"配置文件：{result['path']}")
+        result = w.configure_from_preset("SJTU")
+        print(f"Configured successfully: {result['config']['school']['name']}")
+        print(f"Config file: {result['path']}")
     except ValueError as e:
-        print(f"配置失败：{e}")
-        print(f"配置文件路径：{CONFIG_FILE}")
+        print(f"Configuration failed: {e}")
+        print(f"Config file path: {CONFIG_FILE}")

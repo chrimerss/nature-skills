@@ -48,7 +48,7 @@ Always verify:
 - generate outline options or paragraph structures
 - produce alternative titles or abstract phrasings
 - summarize literature for categorization, not as a substitute for reading
-- translate with terminology and hedging checks
+- convert rough notes with terminology and hedging checks
 
 `Yellow`: allowed only with strong human control
 

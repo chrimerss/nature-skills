@@ -5,7 +5,7 @@
 - There should be no mystery for the writer, but there may be one for the reader.
 - Do not invent data, references, mechanisms, or novelty claims.
 - Do not let AI draft the paper's core scientific argument from scratch.
-- If the draft is Chinese or structurally rough, reconstruct the logic first and the prose second.
+- If the draft is from a non-native English speaker or structurally rough, reconstruct the logic first and the prose second.
 - On first contact with the draft, build a Terminology Ledger and keep terms, abbreviations, units, and notation consistent across every section. Do not introduce synonyms to vary the prose. See `../../../_shared/core/terminology-ledger.md`.
 - Avoid em dashes in polished output by default. Prefer commas, parentheses, or full stops. Use colons sparingly unless the user explicitly asks to preserve dash-based punctuation or wants a colon-led style.
 

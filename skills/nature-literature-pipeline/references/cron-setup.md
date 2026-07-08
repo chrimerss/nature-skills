@@ -1,29 +1,29 @@
-# 2026-05-09 一次性文献推送未触发：排查与补跑记录
+# 2026-05-09 One-Time Literature Push Troubleshooting Log
 
-## 症状
+## Symptoms
 
-大哥反馈：早上快 9 点仍未收到前一晚设置的 08:30 一次性文献推送。
+User reported: At almost 9 AM, the 08:30 one-time literature push scheduled the previous evening had not been received.
 
-原 job 信息：
+Original job info:
 
 - job_id: `a20ff6e2672d`
-- name: `一次性文献推送-5篇-明早`
-- scheduled: `2026-05-09T08:30:00+08:00`
+- name: `one-time-literature-push-5-papers-tomorrow-morning`
+- scheduled: `2026-05-09T08:30:00+00:00`
 - repeat: once
 
-## 排查结果
+## Troubleshooting Findings
 
-- `cronjob(action="list")` 返回 `count=0`，没有任何 jobs。
-- `cronjob(action="run", job_id="a20ff6e2672d")` 返回 `Job with ID ... not found`。
-- `send_message(action="list")` 显示 `feishu:your-group-name` 可用。
-- shell 中 `hermes` CLI 不可见：`bash: hermes: command not found`，无法用 CLI 侧进一步核查。
-- 当前容器无 `~/.hermes/logs/gateway.log`。
+- `cronjob(action="list")` returned `count=0`, no jobs present.
+- `cronjob(action="run", job_id="a20ff6e2672d")` returned `Job with ID ... not found`.
+- `send_message(action="list")` showed `feishu:your-group-name` was available.
+- In shell, `hermes` CLI was not in path: `bash: hermes: command not found`, preventing further CLI checks.
+- Current container had no `~/.hermes/logs/gateway.log`.
 
-结论：不是飞书不可达，而是一次性 cron job 没有保留在当前 cron 存储/profile，或当前 scheduler 未接管。可能与重启、profile/runtime 变化、WSL/Docker/gateway/scheduler 停止有关。
+Conclusion: Not a messaging reachability issue, but rather the one-time cron job was not persisted in the current cron storage/profile, or the current scheduler did not take over. This may be related to container restarts, profile/runtime changes, or WSL/Docker/gateway/scheduler stopping.
 
-## 补救动作
+## Remediation Actions
 
-立即手动补跑小规模检索，使用 OpenAlex API，关键词包括：
+Immediately ran a manual targeted search using OpenAlex API with keywords including:
 
 - `molten chloride salt corrosion MgCl2 KCl NaCl`
 - `molten chloride salt electrochemical monitoring corrosion`
@@ -31,38 +31,38 @@
 - `chloride salt purification electrochemical corrosion`
 - `institution keyword1 keyword2 author1 author2`
 
-筛出并推送 5 篇：
+Filtered and pushed 5 papers:
 
-1. Gong & Ding 2022 — MgOHCl 低浓度腐蚀性杂质电化学监测，A 类。
-2. Gong 2022 — purified MgCl2-KCl-NaCl at 700 °C / Fe-based alloys，A 类。
-3. Witteman 2024 — 连续电化学纯化反应器，A 类。
-4. Ding 2021 — 双 Mg 电极连续电解纯化，A 类。
-5. Hao 2025 — Ni 基合金在 NaCl-KCl-MgCl2 中的 CA 腐蚀模拟，B 类。
+1. Gong & Ding 2022 — Electrochemical monitoring of corrosive impurities, Category A.
+2. Gong 2022 — Purified MgCl2-KCl-NaCl at 700 °C / Fe-based alloys, Category A.
+3. Witteman 2024 — Continuous electrochemical purification reactor, Category A.
+4. Ding 2021 — Continuous electrolytic purification with dual Mg electrodes, Category A.
+5. Hao 2025 — CA corrosion simulation of Ni-based alloys in NaCl-KCl-MgCl2, Category B.
 
-飞书补发成功：
+Successful re-delivery:
 
 - target: `feishu:your-group-name`
 - chat_id: `oc_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
 - message_id: `om_x100b50dc2a1a40a8c108780f4171def`
 
-## 归档结果
+## Archival Results
 
-写入 Obsidian raw 文献库：
+Written to local raw literature vault:
 
-- `/vault/raw/氯盐储能/文献/A_核心主线/笔记/gong2022_mgohcl_monitoring.md`
-- `/vault/raw/氯盐储能/文献/A_核心主线/笔记/gong2022_purified_mgcl2_fe_alloys_700c.md`
-- `/vault/raw/氯盐储能/文献/A_核心主线/笔记/witteman2024_continuous_electrochemical_purification.md`
-- `/vault/raw/氯盐储能/文献/A_核心主线/笔记/ding2021_continuous_electrolytic_purification_mg_electrodes.md`
-- `/vault/raw/氯盐储能/文献/B_章节支撑/笔记/hao2025_ca_ni_alloys_nacl_kcl_mgcl2.md`
+- `/vault/raw/molten_salt/literature/A_Core_Thread/notes/gong2022_mgohcl_monitoring.md`
+- `/vault/raw/molten_salt/literature/A_Core_Thread/notes/gong2022_purified_mgcl2_fe_alloys_700c.md`
+- `/vault/raw/molten_salt/literature/A_Core_Thread/notes/witteman2024_continuous_electrochemical_purification.md`
+- `/vault/raw/molten_salt/literature/A_Core_Thread/notes/ding2021_continuous_electrolytic_purification_mg_electrodes.md`
+- `/vault/raw/molten_salt/literature/B_Chapter_Support/notes/hao2025_ca_ni_alloys_nacl_kcl_mgcl2.md`
 
-并尝试更新：
+And attempted updates to:
 
-- `/vault/raw/氯盐储能/文献/A_核心主线/references.ris`
-- `/vault/raw/氯盐储能/文献/B_章节支撑/references.ris`
+- `/vault/raw/molten_salt/literature/A_Core_Thread/references.ris`
+- `/vault/raw/molten_salt/literature/B_Chapter_Support/references.ris`
 
 ## Lessons
 
-- 创建 cron 后必须立即 `cronjob(action="list")` 验证当前 profile 可见；只看到 create success 不够。
-- 对一次性、次日早晨任务，必须说明 Hermes cron 是本机/profile 调度，不是云端闹钟。
-- 到点未收到时，优先补发，不要长时间排查；飞书和 Obsidian 链路可手动跑通。
-- 若需要长期每日任务，应单独部署并做：list 验证、manual run 验证、飞书投递验证、Obsidian 归档验证、失败提醒。
+- After creating a cron job, must immediately run `cronjob(action="list")` to verify it is visible under the current profile; seeing create success alone is insufficient.
+- For one-time or next-morning tasks, clarify to the user that agent cron jobs rely on local/profile scheduling rather than a cloud alarm clock.
+- When a scheduled delivery fails, prioritize manual re-delivery over lengthy troubleshooting; messaging and archival pathways can be executed manually.
+- If a permanent daily job is needed, deploy it separately and verify: list check, manual run check, messaging delivery check, archival check, and failure notifications.

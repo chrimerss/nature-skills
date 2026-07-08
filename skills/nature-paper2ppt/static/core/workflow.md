@@ -12,7 +12,7 @@ Do not invent missing numbers, mechanisms, datasets, or figure details. Use a tw
 
 The router already detected the `paper_type` axis and loaded the matching arc fragment. Confirm the classification against the source, then follow that fragment's arc (`claim-first`, `question-to-evidence`, `problem-to-solution`, `workflow-to-validation`, or `evidence-map`) when ordering slides.
 
-## Step 3. Build the Chinese presentation plan
+## Step 3. Build the presentation plan
 
 Default length: 12-16 slides for a 15-20 minute report; prefer 10-14 for a quick or unspecified request; expand beyond 16 only for a detailed seminar deck or when the paper genuinely needs the space. Use the default slide structure from the loaded paper-type fragment and adapt it to the paper. Do not force every paper into the same template.
 
@@ -28,17 +28,17 @@ Extract or render only selected figures, crop dense panels, keep original data v
 
 ## Step 6. Write slide-by-slide content
 
-For each slide write: Chinese title (conclusion-style where possible), slide purpose, suggested layout, 2-4 concise Chinese bullets, the selected figure/table asset if any, Chinese caption and interpretation, one core takeaway sentence, and a concise Chinese speaker note when oral explanation helps. Each slide makes one point. Avoid template-like phrases such as “一句话总结”, “最有价值的后续方向”, “不是……而是……”, generic “提供新视角”, or repeated slogan structures; use paper-specific, evidence-grounded Chinese instead.
+For each slide write: title (conclusion-style where possible), slide purpose, suggested layout, 2-4 concise bullets, the selected figure/table asset if any, caption and interpretation, one core takeaway sentence, and a concise speaker note when oral explanation helps. Each slide makes one point. Avoid template-like phrases such as "in summary", "most valuable future direction", "not... but...", generic "provides a new perspective", or repeated slogan structures; use paper-specific, evidence-grounded academic English instead.
 
 Respect the on-slide text budget: write for the slide, not the manuscript; most explanation belongs in speaker notes. Order each result slide as hero evidence first, then a narrow interpretation rail, then only the minimum labels. The detailed text budget, evidence hierarchy, layout-adaptation, anti-template, archetype, title, and density rules are in `references/design-and-layout.md`.
 
 ## Step 7. Build the actual PPTX deck
 
-Create a real `.pptx` as the primary deliverable with `python-pptx` (or a user-provided template) using 16:9 by default, Chinese titles/bullets/captions/notes, source labels on figure slides, content-sized text boxes with conservative margins and no expected clipping, and consistent typography. Let slide geometry follow the figure rather than forcing the figure into a fixed 1:1 template. Align titles, figure edges, source labels, caption bands, and bottom notes to a small set of slide guides; avoid near-miss alignment where objects are off by only a few points. Treat automatic text shrinking as a last resort: prefer shorter text, larger boxes, or splitting the slide; never deliver a slide whose text is expected to overflow or be clipped. Full composition and text-fitting implementation rules are in `references/design-and-layout.md`.
+Create a real `.pptx` as the primary deliverable with `python-pptx` (or a user-provided template) using 16:9 by default, clear titles/bullets/captions/notes, source labels on figure slides, content-sized text boxes with conservative margins and no expected clipping, and consistent typography. Let slide geometry follow the figure rather than forcing the figure into a fixed 1:1 template. Align titles, figure edges, source labels, caption bands, and bottom notes to a small set of slide guides; avoid near-miss alignment where objects are off by only a few points. Treat automatic text shrinking as a last resort: prefer shorter text, larger boxes, or splitting the slide; never deliver a slide whose text is expected to overflow or be clipped. Full composition and text-fitting implementation rules are in `references/design-and-layout.md`.
 
 ## Step 8. Self-review and corrective revision loop
 
-After the first draft, run at least one explicit self-review pass as a defect-finding step: inspect the PPTX and assets, write a severity-graded defect list (`high`/`medium`/`low`) with slide numbers, fix every high-severity issue and every reasonable medium one, regenerate, and update `output/qa_report.md`. When a `.pptx` exists, run `scripts/audit_pptx_quality.py output/final_presentation_cn.pptx --report output/pptx_audit.md` before and after revision, then copy the high/medium findings into the QA report. The full checklist, severity rules, programmatic PPTX checks, and rendered-preview policy are in `references/self-review.md`.
+After the first draft, run at least one explicit self-review pass as a defect-finding step: inspect the PPTX and assets, write a severity-graded defect list (`high`/`medium`/`low`) with slide numbers, fix every high-severity issue and every reasonable medium one, regenerate, and update `output/qa_report.md`. When a `.pptx` exists, run `scripts/audit_pptx_quality.py output/final_presentation.pptx --report output/pptx_audit.md` before and after revision, then copy the high/medium findings into the QA report. The full checklist, severity rules, programmatic PPTX checks, and rendered-preview policy are in `references/self-review.md`.
 
 ## Step 9. Final verification
 

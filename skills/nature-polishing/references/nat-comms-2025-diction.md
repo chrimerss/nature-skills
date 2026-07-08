@@ -9,7 +9,7 @@ or a specific journal house style overrides them. **Do not copy source wording.*
 
 ## 1. Connectors — observed preference order
 
-句首大写连接词词频(5 篇子集合计):
+Capitalized sentence-initial connector frequencies (total across a 5-article subset):
 `However` **51** ≫ `Furthermore` 22 · `Therefore` 19 · `Overall`/`Notably` 16 · `In addition` 13 · `In contrast` 6 · `Moreover` 4 · `Importantly` 2.
 
 - **However** carries turns, gap-opening, and surprises — do not scatter weaker
@@ -64,10 +64,9 @@ concession: *"**Despite the smaller scale** of our pre-training data …, the
   potential / paves the way`.
 - Title: no number, no result — keep digits for the abstract.
 
-## 7. 中文润色要点
+## 7. Non-native / L2 Polishing Essentials
 
-- 连接词:转折/制造空白优先"然而";递进偏"此外/进一步"(对应 Furthermore);
-  因果用"因此";收束用"总体而言/综上"。
-- 慎用"显著"——英文 `significantly` 在本语料 0 次。无统计检验支撑时改"明显/大幅/相当/尤为"。
-- 对冲(可能/提示/有望)集中在意义句,结果句保持带数字的肯定陈述。
-- 战绩措辞(实现/证明/优于/稳健/可泛化/相当)需有数据支撑;弱于对手时用"相当"+"尽管规模更小"客观化,不拔高为"优于"。
+- **Connectors**: For contrast/gap-opening, prioritize "However"; for addition, favor "Furthermore"; for causation, use "Therefore"; for concluding summaries, use "Overall" or "In summary".
+- **Use "Significantly" with caution**: "Significantly" appears 0 times in our corpus. When unsupported by statistical testing, change to "notably", "substantially", "considerably", or "markedly".
+- **Hedging**: Concentrate hedges ("may", "suggests", "expected to") in significance and discussion sentences; keep results reporting as affirmative statements backed by numbers.
+- **Achievement verbs**: Use terms like "achieve", "demonstrate", "outperform", "robust", "generalizable", or "comparable" only when backed by data. When results are weaker than a baseline, state it objectively with "comparable" plus a concession (e.g., "despite the smaller scale"), rather than inflating to "superior".

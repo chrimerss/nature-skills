@@ -4,13 +4,12 @@ description: >-
   Simulate a Nature-style reviewer assessment from the referee perspective rather than
   an author rebuttal. Use when the user wants a pre-submission review, reviewer report,
   peer-review style critique, novelty/significance/technical soundness assessment,
-  reviewer-style manuscript evaluation, 审稿人视角评估, 预审稿意见, or Nature reviewer
-  report. Return 3 reviewer reports plus a cross-review synthesis, grounded only in the
-  local Nature reviewer source basis.
+  reviewer-style manuscript evaluation, pre-submission review, or Nature reviewer
+  report. It evaluates novelty, claim-evidence mapping, methodology, statistical
+  rigor, controls, scholarship, and presentation.
   Also trigger on general pre-submission review requests during academic writing even without the
   word "Nature", such as getting a mock peer review for any journal, critiquing a draft as a
-  reviewer would, assessing novelty/rigor before submission, and Chinese phrasings like
-  审稿人视角、模拟审稿、预审、帮我审一下论文、投稿前自审、审稿意见模拟、找论文问题.
+  reviewer would, or assessing novelty/rigor before submission.
 ---
 
 # Nature Reviewer Assessment Skill
@@ -41,7 +40,7 @@ The skill may receive:
 - abstract, summary paragraph, or cover-summary style text
 - introduction, results, discussion, or methods excerpts
 - figure legends, selected figures, or result notes
-- author notes in Chinese or English describing the claimed contribution
+- author notes describing the claimed contribution
 - pre-submission positioning notes
 
 If the provided material is partial, perform a bounded review and mark the assessment boundary explicitly.

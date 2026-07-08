@@ -32,8 +32,8 @@ Topic is medical/clinical?
 
 ### Journal scope awareness
 - Nature Portfolio journals: use `nature.com` domain filter
-- Chinese journals: CNKI/万方 not indexed in PubMed/CrossRef — flag for manual check
-- Preprints only: arXiv, bioRxiv, medRxiv — no peer review status available
+- Regional journals: not indexed in PubMed/CrossRef — flag for manual check
+- Old literature (<1990): CrossRef citation counts often incomplete — rely on Web of Science / Scopus if precise citation metrics are critical
 
 ## Deduplication Logic
 

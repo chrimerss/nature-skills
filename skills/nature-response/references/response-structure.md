@@ -14,7 +14,6 @@ Return the response in this order unless the user asks for another format:
 6. LaTeX deliverables when requested.
 7. Manuscript change checklist.
 8. Missing information / risk flags.
-9. Chinese confirmation notes when the user writes in Chinese.
 
 ## Response strategy summary
 

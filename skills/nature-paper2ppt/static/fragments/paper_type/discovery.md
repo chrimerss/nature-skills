@@ -18,16 +18,16 @@ If the paper has one strong central claim, you may open `claim-first` and then j
 
 ## Default slide structure (adapt, do not force)
 
-1. 标题页
-2. 研究背景：为什么这个现象/问题重要
-3. 知识缺口：未知的机制或矛盾
-4. 核心问题与假设
-5. 研究设计 / 实验体系
-6-8. 关键证据 1-3（构成证据链）
-9. 验证、对照或稳健性证据
-10. 机制模型 / 综合框架
-11. 创新点与生物学意义
-12. 局限性与未解决问题
-13. 总结与讨论
+1. Title slide
+2. Background: why this phenomenon/problem matters
+3. Knowledge gap: unknown mechanism or contradiction
+4. Core question and hypothesis
+5. Study design / experimental system
+6-8. Key evidence 1-3 (forming the evidence chain)
+9. Validation, control, or robustness evidence
+10. Mechanistic model / synthesis framework
+11. Innovation and biological significance
+12. Limitations and unresolved questions
+13. Summary and discussion
 
 Emphasise the evidence chain: each result slide should advance the mechanistic argument, not just display a figure. Let the mechanism/model slide synthesise the chain.

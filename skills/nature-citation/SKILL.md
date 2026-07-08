@@ -6,12 +6,10 @@ description: >-
   AAAS Science family, and Cell Press, filtering by publication time range, and exporting one
   reference-manager-ready output by default. Use this skill whenever the user asks to input text and
   automatically get references, add citations to a paragraph/manuscript, find Nature-series or CNS
-  support for statements, create text-to-reference correspondence, "分段引用", "自动给出引用",
-  "Nature系列引用", "CNS及子刊", "支撑文献", "补引用", "找引用", or export EndNote/RIS/ENW/Zotero RDF.
+  support for statements, create text-to-reference correspondence, or export EndNote/RIS/ENW/Zotero RDF.
   Also trigger on general academic-writing citation needs even without the word "Nature", such as
   adding references while writing a paper, finding sources/literature for a claim, building a
-  reference list, citation/referencing for academic writing, and Chinese phrasings like
-  学术写作引用、写论文加引用、写paper找文献、加参考文献、配文献、引用文献、文献支撑.
+  reference list, or citation/referencing for academic writing.
 version: 2.0.0
 author: Yuan1z skill, refactored into static/dynamic layers
 ---
@@ -20,7 +18,7 @@ author: Yuan1z skill, refactored into static/dynamic layers
 
 This skill is split into two layers:
 
-- A **static layer** under `static/` that holds versioned, reusable content fragments (core principles and scope, the Chinese-user operating mode, and the citation workflow).
+- A **static layer** under `static/` that holds versioned, reusable content fragments (core principles and scope, and the citation workflow).
 - A **dynamic layer** (this file plus `manifest.yaml`) that loads the core every time and reaches for heavier material only when a step needs it.
 
 Do not try to apply the citation logic from memory or from this router. Always load fragments from disk as described below.
@@ -34,15 +32,13 @@ Follow these four steps every time the skill is invoked.
 Read [manifest.yaml](manifest.yaml). Then read every file listed under `always_load`:
 
 - `static/core/principles.md` — what the skill produces, the strict journal scope, the source hierarchy, and the search-quality rules.
-- `static/core/chinese-mode.md` — how to operate when the user writes in Chinese or asks for `Nature系列`/`CNS及子刊` style support.
 - `static/core/workflow.md` — the seven-step workflow and the final report format.
 
-### 2. No content axis — confirm scope and language inline
+### 2. No content axis — confirm scope inline
 
-Unlike the other nature-* skills, nature-citation has no fragment axis. Its variation is runtime parameters, not different content bodies:
-
-- **journal scope** — `Nature系列` / `CNS` / `CNS及子刊` / flagship-only. Read it from the user's wording (see `core/principles.md`) and pass it to the script as `--scope`.
-- **user language** — if the user writes Chinese, follow `core/chinese-mode.md` (Chinese notes, English search queries).
+Unlike multi-style skills, `nature-citation` has no content variation axis:
+- **journal scope** — default to Nature/CNS (`nature.com/nature`, `nature.com/natbiotech`, `science.org/doi/...`, `cell.com/cell`, `nejm.org/doi/...`, `thelancet.com`, `jamanetwork.com`), but allow the user to broaden to standard SCI or domain top-tier journals inline.
+- **output language** — always return segment notes, evidence notes, and explanations in English.
 - **input length** — if there are more than ~10 segments, switch to the batched long-article strategy in `references/script-usage.md`.
 
 State the detected scope and date limits in one short line before searching.

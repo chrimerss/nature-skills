@@ -16,15 +16,15 @@ Best when study design and statistical inference carry the credibility. Order th
 
 ## Default slide structure (adapt, do not force)
 
-1. 标题页
-2. 研究背景：临床/公共卫生问题
-3. 研究问题与目标
-4. 研究设计：队列/试验/抽样（含 CONSORT/流程图）
-5. 终点指标与变量
-6. 主要结果（生存曲线、森林图、校准曲线等）
-7. 亚组 / 敏感性 / 次要分析
-8. 偏倚与局限性
-9. 临床意义与应用
-10. 总结
+1. Title slide
+2. Background: clinical or public health problem
+3. Study questions and objectives
+4. Study design: cohort / trial / sampling (including CONSORT / flowchart)
+5. Endpoints and variables
+6. Primary results (survival curves, forest plots, calibration curves, etc.)
+7. Subgroup / sensitivity / secondary analyses
+8. Bias and limitations
+9. Clinical significance and applications
+10. Summary
 
 Report effect sizes, confidence intervals, and p-values exactly as in the paper; do not round or restate them loosely. Use survival curves, forest plots, and calibration curves as hero evidence. Be careful not to overstate causal claims beyond the study design.

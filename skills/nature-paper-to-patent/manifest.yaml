@@ -2,7 +2,7 @@ name: nature-paper-to-patent
 version: 1.0.0
 description: >
   Agent-neutral routing manifest for converting research disclosures into
-  evidence-grounded Chinese invention patent drafts.
+  evidence-grounded invention patent drafts.
 
 always_load:
   - static/core/principles.md
@@ -55,7 +55,7 @@ axes:
 
 references:
   on_demand:
-    - condition: drafting or auditing Chinese claims and specification
+    - condition: drafting or auditing claims and specification
       path: references/cn-patent-drafting-guide.md
     - condition: creating figures or selecting a paper methodology figure
       path: references/patent-figure-guide.md

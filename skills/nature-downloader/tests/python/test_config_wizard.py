@@ -24,10 +24,10 @@ class ConfigWizardTest(unittest.TestCase):
             if str(SRC) in sys.path:
                 sys.path.remove(str(SRC))
 
-        self.assertIn("图书馆", prompt)
-        self.assertIn("资源", prompt)
-        self.assertIn("链接", prompt)
-        self.assertNotIn("请问你所在的学校或单位是", prompt)
+        self.assertIn("library", prompt)
+        self.assertIn("resource", prompt)
+        self.assertIn("link", prompt)
+        self.assertNotIn("What is your institution or school", prompt)
 
     def test_infer_whu_metaersp_portal_from_resource_url(self):
         sys.path.insert(0, str(SRC))
@@ -100,14 +100,14 @@ class ConfigWizardTest(unittest.TestCase):
                 config = importlib.reload(config)
                 wizard = importlib.reload(wizard)
 
-                result = wizard.Wizard().configure_from_preset("交大")
+                result = wizard.Wizard().configure_from_preset("SJTU")
                 saved = Path(result["path"])
 
                 self.assertEqual(saved.parent, Path(tmp))
                 self.assertTrue(saved.exists())
                 self.assertEqual(saved.stat().st_mode & 0o777, 0o600)
                 data = json.loads(saved.read_text(encoding="utf-8"))
-                self.assertEqual(data["school"]["name"], "上海交通大学")
+                self.assertEqual(data["school"]["name"], "Shanghai Jiao Tong University")
                 self.assertEqual(data["auth"]["sso_domain"], "jaccount.sjtu.edu.cn")
                 self.assertEqual(data["auth"]["carsi_entry"], "https://jaccount.sjtu.edu.cn/")
             finally:
@@ -121,7 +121,7 @@ class ConfigWizardTest(unittest.TestCase):
         try:
             schools_loader = importlib.import_module("schools_loader")
             schools_loader = importlib.reload(schools_loader)
-            preset = schools_loader.match_school("上海交通大学")
+            preset = schools_loader.match_school("Shanghai Jiao Tong University")
         finally:
             if str(SRC) in sys.path:
                 sys.path.remove(str(SRC))
@@ -142,7 +142,7 @@ class ConfigWizardTest(unittest.TestCase):
             )
 
         self.assertEqual(result.returncode, 2)
-        self.assertIn("尚未配置", result.stdout)
+        self.assertIn("Not configured yet", result.stdout)
 
     def test_cli_url_configures_from_resource_entry(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -185,7 +185,7 @@ class ConfigWizardTest(unittest.TestCase):
             env = os.environ.copy()
             env["LIT_DL_CONFIG_DIR"] = tmp
             preset = subprocess.run(
-                [sys.executable, str(SCRIPT), "preset", "交大"],
+                [sys.executable, str(SCRIPT), "preset", "SJTU"],
                 cwd=ROOT,
                 env=env,
                 text=True,

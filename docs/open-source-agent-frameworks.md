@@ -1,8 +1,8 @@
-# OpenClaw / OpenCode / Hermes 接入教程
+# OpenClaw / OpenCode / Hermes Integration Guide
 
-`nature-skills` 的核心单元是完整的技能目录，而不是单个 `SKILL.md` 文件。接入 OpenClaw、OpenCode、Hermes 这类开源 agent 框架时，推荐先保留一个稳定的本地仓库 clone，再让目标框架扫描或引用 `skills/` 下的完整目录。
+The core unit in `nature-skills` is a complete skill directory, not a standalone `SKILL.md` file. For open-source agent frameworks such as OpenClaw, OpenCode, and Hermes, keep a stable local clone of this repository and let the target framework scan or reference complete directories under `skills/`.
 
-## 通用准备
+## Common Setup
 
 ```bash
 mkdir -p ~/ai-skills
@@ -10,28 +10,28 @@ cd ~/ai-skills
 git clone https://github.com/Yuan1z0825/nature-skills.git
 ```
 
-后续更新：
+To update later:
 
 ```bash
 cd ~/ai-skills/nature-skills
 git pull
 ```
 
-关键规则：
+Rules:
 
-1. 保留完整技能目录，例如 `skills/nature-reader/`，不要只复制 `SKILL.md`。
-2. 如果技能引用共享文件，保留同级的 `skills/_shared/`。
-3. 涉及脚本、MCP 服务或 API 的技能仍需要按技能 README 配置依赖、环境变量和本机凭据。
+1. Keep the complete skill directory, such as `skills/nature-reader/`; do not copy only `SKILL.md`.
+2. Keep sibling shared content in `skills/_shared/` when a skill references it.
+3. Skills that use scripts, MCP services, or APIs still require their own dependencies, environment variables, and local credentials.
 
 ## OpenClaw
 
-OpenClaw 的 workspace skill 目录通常是：
+OpenClaw workspace skills usually live at:
 
 ```text
 ~/.openclaw/workspace/skills/<skill>/SKILL.md
 ```
 
-推荐用符号链接指向稳定 clone，这样后续 `git pull` 后不需要重复复制：
+Use symlinks to point OpenClaw at the stable clone:
 
 ```bash
 mkdir -p ~/.openclaw/workspace/skills
@@ -39,25 +39,25 @@ ln -s ~/ai-skills/nature-skills/skills/nature-reader ~/.openclaw/workspace/skill
 ln -s ~/ai-skills/nature-skills/skills/_shared ~/.openclaw/workspace/skills/_shared
 ```
 
-如果要接入多个技能，继续为每个 `nature-*` 目录创建链接即可：
+Add more skills by linking more `nature-*` directories:
 
 ```bash
 ln -s ~/ai-skills/nature-skills/skills/nature-polishing ~/.openclaw/workspace/skills/nature-polishing
 ln -s ~/ai-skills/nature-skills/skills/nature-writing ~/.openclaw/workspace/skills/nature-writing
 ```
 
-如果你的系统或同步盘不适合使用符号链接，也可以复制完整目录：
+If symlinks are inconvenient, copy the full directories instead:
 
 ```bash
 cp -R ~/ai-skills/nature-skills/skills/nature-reader ~/.openclaw/workspace/skills/
 cp -R ~/ai-skills/nature-skills/skills/_shared ~/.openclaw/workspace/skills/
 ```
 
-复制方式需要在仓库更新后重新复制对应目录。
+When using copy-based installation, copy the directories again after repository updates.
 
 ## OpenCode
 
-OpenCode 可以从项目或全局的 `.agents/skills/**/SKILL.md` 发现 skills。想让所有项目都能用，可以放到全局目录：
+OpenCode can discover skills from project or global `.agents/skills/**/SKILL.md` directories. For global use:
 
 ```bash
 mkdir -p ~/.agents/skills
@@ -66,7 +66,7 @@ ln -s ~/ai-skills/nature-skills/skills/nature-polishing ~/.agents/skills/nature-
 ln -s ~/ai-skills/nature-skills/skills/_shared ~/.agents/skills/_shared
 ```
 
-只想让某个项目使用时，在项目根目录放到 `.agents/skills/`：
+For a single project, place the links under that project's `.agents/skills/`:
 
 ```bash
 cd /path/to/your/project
@@ -75,7 +75,7 @@ ln -s ~/ai-skills/nature-skills/skills/nature-reader .agents/skills/nature-reade
 ln -s ~/ai-skills/nature-skills/skills/_shared .agents/skills/_shared
 ```
 
-较新的 OpenCode 配置也可以在 `opencode.json` 或 `opencode.jsonc` 中声明额外 skills 路径：
+Newer OpenCode configs can also declare an additional skills path in `opencode.json` or `opencode.jsonc`:
 
 ```json
 {
@@ -84,7 +84,7 @@ ln -s ~/ai-skills/nature-skills/skills/_shared .agents/skills/_shared
 }
 ```
 
-如果你使用的是旧版 OpenCode，配置可能仍是下面这种结构：
+Older OpenCode versions may still use this shape:
 
 ```json
 {
@@ -94,21 +94,21 @@ ln -s ~/ai-skills/nature-skills/skills/_shared .agents/skills/_shared
 }
 ```
 
-启动 OpenCode 后，可以先让它列出或使用某个技能，例如：
+After starting OpenCode, ask it to use a skill explicitly:
 
 ```text
-Use the nature-reader skill to turn this paper into a Chinese-English Markdown reader.
+Use the nature-reader skill to turn this paper into a structured Markdown reader.
 ```
 
 ## Hermes
 
-Hermes 的默认技能目录是：
+Hermes stores local skills under:
 
 ```text
 ~/.hermes/skills/
 ```
 
-推荐方式是在 `~/.hermes/config.yaml` 中把 `nature-skills` 的 `skills/` 目录声明为外部技能目录：
+The recommended approach is to add the `nature-skills` `skills/` directory as an external skill directory in `~/.hermes/config.yaml`:
 
 ```yaml
 skills:
@@ -116,13 +116,13 @@ skills:
     - ~/ai-skills/nature-skills/skills
 ```
 
-这样 Hermes 可以直接发现 `nature-reader`、`nature-polishing`、`nature-writing` 等技能，并通过 slash command 使用：
+Hermes can then discover skills such as `nature-reader`, `nature-polishing`, and `nature-writing`, and use them as slash commands:
 
 ```text
-/nature-reader 把这篇论文做成中英文对照 Markdown reader。
+/nature-reader Turn this paper into a structured Markdown reader.
 ```
 
-如果你不想让 Hermes 直接扫描外部仓库，也可以复制到 Hermes 自己的目录：
+If you do not want Hermes to scan the external repository directly, copy selected skills into Hermes' own directory:
 
 ```bash
 mkdir -p ~/.hermes/skills/research
@@ -131,23 +131,23 @@ cp -R ~/ai-skills/nature-skills/skills/nature-polishing ~/.hermes/skills/researc
 cp -R ~/ai-skills/nature-skills/skills/_shared ~/.hermes/skills/research/_shared
 ```
 
-需要注意：Hermes 的外部技能目录不是只读保护边界。如果你允许 Hermes 修改技能，且外部目录对 Hermes 可写，它可能会原地修改该目录中的文件。团队共享或上游仓库 clone 建议保持只读，或者复制到 `~/.hermes/skills/` 后再使用。
+Note that Hermes external skill directories are not a read-only protection boundary. If the external directory is writable by Hermes and you allow skill edits, Hermes may modify files in place. For shared team directories or upstream clones, keep them read-only or copy selected skills into `~/.hermes/skills/`.
 
-## 推荐的最小组合
+## Suggested Starter Set
 
-刚开始不需要一次性接入全部技能。推荐先接入：
+You do not need to install every skill at first. A practical starter set is:
 
-| 任务 | 推荐技能 |
+| Task | Recommended skill |
 | --- | --- |
-| 读论文、翻译、图文对应 | `nature-reader` |
-| 论文润色、英文表达 | `nature-polishing` |
-| 写摘要、引言、讨论 | `nature-writing` |
-| 预审稿、模拟 reviewer | `nature-reviewer` |
-| 返修、cover letter、审稿意见回复 | `nature-response` |
-| 科研图、论文示意图 | `nature-figure` |
-| 文献检索、严格他引、引用者画像 | `nature-academic-search` |
+| Paper reading, figure-text alignment, and source-grounded notes | `nature-reader` |
+| Manuscript polishing and English academic expression | `nature-polishing` |
+| Abstract, introduction, and discussion drafting | `nature-writing` |
+| Pre-submission reviewer simulation | `nature-reviewer` |
+| Revision response, cover letter, reviewer replies | `nature-response` |
+| Scientific figures and manuscript schematics | `nature-figure` |
+| Literature search, strict self-citation audit, citer profiling | `nature-academic-search` |
 
-如果要一次性链接全部 `nature-*` 技能到某个目录，可以用：
+To link every `nature-*` skill into one directory:
 
 ```bash
 mkdir -p ~/.agents/skills
@@ -157,4 +157,4 @@ done
 ln -s ~/ai-skills/nature-skills/skills/_shared ~/.agents/skills/_shared
 ```
 
-这个示例以 OpenCode 的全局 `.agents/skills` 目录为例。用于 OpenClaw 时，把目标目录换成 `~/.openclaw/workspace/skills`；用于 Hermes 时，优先使用 `external_dirs`。
+This example uses OpenCode's global `.agents/skills` directory. For OpenClaw, replace the target with `~/.openclaw/workspace/skills`; for Hermes, prefer `external_dirs`.

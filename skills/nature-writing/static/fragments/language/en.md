@@ -1,6 +1,6 @@
 # Language: English source (writing)
 
-When the source notes are already in English, default to standard scientific-English drafting conventions.
+Default to standard scientific-English drafting conventions.
 
 ## Sentence rules
 

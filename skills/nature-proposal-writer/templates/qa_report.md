@@ -8,18 +8,17 @@
 
 | Dimension | Score | Notes |
 |---|---:|---|
-| 研究问题清晰度 |  |  |
-| 科学张力 |  |  |
-| 证据匹配 |  |  |
-| 逻辑链 |  |  |
-| 方法可行性 |  |  |
-| 创新性 |  |  |
-| 风险边界 |  |  |
-| 语言质量 |  |  |
+| Research Question Clarity |  |  |
+| Scientific Tension |  |  |
+| Evidence Alignment |  |  |
+| Logical Chain |  |  |
+| Method Feasibility |  |  |
+| Innovation |  |  |
+| Risk Boundaries |  |  |
+| Language Quality |  |  |
 
 ## Main risks
 
 ## Required fixes
 
 ## Recommendation
-

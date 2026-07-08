@@ -30,16 +30,15 @@ NS = {
 }
 
 AI_PATTERNS = [
-    ("一句话总结", re.compile(r"一句话总结")),
-    ("最有价值的后续方向", re.compile(r"最有价值的后续方向")),
-    ("不是……而是……", re.compile(r"不是.{0,18}而是")),
-    ("不只是……更是……", re.compile(r"不只是.{0,18}更是")),
-    ("值得注意的是", re.compile(r"值得注意的是")),
-    ("总的来说", re.compile(r"总的来说")),
-    ("从某种意义上", re.compile(r"从某种意义上")),
-    ("提供了新的视角", re.compile(r"提供.{0,8}新的视角")),
-    ("具有重要意义", re.compile(r"具有重要意义")),
-    ("未来可以进一步探索", re.compile(r"未来可以进一步探索")),
+    ("In summary", re.compile(r"\bIn summary\b", re.IGNORECASE)),
+    ("Most valuable future direction", re.compile(r"\bMost valuable future direction\b", re.IGNORECASE)),
+    ("Not just X, but Y", re.compile(r"\bNot just .* but also\b", re.IGNORECASE)),
+    ("It is worth noting that", re.compile(r"\bIt is worth noting that\b", re.IGNORECASE)),
+    ("Overall", re.compile(r"\bOverall,\b", re.IGNORECASE)),
+    ("In a sense", re.compile(r"\bIn a sense\b", re.IGNORECASE)),
+    ("Provides a new perspective", re.compile(r"\bProvides a new perspective\b", re.IGNORECASE)),
+    ("Of great significance", re.compile(r"\bOf great significance\b", re.IGNORECASE)),
+    ("Can be further explored in the future", re.compile(r"\bCan be further explored in the future\b", re.IGNORECASE)),
 ]
 
 

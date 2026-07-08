@@ -1,8 +1,8 @@
 # Evaluation rubric
 
-Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in materials/chemistry/engineering domains.
+Score each dimension 0-10. Anchors below are for academic research proposals in materials/chemistry/engineering domains.
 
-## 1. 研究问题清晰度 — Does the text clearly state the problem?
+## 1. Research Question Clarity — Does the text clearly state the problem?
 
 | Score | Anchor |
 |---|---|
@@ -11,9 +11,9 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 | 7 | Question stated explicitly, but embedded in background section rather than standing alone. |
 | 9 | Question stated in a dedicated section; precise and falsifiable. |
 
-**Common fix**: Extract the core question into a standalone "科学问题" paragraph or section.
+**Common fix**: Extract the core question into a standalone "Research Question" paragraph or section.
 
-## 2. 科学张力 — Known → unknown → why the gap matters
+## 2. Scientific Tension — Known → unknown → why the gap matters
 
 | Score | Anchor |
 |---|---|
@@ -22,7 +22,7 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 | 7 | Gap clearly stated with partial motivation; the consequence of filling the gap is implied but not explicit. |
 | 9 | Gap is a genuine contradiction or engineering constraint (e.g., "lowering melting point with ZnCl2 breaks the existing Mg purification path"). Reader feels the tension. |
 
-## 3. 证据匹配 — Claims backed, hypotheses flagged
+## 3. Evidence Alignment — Claims backed, hypotheses flagged
 
 | Score | Anchor |
 |---|---|
@@ -33,7 +33,7 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 
 **Red flags**: simulation/model results reported to 3+ significant figures; figure data cited without acknowledging it needs experimental verification.
 
-## 4. 逻辑链 — Background → gap → question → objectives → methods → outcomes
+## 4. Logical Chain — Background → gap → question → objectives → methods → outcomes
 
 | Score | Anchor |
 |---|---|
@@ -42,7 +42,7 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 | 7 | Chain is coherent end-to-end. At least one sub-chain is exceptionally tight (e.g., a specific problem → a specific method designed to address it). |
 | 9 | Every objective maps to a method, every method to an expected outcome. No orphaned objectives or untethered methods. |
 
-## 5. 方法可行性 — Concrete enough to reproduce or challenge
+## 5. Method Feasibility — Concrete enough to reproduce or challenge
 
 | Score | Anchor |
 |---|---|
@@ -53,7 +53,7 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 
 **Common pitfall**: "take sample, then add metal coupon, then re-heat" — if atmosphere control during the intermediate step is not described, flag it.
 
-## 6. 创新性 — Specific contribution, not slogan
+## 6. Innovation — Specific contribution, not slogan
 
 | Score | Anchor |
 |---|---|
@@ -62,7 +62,7 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 | 7 | Contribution is specific and motivated (e.g., "establishing whether Zn/ZnO can replace Mg as purifier in a quaternary chloride system"). Innovation is implicit in the argument chain rather than listed as bullet points. |
 | 9 | Contribution is explicit, specific, and novel enough that a reviewer can immediately place it relative to the literature. |
 
-## 7. 风险边界 — Uncertainty, alternatives, and limitations acknowledged
+## 7. Risk Boundaries — Uncertainty, alternatives, and limitations acknowledged
 
 | Score | Anchor |
 |---|---|
@@ -71,11 +71,11 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 | 7 | Conditional outcome logic present ("if X, then Y; if not, then Z"). Backup paths identified for key uncertain steps. |
 | 9 | Decision tree for major uncertainties; explicit "if all candidates fail" fallback; abnormal-condition handling protocol described. |
 
-## 8. 语言质量 — Clear, non-template, free of unsupported intensifiers
+## 8. Language Quality — Clear, non-template, free of unsupported intensifiers
 
 | Score | Anchor |
 |---|---|
-| 3 | Dense anti-patterns: 具有重要意义, 填补空白, 显著, 系统, 首先/其次/再次 scaffolding, background too broad. |
+| 3 | Dense anti-patterns: "of great significance", "filling the gap", "significantly", "systematically", rigid first/second/third scaffolding, background too broad. |
 | 5 | Some anti-patterns present; sentences overly long (>100 characters); expected-outcomes section bloated relative to methods. |
 | 7 | Minimal anti-patterns. Literature citations contextualized, not listed. Long sentences exist but are readable. |
 | 9 | No detectable anti-patterns. Prose is efficient, precise, and domain-appropriate. |
@@ -91,10 +91,10 @@ Score each dimension 0-10. Anchors below are for Chinese doctoral proposals in m
 ## Thresholds
 
 ```text
-< 6.0    不可交付，必须重构
-6.0-7.0  内部草稿
-7.0-8.0  可给导师看
-> 8.0    正式版本打磨
+< 6.0    Not deliverable; must refactor
+6.0-7.0  Internal draft
+7.0-8.0  Supervisor-ready draft
+> 8.0    Ready for final polish
 ```
 
 Stage thresholds:

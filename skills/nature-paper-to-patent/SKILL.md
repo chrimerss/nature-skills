@@ -1,9 +1,9 @@
 ---
 name: nature-paper-to-patent
-description: Convert scientific papers, theses, technical reports, source code, figures, or research manuscripts into evidence-grounded Chinese invention patent drafts. Use when an AI agent must extract patentable technical contributions, map every claimed feature to source evidence, preserve core formulas as editable Office Math, generate claim-aligned flowcharts and methodology figures, compare a paper with an existing patent, audit support and consistency, or deliver separate Chinese DOCX files for claims, specification, abstract, and abstract figure.
+description: Convert scientific papers, theses, technical reports, source code, figures, or research manuscripts into evidence-grounded invention patent drafts. Use when an AI agent must extract patentable technical contributions, map every claimed feature to source evidence, preserve core formulas as editable Office Math, generate claim-aligned flowcharts and methodology figures, compare a paper with an existing patent, audit support and consistency, or deliver separate DOCX files for claims, specification, abstract, and abstract figure.
 ---
 
-# Paper to Chinese Patent
+# Paper to Patent
 
 Use this file as the router for the patent-drafting workflow. Do not draft the
 application directly from the paper abstract or contribution list.
@@ -49,15 +49,14 @@ concept pass their gates.
 For a full application, draft claims first, then align the specification,
 figures, embodiments, and abstract to the claim terminology and step order.
 
-## 4. Produce Chinese formal documents
+## 4. Produce formal documents
 
-Agent-facing analysis may use the user's preferred language. Produce formal
-Chinese patent deliverables in Chinese:
+Agent-facing analysis and formal patent deliverables must be produced in English:
 
-- 权利要求书;
-- 说明书;
-- 说明书摘要;
-- 摘要附图;
+- Claims;
+- Specification;
+- Abstract;
+- Abstract drawings;
 - figure labels and descriptions.
 
 For algorithmic inventions, retain source-supported core formulas, define every

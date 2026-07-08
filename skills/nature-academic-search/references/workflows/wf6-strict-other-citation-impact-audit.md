@@ -5,11 +5,11 @@ other-citations from self/team citations, build article-level citation metric
 tables, identify high-profile independent citers, and extract how those citers
 discuss the target paper.
 
-**Use when the user asks:** `严格他引`, `他引判定`, `排除自引`,
-`谁引用了我的文章`, `引用我的文章的人有没有大牛`, `院士引用`,
-`杰青引用`, `长江学者引用`, `Fellow citation`, `influential citer`,
-`citation context`, `文章引用表`, `指定文章引用数`, `严格他引数`,
-`整理成表格`, or similar citation-impact questions.
+**Use when the user asks:** `strict independent citation`, `independent citation audit`, `self-citation exclusion`,
+`who cited my paper`, `high-profile citers`, `academy member citations`,
+`talent awardee citations`, `institutional leader citations`, `Fellow citation`, `influential citer`,
+`citation context`, `article citation table`, `article citation count`, `strict independent citation count`,
+`compile into table`, or similar citation-impact questions.
 
 **Uses:**
 - [Search Strategy](../search-strategy.md) — construct title/DOI/cited-by queries.
@@ -29,7 +29,7 @@ unless the evidence supports it.
 | `collaborator_or_affiliation_overlap` | No direct author overlap, but there is a same-institution, same-center, advisor/student, project, or recent coauthorship tie strong enough to make strict independence doubtful. |
 | `unknown_metadata` | Metadata is insufficient to classify independence. |
 
-For `严格他引`, the default bar is stricter than a simple non-self-citation:
+For strict independent citations, the default bar is stricter than a simple non-self-citation:
 exclude direct self-citations, same-team citations, and obvious close
 collaboration-network citations. If the user wants a looser bibliometric
 definition, state the changed rule explicitly.
@@ -84,9 +84,9 @@ definition, state the changed rule explicitly.
         Google Scholar;
      4. news, personal pages, or third-party biographies only as secondary
         support.
-   - Recognized profile signals include academy member / 院士, university
+   - Recognized profile signals include academy member, university
      president or vice president, dean or department chair, national talent
-     awards such as 杰青 / 长江学者 / 优青, society fellow status such as IEEE
+     awards (such as national distinguished young scholars), society fellow status such as IEEE
      Fellow / AAAS Fellow / RSC Fellow / ASCE Fellow, highly cited researcher
      status, major editor roles, or clearly field-leading citation/profile
      evidence.
@@ -107,7 +107,7 @@ definition, state the changed rule explicitly.
 7. **Generate the audit report.**
    - Start with coverage and limitations.
    - Separate high-profile independent citers from ordinary citing papers.
-   - Keep every identity claim tied to evidence. Unsupported "大牛" labels are
+   - Keep every identity claim tied to evidence. Unsupported "field leader" labels are
      not allowed.
 
 ## Article Summary Table Mode
@@ -157,21 +157,13 @@ for a different schema:
 |  |  |  |  |  |  |  |  |
 ```
 
-For Chinese outputs, use this header:
-
-```markdown
-| 文章名 | 发表时间 | 作者名 | 作者机构 | 引用数 | 严格他引数 | DOI | 证据 / 备注 |
-|---|---|---|---|---:|---:|---|---|
-|  |  |  |  |  |  |  |  |
-```
-
 Always include a short source note after the table:
 
 ```text
-计数来源：
-- 引用数来源：
-- 严格他引判定来源：
-- 未覆盖或无法访问的来源：
+Source notes:
+- Citation count source:
+- Strict other-citation verification source:
+- Uncovered or inaccessible sources:
 ```
 
 ## Output Format
@@ -221,12 +213,12 @@ Evidence gaps / next checks
 
 ## Red Lines
 
-- Do not call someone an academy member, fellow, dean, president, 杰青, 长江学者,
-  or similar without evidence for the same person.
+- Do not call someone an academy member, fellow, dean, president, or distinguished scholar
+  without evidence for the same person.
 - Do not treat same-name matches as identity matches without affiliation or
   author-ID support.
 - Do not treat citation count or h-index alone as proof that the citer is a
-  "大牛"; present it as bibliometric context only.
+  "field leader"; present it as bibliometric context only.
 - Do not infer citation context from abstracts, titles, or reference-list
   presence when full text is unavailable.
 - Do not hide source coverage limits. If Scopus/WoS/Semantic Scholar/OpenAlex

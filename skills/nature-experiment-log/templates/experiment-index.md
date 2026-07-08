@@ -1,23 +1,23 @@
-# 实验索引
+# Experiment Index
 
-Dataview 查询入口，自动汇总所有实验日志。
+Dataview query dashboard that automatically summarizes all experiment logs.
 
 ```dataview
 TABLE date, salt_system, exp_type, material, anomaly
-FROM "实验日志"
+FROM "Experiment-Logs"
 WHERE exp_id
 SORT date DESC
 ```
 
-## 使用
+## Usage
 
-1. 将此文件放在 vault 的 `实验日志/` 目录下
-2. 确保所有日志文件包含 YAML frontmatter（`exp_id`, `date`, `salt_system`, `exp_type` 等字段）
-3. Obsidian 打开此文件即可看到交互式实验列表
+1. Place this file in your vault's `Experiment-Logs/` directory.
+2. Ensure all log files contain YAML frontmatter (fields like `exp_id`, `date`, `salt_system`, `exp_type`).
+3. Open this file in Obsidian to view an interactive list of experiments.
 
-## 自定义
+## Customization
 
-按你的实验体系调整查询字段。常见扩展：
-- 按体系筛选：`WHERE salt_system = "氯盐"`
-- 按异常筛选：`WHERE anomaly = true`
-- 按日期范围：`WHERE date >= date(2026-01-01)`
+Adjust query fields according to your research systems. Common extensions:
+- Filter by system: `WHERE salt_system = "Chloride"`
+- Filter by anomaly: `WHERE anomaly = true`
+- Filter by date range: `WHERE date >= date(2026-01-01)`

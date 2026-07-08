@@ -6,15 +6,15 @@ Include source information:
 
 - title slide: paper title, authors if useful, journal/preprint server, year, DOI if available,
 - figure slides: small labels such as `Source: Fig. 2b, Nature, 2024`,
-- adapted or redrawn content: label as `整理自` or `改绘自`,
+- adapted or redrawn content: label as `Adapted from` or `Redrawn from`,
 - do not remove original figure labels or alter scientific data.
 
 ## Output files
 
 Generate a minimal but complete output package by default.
 
-### 1. `output/final_presentation_cn.pptx`
-The main deliverable: a complete Chinese PPTX deck with figures, captions, takeaways, source labels, and speaker notes.
+### 1. `output/final_presentation.pptx`
+The main deliverable: a complete PPTX deck with figures, captions, takeaways, source labels, and speaker notes.
 
 ### 2. `output/qa_report.md`
 A short quality report: PPTX creation status; slide count; figures inserted; missing or placeholder figures; figure-crop QA results; alignment checks; de-template language scan; self-review defects found, grouped by severity; defects corrected during the revision pass; text overflow and text-fit checks performed; design-rhythm / anti-template review performed; verification method used after revision; known limitations; manual follow-up if needed.
@@ -30,9 +30,9 @@ If no external figure/table assets are extracted, omit `asset_manifest.md` or wr
 ### Optional files
 Create these only when useful for review, debugging, or user-requested traceability, and skip them by default unless they materially reduce back-and-forth:
 
-- `output/ppt_outline_cn.md` — Chinese outline: paper information, paper type, central argument, slide structure, slide purpose.
-- `output/figure_plan.md` — figure selection plan: figure / panel, what it shows, why it matters, recommended slide, Chinese caption, interpretation.
-- `output/ppt_script_cn_with_figures.md` — slide-by-slide script (Purpose / Layout / On-slide bullets / Figure-Table / Chinese caption / Core takeaway / Speaker note per slide).
+- `output/ppt_outline.md` — outline: paper information, paper type, central argument, slide structure, slide purpose.
+- `output/figure_plan.md` — figure selection plan: figure / panel, what it shows, why it matters, recommended slide, caption, interpretation.
+- `output/ppt_script_with_figures.md` — slide-by-slide script (Purpose / Layout / On-slide bullets / Figure-Table / caption / Core takeaway / Speaker note per slide).
 - `output/rendered/` — rendered slide previews only when a reliable headless renderer is available or the user requests visual QA.
 
 ## Quality rules
@@ -48,7 +48,7 @@ Create these only when useful for review, debugging, or user-requested traceabil
 - Ensure text, captions, and figures do not overlap.
 - Ensure font hierarchy is consistent across slides and that figures, captions, source labels, and metrics feel visually related rather than independently placed.
 - Ensure layout alignment is intentional: repeated title blocks, figure edges, caption/source strips, and bottom notes should share stable guides rather than drifting by a few points.
-- Ensure Chinese expression is academic and source-specific; remove obvious AI-template phrases and repetitive slogan patterns.
+- Ensure academic expression is source-specific; remove obvious AI-template phrases and repetitive slogan patterns.
 - Ensure the visual rhythm does not feel like a repeated AI template; vary composition based on evidence role and figure geometry.
 - Ensure the deck is not visually underfilled: empty regions should be intentional whitespace, not leftover template space.
 - Run at least one self-review and corrective revision pass; do not deliver a first draft with known high-severity defects.

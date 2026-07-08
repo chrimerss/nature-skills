@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run deterministic structural checks on Chinese patent claims."""
+"""Run deterministic structural checks on patent claims."""
 
 import argparse
 import json
@@ -8,13 +8,14 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-CLAIM_START = re.compile(r"(?m)^\s*(\d+)\s*[.、．]\s*")
+CLAIM_START = re.compile(r"(?m)^\s*(\d+)\s*\.\s*")
 REFERENCE = re.compile(
-    r"权利要求\s*(\d+)(?:\s*[-—~～至]\s*(\d+))?"
-    r"|权利要求\s*(\d+)\s*(?:或|、)\s*(\d+)"
+    r"claim\s*(\d+)(?:\s*(?:to|-|through)\s*(\d+))?"
+    r"|claim\s*(\d+)\s*(?:or|,|and)\s*(\d+)",
+    re.IGNORECASE,
 )
-TERM_INTRO = re.compile(r"(?:所述|该)([\u4e00-\u9fffA-Za-z][\u4e00-\u9fffA-Za-z0-9_-]{1,20})")
-PLACEHOLDER = re.compile(r"\[(?:TO CONFIRM|待确认)[^\]]*\]", re.IGNORECASE)
+TERM_INTRO = re.compile(r"(?:said|the)\s+([a-zA-Z][a-zA-Z0-9_-]{1,30})", re.IGNORECASE)
+PLACEHOLDER = re.compile(r"\[TO CONFIRM[^\]]*\]", re.IGNORECASE)
 
 
 @dataclass
@@ -47,20 +48,20 @@ def references(body: str) -> list[int]:
 
 
 def normalize(text: str) -> str:
-    return re.sub(r"\s+", "", text)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def audit(text: str) -> list[Finding]:
     claims = split_claims(text)
     findings = []
     if not claims:
-        return [Finding("ERROR", None, "NO_CLAIMS", "未识别到以“1.”形式起始的权利要求。")]
+        return [Finding("ERROR", None, "NO_CLAIMS", "No claims starting with '1.' detected.")]
 
     numbers = [number for number, _ in claims]
     expected = list(range(1, len(claims) + 1))
     if numbers != expected:
         findings.append(
-            Finding("ERROR", None, "NUMBER_SEQUENCE", f"编号应连续为{expected}，实际为{numbers}。")
+            Finding("ERROR", None, "NUMBER_SEQUENCE", f"Claim numbers should be consecutive {expected}, found {numbers}.")
         )
 
     previous_text = ""
@@ -71,59 +72,60 @@ def audit(text: str) -> list[Finding]:
         refs = references(body)
 
         if not body:
-            findings.append(Finding("ERROR", number, "EMPTY", "权利要求正文为空。"))
+            findings.append(Finding("ERROR", number, "EMPTY", "Claim body is empty."))
             continue
         if PLACEHOLDER.search(body):
             findings.append(
-                Finding("ERROR", number, "PLACEHOLDER", "正式权利要求中仍含待确认标记。")
+                Finding("ERROR", number, "PLACEHOLDER", "Formal claims still contain confirmation placeholders.")
             )
         if number == 1 and refs:
             findings.append(
-                Finding("ERROR", number, "INDEPENDENT_REFERENCE", "权利要求1不应引用其他权利要求。")
+                Finding("ERROR", number, "INDEPENDENT_REFERENCE", "Claim 1 should not reference other claims.")
             )
         if number > 1 and not refs:
             findings.append(
-                Finding("WARNING", number, "NO_REFERENCE", "未检测到从属引用；确认其是否为独立权利要求。")
+                Finding("WARNING", number, "NO_REFERENCE", "No dependency reference detected; verify if this is intended as an independent claim.")
             )
         for ref in refs:
             if ref >= number:
                 findings.append(
-                    Finding("ERROR", number, "FORWARD_REFERENCE", f"引用了非在先权利要求{ref}。")
+                    Finding("ERROR", number, "FORWARD_REFERENCE", f"References a subsequent claim {ref}.")
                 )
             if ref not in claim_map:
                 findings.append(
-                    Finding("ERROR", number, "MISSING_REFERENCE", f"引用的权利要求{ref}不存在。")
+                    Finding("ERROR", number, "MISSING_REFERENCE", f"Referenced claim {ref} does not exist.")
                 )
 
-        if "其特征在于" not in compact:
+        if not re.search(r"(comprising|characterized in that|comprises|including|consisting of)", compact, re.IGNORECASE):
             findings.append(
-                Finding("WARNING", number, "TRANSITION", "未检测到“其特征在于”过渡语。")
+                Finding("WARNING", number, "TRANSITION", "No standard transition phrase ('comprising', 'characterized in that', etc.) detected.")
             )
         if len(compact) < 25:
             findings.append(
-                Finding("WARNING", number, "TOO_SHORT", "权利要求较短，确认是否完整限定技术方案。")
+                Finding("WARNING", number, "TOO_SHORT", "Claim is relatively short; verify that it completely defines the technical solution.")
             )
-        if re.search(r"(效果更好|性能优异|显著提高|大大提高|最佳|最优)", compact):
+        if re.search(r"\b(better|superior|significantly improved|greatly improved|best|optimal)\b", compact, re.IGNORECASE):
             findings.append(
-                Finding("WARNING", number, "RESULT_LANGUAGE", "含结果或宣传性措辞，确认是否改为技术限定。")
+                Finding("WARNING", number, "RESULT_LANGUAGE", "Contains promotional or result-only language; verify whether technical limitations should be used instead.")
             )
 
-        searchable_basis = previous_text + "".join(
+        searchable_basis = previous_text + " ".join(
             claim_map.get(ref, "") for ref in refs
         )
-        for term in sorted(set(TERM_INTRO.findall(body))):
-            if term in {"方法", "装置", "设备", "系统", "步骤", "程序"}:
+        for match in TERM_INTRO.finditer(body):
+            term = match.group(1).lower()
+            if term in {"method", "apparatus", "device", "system", "step", "program", "medium", "process", "invention"}:
                 continue
-            if term not in searchable_basis and compact.find(term) <= 4:
+            if term not in searchable_basis.lower() and compact.lower().find(term) <= 15:
                 findings.append(
                     Finding(
                         "WARNING",
                         number,
                         "ANTECEDENT_BASIS",
-                        f"术语“{term}”可能缺少清晰的前置基础。",
+                        f"Term '{term}' introduced with 'said/the' may lack clear antecedent basis.",
                     )
                 )
-        previous_text += compact
+        previous_text += " " + compact
 
     return findings
 
@@ -139,14 +141,14 @@ def main() -> int:
     if args.json:
         print(json.dumps([finding.__dict__ for finding in findings], ensure_ascii=False, indent=2))
     elif not findings:
-        print("PASS: 未发现结构性问题。")
+        print("PASS: No claim structural issues detected.")
     else:
         for finding in findings:
-            location = f"权利要求{finding.claim}" if finding.claim else "整体"
+            location = f"Claim {finding.claim}" if finding.claim else "Overall"
             print(f"{finding.level}\t{location}\t{finding.code}\t{finding.message}")
         errors = sum(finding.level == "ERROR" for finding in findings)
         warnings = sum(finding.level == "WARNING" for finding in findings)
-        print(f"\n汇总: {errors} 个错误, {warnings} 个警告")
+        print(f"\nSummary: {errors} error(s), {warnings} warning(s)")
 
     return 1 if any(finding.level == "ERROR" for finding in findings) else 0
 

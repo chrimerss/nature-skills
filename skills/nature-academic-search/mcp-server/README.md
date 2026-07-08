@@ -1,45 +1,45 @@
-# 统一学术搜索 MCP 服务器
+# Unified Academic Search MCP Server
 
-这是统一的学术搜索 MCP 服务器，整合 CrossRef、PubMed、arXiv、Scopus 和 ScienceDirect 数据源。
+This is the unified academic search MCP server, integrating CrossRef, PubMed, arXiv, Scopus, and ScienceDirect data sources.
 
-## 工具
+## Tools
 
-| 工具 | 功能 |
-|------|------|
-| `search_papers` | 统一搜索，支持多数据源并发 |
-| `get_paper_by_id` | 按 DOI、PMID 或 arXiv ID 获取详情 |
-| `get_citation` | 格式化引用，支持 APA、Nature、IEEE 等风格 |
-| `lookup_mesh` | MeSH 词表查询 |
-| `search_scopus` | Scopus 高级检索 |
-| `get_scopus_abstract` | Scopus 摘要与详情元数据 |
-| `get_scopus_citation_overview` | Scopus 引用概览 |
-| `search_scopus_authors` / `get_scopus_author` | 作者检索与详情 |
-| `search_scopus_affiliations` / `get_scopus_affiliation` | 机构检索与详情 |
-| `search_scopus_serial_titles` / `get_scopus_serial_title` | 期刊与连续出版物检索和详情 |
-| `get_scopus_plumx_metrics` | PlumX 指标 |
-| `search_sciencedirect` | ScienceDirect 检索 |
-| `get_sciencedirect_article_metadata` | ScienceDirect 文章元数据 |
+| Tool | Function |
+|------|----------|
+| `search_papers` | Unified search supporting concurrent queries across multiple sources |
+| `get_paper_by_id` | Fetch details by DOI, PMID, or arXiv ID |
+| `get_citation` | Formatted citation string supporting APA, Nature, IEEE, etc. |
+| `lookup_mesh` | MeSH vocabulary query |
+| `search_scopus` | Scopus advanced search |
+| `get_scopus_abstract` | Scopus abstract and detailed metadata |
+| `get_scopus_citation_overview` | Scopus citation overview |
+| `search_scopus_authors` / `get_scopus_author` | Author search and details |
+| `search_scopus_affiliations` / `get_scopus_affiliation` | Affiliation search and details |
+| `search_scopus_serial_titles` / `get_scopus_serial_title` | Journal and serial title search and details |
+| `get_scopus_plumx_metrics` | PlumX metrics |
+| `search_sciencedirect` | ScienceDirect search |
+| `get_sciencedirect_article_metadata` | ScienceDirect article metadata |
 
-## 配置
+## Configuration
 
-环境变量：
+Environment variables:
 
-- `PUBMED_EMAIL`：必填，NCBI 要求。
-- `NCBI_API_KEY`：可选，用于提升速率限制。
-- Elsevier / Scopus / ScienceDirect：复用 `pybliometrics` 配置文件，默认位置为 `~/.config/pybliometrics.cfg`。
+- `PUBMED_EMAIL`: Required by NCBI.
+- `NCBI_API_KEY`: Optional, used to increase rate limits.
+- Elsevier / Scopus / ScienceDirect: Reuses `pybliometrics` configuration files, located by default at `~/.config/pybliometrics.cfg`.
 
-`search_papers` 默认检索 CrossRef、PubMed 和 arXiv。Scopus / ScienceDirect 是可选 provider：只有在 `sources` 显式传入 `scopus` / `sciencedirect`，或调用专用 Scopus / ScienceDirect 工具时，才会访问 Elsevier API。
+`search_papers` queries CrossRef, PubMed, and arXiv by default. Scopus / ScienceDirect are optional providers: the Elsevier API is only accessed when `scopus` / `sciencedirect` is explicitly passed in `sources` or when dedicated Scopus / ScienceDirect tools are invoked.
 
-这样可以避免默认搜索无意消耗 Elsevier API 配额；若本机缺少 `pybliometrics` 配置，会在返回 JSON 的 `errors` 字段中给出对应数据源错误。
+This prevents default searches from unintentionally consuming Elsevier API quotas; if local `pybliometrics` configuration is missing, an error for that specific data source will be returned in the JSON `errors` field.
 
-配置文件：`config.toml`
+Configuration file: `config.toml`
 
-## 使用
+## Usage
 
-插件会通过以下形式启动隔离运行环境：
+The plugin launches an isolated execution environment via:
 
 ```bash
 uv run --no-project --directory <mcp-server> --with ... python academic_search_server.py
 ```
 
-这些工具由 `academic-search` skill 调用。
+These tools are invoked by the `academic-search` skill.

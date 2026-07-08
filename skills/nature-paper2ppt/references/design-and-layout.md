@@ -21,9 +21,9 @@ Do not create the whole deck from one generic layout family. If the plan shows r
 Write for the slide, not for the manuscript. Most explanation belongs in speaker notes. Use these default limits unless a user-provided template clearly supports more:
 
 - title: one line preferred; two lines allowed only when the slide still has enough vertical space,
-- normal slide: 2-3 bullets, each no more than about 18 Chinese characters or 8-10 English words,
+- normal slide: 2-3 bullets, each no more than about 8-12 words,
 - result slide: 1 short interpretation sentence plus at most 2 compact callouts,
-- card body: 1 sentence, usually no more than 24 Chinese characters,
+- card body: 1 sentence, usually no more than 15-20 words,
 - metric label: 1 line whenever possible,
 - source label: small and short; do not let source text compete with the figure.
 
@@ -68,7 +68,7 @@ Use these defaults unless the source strongly suggests otherwise:
 
 ## Title writing rule
 
-Use conclusion-style titles whenever possible. A good title states the slide's point, not just its topic. Prefer "PathAgent 主动识别信息不足并补充证据" over labels like "Case Study" or "Figure 3".
+Use conclusion-style titles whenever possible. A good title states the slide's point, not just its topic. Prefer "PathAgent actively identifies information gaps and retrieves supplementary evidence" over labels like "Case Study" or "Figure 3".
 
 ## Visual density rule
 
@@ -81,7 +81,7 @@ When authoring with python-pptx or similar tooling:
 - Treat automatic text shrinking (`fit_text` or equivalent) as a last resort, not the layout strategy. It can fail silently, behave differently across platforms, or make text too small.
 - Prefer writing shorter text, increasing the text box, or splitting the slide.
 - Use explicit line breaks for known long phrases, model names, and metric labels.
-- Keep text box margins conservative; avoid tiny text boxes with long Chinese-English mixed strings.
+- Keep text box margins conservative; avoid tiny text boxes with long text strings.
 - If using auto-fit, still verify the rendered or estimated text size and document the fallback.
 - Never accept a slide where text is expected to overflow, be clipped, or require manual resizing by the user.
 
@@ -107,33 +107,30 @@ Before final delivery, inspect every result slide for:
 
 Use `scripts/audit_pptx_quality.py` after deck generation to catch shape bounds, repeated near-miss alignment, and text overload. The script is not a substitute for visual review, but any high-severity finding should trigger revision.
 
-## Chinese academic expression and de-template rules
+## Academic expression and de-template rules
 
-Write Chinese as if the presenter will say it aloud in a serious group meeting. Use source-specific claims and concrete evidence. Avoid slogans, meta-commentary, and common AI summary frames.
+Write slide text as if the presenter will say it aloud in a serious group meeting. Use source-specific claims and concrete evidence. Avoid slogans, meta-commentary, and common AI summary frames.
 
 Do not use these phrases in slide titles, takeaways, bullets, or speaker notes unless they appear verbatim in the source and are being quoted:
 
-- `一句话总结`
-- `最有价值的后续方向`
-- `不是……而是……`
-- `不只是……更是……`
-- `值得注意的是`
-- `总的来说`
-- `从某种意义上`
-- `提供了新的视角`
-- `具有重要意义`
-- `未来可以进一步探索`
+- `In summary`
+- `Most valuable future direction`
+- `Not just X, but Y`
+- `It is worth noting that`
+- `Overall`
+- `In a sense`
+- `Provides a new perspective`
+- `Of great significance`
+- `Can be further explored in the future`
 
 Replace template wording with evidence-bound language:
 
 ```text
-Weak: 一句话总结：该方法具有重要意义。
-Better: 该方法把检索、证据补全和答案生成拆成可审计流程，降低了遗漏关键文献的风险。
-```
+Weak: In summary: this method is of great significance.
+Better: On HotpotQA, retrieval-augmented generation improves exact match by 14.2%.
 
-```text
-Weak: 这不是简单的性能提升，而是范式转变。
-Better: 消融实验显示，主动检索模块主要提升了长尾问题的可回答率。
+Weak: This is not just a simple performance improvement, but a paradigm shift.
+Better: Ablation studies show the active retrieval module primarily improves answerability on long-tail questions.
 ```
 
 If a sentence sounds like it could fit any paper, rewrite it until it names the method, dataset, mechanism, figure evidence, or limitation from this paper.
@@ -142,7 +139,7 @@ If a sentence sounds like it could fit any paper, rewrite it until it names the 
 
 Use a restrained Nature-style academic presentation design: clean white or very light background; dark readable text; one or two muted accent colors; compact but not crowded layouts; figure-first result slides; concise captions; no decorative stock images; no decorative gradients; no exaggerated marketing-style section pages.
 
-Use Chinese suitable for oral academic reporting: avoid rigid translation; avoid long paragraphs; avoid jargon stacking; preserve technical terms where Chinese translation would reduce precision; prefer evidence-based interpretation over vague praise.
+Use clear English suitable for oral academic reporting: avoid long paragraphs; avoid jargon stacking; prefer evidence-based interpretation over vague praise.
 
 Treat each slide like a publication figure page: one dominant idea, one clear evidence hierarchy, and asymmetry when the story needs it.
 
@@ -162,11 +159,11 @@ Treat each slide like a publication figure page: one dominant idea, one clear ev
 ### Typography system
 
 - Build a clear three-level hierarchy: title, body, caption/source. Do not let every text block look like the same font at slightly different sizes.
-- Use one Chinese sans-serif family for most copy and one English/number companion font for metrics, abbreviations, model names, DOI, and small metadata.
+- Use a clean sans-serif family for most copy and a companion font for metrics, abbreviations, model names, DOI, and small metadata.
 - Prefer title sizes roughly in the 24-32 pt range, body copy in the 12-16 pt range, and source/caption text in the 7-9 pt range unless the template clearly calls for something else.
 - Let titles carry more weight than bullets. Large metrics may stand out but must not overpower the slide title or main figure.
 - Keep captions and source labels lighter in color and smaller in size than the main argument text.
-- Avoid mixing many font families on one slide. One Chinese family plus one English/numeric companion is the default maximum.
+- Avoid mixing many font families on one slide. One primary sans-serif family plus one companion is the default maximum.
 
 ### Figure-text coordination
 

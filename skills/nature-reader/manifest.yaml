@@ -4,7 +4,7 @@ description: >
   Declarative manifest for the static/dynamic split. SKILL.md uses this to
   decide which fragments to load for a given paper-reading request. The main
   axis is the source format, which changes how text, figures, and tables are
-  extracted before the bilingual reader is built.
+  extracted before the reader is built.
 
 always_load:
   # Shared layer — common to the nature-* skills

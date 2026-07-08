@@ -28,7 +28,7 @@ methodology figures have all been inspected or marked unavailable.
 
 Create:
 
-- a terminology ledger with one canonical Chinese term per object;
+- a terminology ledger with one canonical term per object;
 - an input-operation-output map;
 - a formula inventory with symbols and technical role;
 - a figure inventory distinguishing methodology figures from result charts;
@@ -96,7 +96,7 @@ source and symbol definitions.
 Draft the abstract last. Keep terminology aligned with the principal claim.
 Use the same main figure as the abstract figure and specification figure.
 
-Output: separate Chinese DOCX files, SVG/PNG figures, structured JSON, and
+Output: separate DOCX files, SVG/PNG figures, structured JSON, and
 audit reports under `outputs/`.
 
 Gate: `scripts/validate_patent_draft.py` and

@@ -16,15 +16,15 @@ Best when a target property or technical challenge drives a design that is then 
 
 ## Default slide structure (adapt, do not force)
 
-1. 标题页
-2. 研究背景：目标性能 / 技术挑战
-3. 设计思路 / 原理
-4. 合成 / 制备 / 实验装置
-5. 表征结果
-6-7. 性能证据（关键对比）
-8. 机制 / 构效关系
-9. 稳定性 / 可扩展性 / 应用边界
-10. 局限性
-11. 总结
+1. Title slide
+2. Background: target performance / technical challenge
+3. Design concepts / principles
+4. Synthesis / fabrication / experimental setup
+5. Characterization results
+6-7. Performance evidence (key comparisons)
+8. Mechanism / structure-property relationships
+9. Stability / scalability / application boundaries
+10. Limitations
+11. Summary
 
 Keep characterisation panels (XRD, SEM/TEM, spectra, performance curves) readable — crop to the key panel rather than shrinking a dense multi-panel figure. Keep units, chemical formulae, and material names exact and consistent.

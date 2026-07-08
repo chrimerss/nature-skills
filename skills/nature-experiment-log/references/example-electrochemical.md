@@ -1,6 +1,6 @@
-# 实验日志示例：电化学测试
+# Experiment Log Example: Electrochemical Testing
 
-以下是一个电化学表征实验的完整日志示例。所有数据均为虚构。
+The following is a complete log example for an electrochemical characterization experiment. All data is fictitious.
 
 ---
 
@@ -8,65 +8,65 @@
 ---
 exp_id: OX-E-260615-001
 date: 2026-06-15
-salt_system: 氧化物体系
+salt_system: Oxide System
 salt_batch: OX-A1-B001
 salt_composition: "*** (*** wt%)"
-exp_type: 电化学
+exp_type: Electrochemistry
 test_method: CV
-working_electrode: Pt丝
-counter_electrode: Pt网
-reference_electrode: "Ag/Ag+ 准参比"
+working_electrode: Pt wire
+counter_electrode: Pt mesh
+reference_electrode: "Ag/Ag+ quasi-reference"
 temperature: 500
 atmosphere: Ar
 potential_window_V: "-1.5 ~ +1.0"
 scan_rate_mV_s: 50
-evaluation_target: "检测体系电化学窗口及杂质氧化还原峰"
+evaluation_target: "Determine electrochemical window and detect impurity redox peaks"
 anomaly: false
 anomaly_ref:
-tags: [电化学, CV, 窗口测试]
+tags: [Electrochemistry, CV, Window Test]
 ---
 
-# 实验目的
+# Objective
 
-测定候选配方 A1 在 500°C 下的电化学窗口，确认是否适合后续腐蚀实验。同时检测是否存在杂质氧化还原峰。
+Determine the electrochemical window of candidate formulation A1 at 500°C to confirm its suitability for subsequent corrosion experiments. Simultaneously detect whether impurity redox peaks are present.
 
-# 实验步骤
+# Procedure
 
-1. 手套箱中配制 A1 盐 30g，转入刚玉坩埚
-2. 马弗炉 300°C 干燥 2h（去除吸附水）
-3. 转移至电化学测试台，Ar 气氛下升温至 500°C
-4. 三电极体系：Pt 丝工作电极、Pt 网对电极、Ag/Ag+ 准参比
-5. CV 扫描：-1.5V 至 +1.0V，扫速 50 mV/s
-6. 记录 3 圈，取第 3 圈为稳态数据
+1. Prepare 30g of A1 salt in the glovebox and transfer to an alumina crucible.
+2. Dry in muffle furnace at 300°C for 2h (to remove adsorbed moisture).
+3. Transfer to the electrochemical test station and heat to 500°C under Ar atmosphere.
+4. Three-electrode setup: Pt wire working electrode, Pt mesh counter electrode, Ag/Ag+ quasi-reference electrode.
+5. CV scan: -1.5V to +1.0V at a scan rate of 50 mV/s.
+6. Record 3 cycles; take the 3rd cycle as steady-state data.
 
-# 观察
+# Observations
 
-- 盐熔化后呈透明液体，无明显悬浮物
-- CV 曲线在 -0.8V 和 +0.6V 处出现小峰（疑似杂质）
-- 电极表面无可见腐蚀
+- Salt melted into a transparent liquid with no visible suspended particles.
+- CV curve exhibited minor peaks at -0.8V and +0.6V (suspected impurities).
+- No visible corrosion on electrode surfaces.
 
-# 结果
+# Results
 
-- 电化学窗口约 2.5V（-1.5 至 +1.0V），适合后续腐蚀实验
-- 需进一步 EIS 确认体系稳定性
-- 杂质峰需通过标准加入法确认来源
+- Electrochemical window is approximately 2.5V (-1.5 to +1.0V), suitable for subsequent corrosion testing.
+- Further EIS testing required to confirm long-term system stability.
+- Impurity peaks require standard addition method to identify chemical species.
 
-# 异常
+# Anomalies
 
-无。
+None.
 
-# 下一步
+# Next Steps
 
-- EIS 长时间稳定性测试（100h）
-- 标准加入法标定杂质峰对应的化学物种
-- 与 A2、A3 候选配方对比窗口宽度
+- Long-term EIS stability testing (100h).
+- Use standard addition method to calibrate chemical species corresponding to impurity peaks.
+- Compare window width against candidate formulations A2 and A3.
 
 ---
 
-# 原始材料
+# Raw Materials
 
-原始图片和语音记录归档于：
-`raw/experiments/2026.06.15_A1电化学窗口测试_OX-E-260615-001/`
+Raw image and audio records are archived at:
+`raw/experiments/2026.06.15_A1_Electrochemical_Window_Test_OX-E-260615-001/`
 
-- `图片/IMG_6151.jpg` — 三电极测试台布置
-- `图片/IMG_6152.jpg` — CV 曲线截图
+- `Images/IMG_6151.jpg` — Three-electrode test setup layout
+- `Images/IMG_6152.jpg` — CV curve screenshot

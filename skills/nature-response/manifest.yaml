@@ -36,8 +36,6 @@ references:
       path: references/action-mapping.md
     - condition: recommended language, forbidden phrasing, or disagreement tone
       path: references/tone-and-stance.md
-    - condition: the user writes in Chinese or provides Chinese author notes
-      path: references/chinese-author-alignment.md
     - condition: impossible experiments, factual errors, conflicting reviewers, citations, statistics, compliance, transfer, or appeal-like cases
       path: references/difficult-cases.md
     - condition: before finalizing an output or auditing a draft response

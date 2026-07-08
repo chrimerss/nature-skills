@@ -65,22 +65,22 @@ Generate review artifacts (HTML/TSV/JSON/report) for long or ambiguous runs — 
 Unless the user asks for a different format, return:
 
 ```text
-交互式引用浏览器
-- [absolute path to citation_visualization.html]  ← 在浏览器中打开此文件，可筛选/选择/下载引用
+Interactive Citation Browser
+- [absolute path to citation_visualization.html]  ← Open this file in your browser to filter, select, and download references
 
-检索范围
+Search Scope
 - [Nature Portfolio / Science family / Cell Press / flagship only, plus date limits]
 
-分段引用对应关系
+Segment-to-Citation Mapping
 S001: [source segment]
   - [Author, year, title, journal, DOI]
-  - 支撑等级: [strong/partial/background/limiting/metadata-only]
-  - 插入建议: [e.g. after sentence / after clause]
+  - Support level: [strong/partial/background/limiting/metadata-only]
+  - Insertion suggestion: [e.g. after sentence / after clause]
 
-导出文件
+Exported Files
 - [absolute path to references.enw / references.ris / references.rdf]
 
-风险和缺口
+Risks and Gaps
 - [missing full-text check, contradictory evidence, no direct CNS literature, etc.]
 ```
 

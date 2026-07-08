@@ -7,11 +7,11 @@ Populate a UTF-8 JSON file with this structure before rendering a DOCX. Empty op
 ```json
 {
   "schema_version": "2.0",
-  "title": "一种……方法、设备及介质",
+  "title": "A method, apparatus and medium for ...",
   "metadata": {
     "source": "paper.pdf",
-    "target": "中国发明专利",
-    "draft_status": "供发明人及专利代理师复核"
+    "target": "Invention Patent",
+    "draft_status": "For inventor and patent attorney review"
   },
   "source_analysis": {
     "contains_core_formulas": true,
@@ -22,31 +22,31 @@ Populate a UTF-8 JSON file with this structure before rendering a DOCX. Empty op
     {
       "id": "P001",
       "type": "paper-text",
-      "locator": "第3页，2.2节，第1段",
-      "summary": "公开核心特征提取流程",
+      "locator": "Page 3, Section 2.2, Para 1",
+      "summary": "Discloses core feature extraction process",
       "confidence": "high"
     },
     {
       "id": "E001",
       "type": "equation",
-      "locator": "第4页，公式(1)",
-      "summary": "类别原型计算",
+      "locator": "Page 4, Equation (1)",
+      "summary": "Class prototype calculation",
       "confidence": "high"
     }
   ],
   "terminology_ledger": [
     {
-      "concept": "类别原型",
-      "canonical_zh": "类别原型",
+      "concept": "Class prototype",
+      "canonical_term": "Class prototype",
       "source_terms": ["class prototype", "prototype"],
-      "forbidden_aliases": ["类别中心"]
+      "forbidden_aliases": ["class center"]
     }
   ],
   "formula_inventory": [
     {
       "source_id": "E001",
       "source_number": "(1)",
-      "technical_role": "根据支持集特征计算类别原型",
+      "technical_role": "Calculate class prototype based on support set features",
       "disposition": "specification-equation-1"
     }
   ],
@@ -60,46 +60,46 @@ Populate a UTF-8 JSON file with this structure before rendering a DOCX. Empty op
   ],
   "abstract_figure_number": 1,
   "assumptions": [
-    "目标法域为中国"
+    "Target jurisdiction is United States / International / General Patent"
   ],
   "invention_concept": {
-    "technical_problem": "……",
-    "technical_means": "……",
-    "technical_effect": "……"
+    "technical_problem": "...",
+    "technical_means": "...",
+    "technical_effect": "..."
   },
   "evidence_ledger": [
     {
       "id": "F1",
-      "feature": "……",
+      "feature": "...",
       "source_ids": ["P001", "E001"],
-      "source_location": "第3页，2.2节",
-      "technical_role": "……",
-      "effect": "……",
+      "source_location": "Page 3, Section 2.2",
+      "technical_role": "...",
+      "effect": "...",
       "support_status": "explicit"
     }
   ],
   "claims": [
     {
       "number": 1,
-      "text": "一种……方法，其特征在于，包括：……"
+      "text": "A method of ..., comprising: ..."
     },
     {
       "number": 2,
-      "text": "根据权利要求1所述的方法，其特征在于，……"
+      "text": "The method of claim 1, wherein ..."
     }
   ],
   "claim_feature_map": [
     {
       "claim_number": 1,
-      "feature": "根据支持集特征计算类别原型",
+      "feature": "Calculate class prototype based on support set features",
       "evidence_ids": ["F1"],
-      "specification_locations": ["具体实施方式，实施例1"]
+      "specification_locations": ["Detailed Description, Embodiment 1"]
     }
   ],
   "figures": [
     {
       "number": 1,
-      "title": "方法流程图",
+      "title": "Method Flowchart",
       "type": "flowchart",
       "orientation": "vertical",
       "claim_number": 1,
@@ -108,12 +108,12 @@ Populate a UTF-8 JSON file with this structure before rendering a DOCX. Empty op
       "nodes": [
         {
           "id": "S1",
-          "label": "S1：获取并预处理待检测数据",
+          "label": "S1: Acquire and preprocess target data",
           "claim_step": "S1"
         },
         {
           "id": "S2",
-          "label": "S2：提取多尺度特征",
+          "label": "S2: Extract multiscale features",
           "claim_step": "S2"
         }
       ],
@@ -127,22 +127,22 @@ Populate a UTF-8 JSON file with this structure before rendering a DOCX. Empty op
     },
     {
       "number": 2,
-      "title": "核心方法结构示意图",
+      "title": "Core Methodology Schematic",
       "type": "methodology",
       "orientation": "horizontal",
       "source_ids": ["F001", "P001"],
       "nodes": [
         {
           "id": "input",
-          "label": "输入特征"
+          "label": "Input feature"
         },
         {
           "id": "module",
-          "label": "核心处理模块"
+          "label": "Core processing module"
         },
         {
           "id": "output",
-          "label": "输出特征"
+          "label": "Output feature"
         }
       ],
       "edges": [
@@ -161,73 +161,73 @@ Populate a UTF-8 JSON file with this structure before rendering a DOCX. Empty op
   ],
   "specification": {
     "technical_field": [
-      "本发明涉及……"
+      "The present invention relates to ..."
     ],
     "background": [
-      "……"
+      "..."
     ],
     "invention_content": {
       "problem": [
-        "……"
+        "..."
       ],
       "solution": [
-        "……"
+        "..."
       ],
       "beneficial_effects": [
-        "……"
+        "..."
       ]
     },
     "figure_descriptions": [
-      "图1为本发明方法流程图。"
+      "Fig. 1 is a method flowchart of the present invention."
     ],
     "equations": [
       {
         "number": 1,
-        "source_location": "论文第4页，公式(1)",
+        "source_location": "Paper page 4, Equation (1)",
         "source_ids": ["E001"],
         "expression": "O_u = (1/|S_u|) Σ_(x_i,y_i∈S_u) h_γ(x_i)",
         "latex": "O_u = \\frac{1}{|S_u|}\\sum_{(x_i,y_i)\\in S_u} h_\\gamma(x_i)",
         "symbols": [
-          {"symbol": "O_u", "meaning": "类别u的类别原型"},
-          {"symbol": "S_u", "meaning": "类别u的支持集"},
-          {"symbol": "h_\\gamma", "meaning": "监督特征提取器"}
+          {"symbol": "O_u", "meaning": "Class prototype of class u"},
+          {"symbol": "S_u", "meaning": "Support set of class u"},
+          {"symbol": "h_\\gamma", "meaning": "Supervised feature extractor"}
         ],
-        "technical_role": "对同一类别样本的监督特征求均值以获得类别原型",
-        "description": "其中，O_u表示类别u的类别原型，S_u表示类别u的支持集，h_γ表示监督特征提取器。该公式通过对同一类别样本的监督特征求均值获得类别原型。"
+        "technical_role": "Average supervised features of samples in the same class to obtain class prototype",
+        "description": "Wherein O_u represents the class prototype of class u, S_u represents the support set of class u, and h_γ represents the supervised feature extractor. This equation calculates the class prototype by averaging supervised features across samples in the same class."
       }
     ],
     "embodiments": [
       {
-        "heading": "实施例1",
+        "heading": "Embodiment 1",
         "paragraphs": [
-          "……"
+          "..."
         ]
       }
     ]
   },
-  "abstract": "本发明涉及……",
+  "abstract": "The present invention relates to ...",
   "audit": {
     "support_findings": [
-      "……"
+      "..."
     ],
     "consistency_findings": [
-      "……"
+      "..."
     ]
   },
   "quality_assessment": {
     "status": "review-draft",
     "scores": {
-      "evidence_support": {"score": 4, "evidence": "每项权利要求特征均映射到证据台账。"},
-      "claim_architecture": {"score": 4, "evidence": "独立权利要求形成完整技术链，并设置从属回退层。"},
-      "terminology_consistency": {"score": 4, "evidence": "权利要求、说明书和附图使用统一术语。"},
-      "enablement_detail": {"score": 3, "evidence": "已说明主要数据流、公式和实施步骤。"},
-      "technical_effect_reasoning": {"score": 3, "evidence": "主要效果已关联到对应技术手段。"},
-      "formula_coverage": {"score": 4, "evidence": "核心公式均已收录并定义符号。"},
-      "figure_alignment": {"score": 4, "evidence": "主流程图与权利要求1步骤一致。"}
+      "evidence_support": {"score": 4, "evidence": "Every claim feature maps to the evidence ledger."},
+      "claim_architecture": {"score": 4, "evidence": "Independent claim forms a closed technical chain with layered fallback positions."},
+      "terminology_consistency": {"score": 4, "evidence": "Claims, specification, and figures use consistent terminology."},
+      "enablement_detail": {"score": 3, "evidence": "Main data flow, equations, and implementation steps are described."},
+      "technical_effect_reasoning": {"score": 3, "evidence": "Main effects are causally linked to corresponding technical means."},
+      "formula_coverage": {"score": 4, "evidence": "Core equations are included with defined symbols."},
+      "figure_alignment": {"score": 4, "evidence": "Main flowchart aligns with steps in claim 1."}
     }
   },
   "inventor_questions": [
-    "[TO CONFIRM: ……]"
+    "[TO CONFIRM: ...]"
   ]
 }
 ```

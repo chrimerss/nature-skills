@@ -16,17 +16,17 @@ Best when the paper proposes a procedure and must show it works and is better. O
 
 ## Default slide structure (adapt, do not force)
 
-1. 标题页
-2. 研究背景：当前方法的瓶颈
-3. 核心问题：要解决什么
-4. 方法总览 / 架构图（通常 full-width 流程图）
-5. 关键设计 / 模块
-6. 评测设置：数据集、基线、指标
-7-8. 主要性能结果（与基线对比）
-9. 消融 / 稳健性 / 失败案例
-10. 方法优势与适用边界
-11. 复用场景与开源情况
-12. 局限性
-13. 总结
+1. Title slide
+2. Background: bottleneck of current methods
+3. Core problem: what needs to be solved
+4. Method overview / architecture diagram (usually full-width workflow diagram)
+5. Key design / modules
+6. Evaluation setup: datasets, baselines, metrics
+7-8. Main performance results (compared with baselines)
+9. Ablation / robustness / failure cases
+10. Method advantages and applicability boundaries
+11. Reuse scenarios and open source status
+12. Limitations
+13. Summary
 
 Use editable PPT-native tables/charts for benchmark numbers when values are explicit. Keep model names, dataset names, and metric names identical to the paper via the Terminology Ledger. The architecture/workflow slide is usually a full-width process diagram, not a two-column split.

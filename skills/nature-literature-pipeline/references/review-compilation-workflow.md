@@ -1,110 +1,110 @@
-# 手工综述编译工作流
+# Manual Review Compilation Workflow
 
-从"零库存→投稿"的完整综述写作流程，适用于已确定主题方向后的文献整合阶段。与每日自动化pipeline互补——pipeline管日常发现，本文件管集中编撰。
+End-to-end review writing workflow from zero inventory to submission, applicable for literature integration after determining the topic direction. Complementary to the daily automated pipeline — the pipeline handles daily discovery, while this file manages intensive review drafting.
 
-## 阶段1: 盘点存量
+## Phase 1: Inventory Assessment
 
-### 1.1 从Vault提取
-- 用 `gbrain_query` 搜主题关键词（中英文各一次）
-- 用 `gbrain_search` 搜最宽泛关键词（如 `corrosion`）捕捉漏网
-- 精读核心页面（如综述章节草稿），提取引用列表
+### 1.1 Extract from Vault
+- Use `gbrain_query` to search topic keywords
+- Use `gbrain_search` to search the broadest keywords (e.g., `corrosion`) to catch missed items
+- Deeply read core pages (e.g., review chapter drafts) and extract citation lists
 
-### 1.2 从Zotero提取
-- `zotero_search_items` 搜主题关键词，`qmode=everything`
-- 去重（与vault内容交叉核对）
-- 按相关性分级（A=直接相关/B=部分相关/C=背景）
+### 1.2 Extract from Zotero
+- `zotero_search_items` for topic keywords, `qmode=everything`
+- Deduplicate (cross-check with vault contents)
+- Grade by relevance (A = directly relevant / B = partially relevant / C = background)
 
-### 1.3 汇总评估
-- 生成文献数量估计，判断是否需要补搜
-- 对照综述框架，识别薄弱子方向
+### 1.3 Summary Assessment
+- Estimate literature quantity and determine if supplementary searches are needed
+- Compare against the review framework to identify weak sub-directions
 
-## 阶段2: 空白填补
+## Phase 2: Gap Filling
 
-### 2.1 识别空白
-常见空白类型：
-- 特定盐体系（如NaNO₂含量影响）文献不足
-- 特定机理角度（如定量剥落判据）数据稀缺
-- 特定时间尺度（>10000h）系统空白——标注为领域gap而非继续检索
-- 特定研究团队的工作遗漏
+### 2.1 Identify Gaps
+Common gap types:
+- Insufficient literature on specific systems (e.g., impurity effects)
+- Scarcity of data on specific mechanistic angles (e.g., quantitative spalling criteria)
+- Systemic gaps at specific time scales (>10000h) — mark as domain gaps rather than continuing search
+- Omission of work from specific research groups
 
-### 2.2 定向搜索
-- `web_search` 英文+中文各搜一次，覆盖不同关键词组合
-- 追踪关键论文的引用链（谁引用了领域奠基论文？）
-- 中国团队的CNKI/中文期刊论文——对国内合作者信息增量高
+### 2.2 Targeted Search
+- `web_search` across different keyword combinations
+- Trace citation chains of key papers (who cited foundational domain papers?)
+- Search domain-specific databases or regional journals for incremental insights
 
-### 2.3 提取与筛选
-- `web_extract` 拉取关键论文全文/摘要
-- 按空白→文献映射记录
-- 再次评估文献总量是否达标（综述目标期刊通常80-150条引用）
+### 2.3 Extraction and Screening
+- `web_extract` to pull full text/abstracts of key papers
+- Record gap-to-literature mappings
+- Re-evaluate whether total literature volume meets targets (review target journals typically require 80-150 citations)
 
-## 阶段3: 观众过滤
+## Phase 3: Audience Filtering
 
-对于合作者审阅版，应用观众相关过滤原则：
+For collaborator review versions, apply audience-relevant filtering principles:
 
-| 原则 | 操作 |
-|------|------|
+| Principle | Action |
+|-----------|--------|
 | Audience's domain | Remove papers the audience already knows well |
-| 对方不熟悉的领域 | 保留该方向的定量数据论文——是信息增量 |
-| 偏离主线太远 | 砍纯方法学/涂覆/缓蚀/碳钢论文 |
-| 低信息增量 | 砍中文中文期刊论文（对国外合作者） |
-| 保留对方团队工作 | 同一机构的相关论文应保留（如给某作者保留其机构系列工作） |
+| Unfamiliar domains | Retain quantitative data papers in that direction as incremental information |
+| Far from main thread | Trim pure methodology or tangential papers |
+| Low incremental value | Trim papers with redundant findings or regional papers without global scope |
+| Retain collaborator work | Retain relevant papers from the same institution or collaborator team |
 
-典型砍留比：90→50篇。
+Typical trim ratio: 90 → 50 papers.
 
-## 阶段4: 架构设计
+## Phase 4: Architecture Design
 
-### 4.1 总体叙事
-- 一条因果链贯穿：环境化学→结构形成→失效模式→工程控制
-- 避免材料A→B→C的目录式罗列
-- 核心章节（失效模式）占全文~30%篇幅
+### 4.1 Overall Narrative
+- A causal chain running through: environmental chemistry → structure formation → failure modes → engineering controls
+- Avoid catalog-style listing of material A → B → C
+- Core chapters (failure modes) should account for ~30% of total length
 
-### 4.2 典型7节结构
+### 4.2 Typical 7-Section Structure
 ```
-§1 Introduction         (~8% 字数, 低引用密度)
-§2 化学环境             (~13%, 中)
-§3 形成/结构/动力学      (~17%, 中高)
-§4 失效模式 ★核心        (~27%, 高)
-§5 调控因素             (~13%, 中高)
-§6 方法学               (~10%, 中)
-§7 工程启示+展望         (~10%, 低)
+§1 Introduction         (~8% length, low citation density)
+§2 Chemical Environment (~13%, medium)
+§3 Formation/Structure  (~17%, medium-high)
+§4 Failure Modes ★Core  (~27%, high)
+§5 Control Factors      (~13%, medium-high)
+§6 Methodology          (~10%, medium)
+§7 Engineering Outlook  (~10%, low)
 ```
 
-引用分布：核心章节约占50条中的16条。
+Citation distribution: Core chapters account for about 16 out of 50 citations.
 
-## 阶段5: 图表规划
+## Phase 5: Figure Planning
 
-### 5.1 A类图（自绘）
-不需要原始数据，用concept-diagrams skill绘制：
-- 结构示意图（如氧化膜双层）
-- 因果流程图（如material chemistry → failure chain）
-- 机理对比图（如四种失效模式）
-- 概念相图（如T-pO²⁻稳定性分区）
-- 方法论对比表
+### 5.1 Category A Figures (Self-drawn)
+Do not require raw data; draw using concept diagram tools:
+- Structural schematics (e.g., oxide bilayer)
+- Causal flowcharts (e.g., material chemistry → failure chain)
+- Mechanism comparison diagrams (e.g., four failure modes)
+- Conceptual phase diagrams (e.g., stability zones)
+- Methodology comparison tables
 
-典型数量：8-10张。
+Typical quantity: 8-10 figures.
 
-### 5.2 B类图（引用）
-需要从已发表论文截取，注明"adapted from"：
-- SEM截面（氧化膜实证图像）
-- 定量关系曲线（如O²⁻-腐蚀速率）
-- 对比柱状图（如等温/热循环/热冲击）
+### 5.2 Category B Figures (Cited)
+Require cropping from published papers, annotated with "adapted from":
+- SEM cross-sections (empirical images)
+- Quantitative relationship curves (e.g., corrosion rates)
+- Comparative bar charts (e.g., isothermal vs. thermal cycling)
 
-优先从领域标杆论文选取：领域奠基系列、代表性综述、最新突破。
+Prioritize selecting from benchmark domain papers: foundational series, representative reviews, latest breakthroughs.
 
-## 阶段6: BibTeX导出
+## Phase 6: BibTeX Export
 
-- 在 `outputs/literature/` 下创建 `.bib` 文件
-- 每条包含：title, author, journal, volume, pages, year, doi, abstract（简短标注）
-- 用 `%` 注释分行分组
-- 用户拖入Zotero后统一打标签
+- Create `.bib` file under `outputs/literature/`
+- Each entry includes: title, author, journal, volume, pages, year, doi, abstract (brief annotation)
+- Use `%` comments to group by section
+- Enable drag-and-drop import into reference managers like Zotero
 
-## 附: 硝酸盐氧化膜综述实例数据
+## Appendix: Example Review Parameters
 
-本文件基于2026-06-23的会话总结，以下为该综述的具体参数供参考：
+This section illustrates parameters from a sample review for reference:
 
-- 主题：material oxidation and failure in high-temperature environments
-- 文献总量：90→50篇（针对受众精简版）
-- A类图：8张（fig1-fig8，见 `outputs/figures/`）
-- B类图需求：3-4张（SEM截面/定量曲线/Au示踪）
-- 篇幅：~30,000中文字 → 排版后~36-40页
-- 目标期刊候选：《中国腐蚀与防护学报》《储能科学与技术》
+- Topic: material oxidation and failure in high-temperature environments
+- Total literature: 90 → 50 papers (streamlined for target audience)
+- Category A figures: 8 figures (fig1-fig8, see `outputs/figures/`)
+- Category B figure requirements: 3-4 figures (SEM cross-sections / quantitative curves)
+- Length: ~15,000 words → ~36-40 typeset pages
+- Target journal candidates: Domain-specific corrosion and materials science journals

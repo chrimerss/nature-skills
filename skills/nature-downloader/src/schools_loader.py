@@ -1,4 +1,4 @@
-"""预设学校库加载与匹配模块。"""
+"""Preset institution library loading and matching module."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def _parse_scalar(value: str) -> Any:
 
 
 def _load_schools_without_yaml(text: str) -> list[dict[str, Any]]:
-    """读取本仓库固定格式的 schools.yaml，避免 PyYAML 缺失时预设库失效。"""
+    """Read schools.yaml in fixed format without PyYAML dependency."""
     schools: list[dict[str, Any]] = []
     current: Optional[dict[str, Any]] = None
     section: Optional[str] = None
@@ -78,7 +78,7 @@ def _load_schools_without_yaml(text: str) -> list[dict[str, Any]]:
 
 
 def load_schools() -> list[dict[str, Any]]:
-    """加载预设学校库。优先用 PyYAML，缺失时使用内置简易解析器。"""
+    """Load preset institutions. Use PyYAML if available, fallback to basic parser."""
     if not SCHOOLS_FILE.exists():
         return []
     text = SCHOOLS_FILE.read_text(encoding="utf-8")
@@ -89,10 +89,10 @@ def load_schools() -> list[dict[str, Any]]:
 
 
 def match_school(query: str) -> Optional[dict[str, Any]]:
-    """模糊匹配学校。
+    """Fuzzy match institution name.
 
-    匹配顺序：精确名称 → 别名精确 → 包含匹配。
-    返回匹配到的学校字典，未匹配返回 None。
+    Matching order: exact name -> exact alias -> substring match.
+    Returns matched institution dict or None.
     """
     query = query.strip().lower()
     if not query:
@@ -102,23 +102,23 @@ def match_school(query: str) -> Optional[dict[str, Any]]:
     if not schools:
         return None
 
-    # 1. 精确匹配 name
+    # 1. Exact match on name
     for s in schools:
         if s["name"].lower() == query:
             return s
 
-    # 2. 别名精确匹配
+    # 2. Exact match on aliases
     for s in schools:
         for alias in s.get("aliases", []):
             if alias.lower() == query:
                 return s
 
-    # 3. name 包含匹配
+    # 3. Substring match on name
     for s in schools:
         if query in s["name"].lower():
             return s
 
-    # 4. 别名包含匹配
+    # 4. Substring match on aliases
     for s in schools:
         for alias in s.get("aliases", []):
             if query in alias.lower():
@@ -128,19 +128,19 @@ def match_school(query: str) -> Optional[dict[str, Any]]:
 
 
 def list_school_names() -> list[str]:
-    """返回所有预设学校名称列表。"""
+    """Return a list of all preset institution names."""
     return [s["name"] for s in load_schools()]
 
 
 if __name__ == "__main__":
     schools = load_schools()
-    print(f"预设学校库共 {len(schools)} 所")
+    print(f"Preset institutions: {len(schools)}")
     for s in schools[:5]:
         print(f"  - {s['name']} ({', '.join(s.get('aliases', []))})")
     if len(schools) > 5:
-        print(f"  ... 还有 {len(schools) - 5} 所")
+        print(f"  ... and {len(schools) - 5} more")
 
-    print("\n=== 匹配测试 ===")
-    for q in ["交大", "SJTU", "清华", "复旦", "不存在的学校"]:
+    print("\n=== Matching Test ===")
+    for q in ["SJTU", "Tsinghua", "Fudan", "Nonexistent School"]:
         m = match_school(q)
-        print(f"  '{q}' -> {m['name'] if m else '未匹配'}")
+        print(f"  '{q}' -> {m['name'] if m else 'Not matched'}")

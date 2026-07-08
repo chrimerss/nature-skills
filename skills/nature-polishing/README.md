@@ -1,68 +1,68 @@
-# `nature-polishing` 技能
+# `nature-polishing` Skill
 
-`nature-polishing` 用于把学术手稿文本润色、重构或翻译成更接近 `Nature` 风格的简洁英文。
+`nature-polishing` is designed to polish, restructure, or translate academic prose into concise English that aligns closely with Nature-family style.
 
-## 来源层级
+## Source Hierarchy
+- `Main strategy`: Writing course notes from `Chapter1-Week1-7 full version.pdf`.
+- `Published article patterns`: Curated writing patterns from Nature and Nature Communications articles.
 
-- `Main strategy`：`Chapter1-Week1-7 full version.pdf` 中的写作课程笔记。
-- `Published article patterns`：精选 Nature 与 Nature Communications 论文范式。
-- `Reference support`：`Academic-Phrasebank-Navigable-PDF-2023.pdf`。
+## Key Architecture
+- The main `SKILL.md` is structured around core writing strategies: paper types, reader workflows, hourglass structure, writing order, section responsibilities, intellectual debt, and AI/ethics boundaries.
+- Full-manuscript polishing leverages published article patterns, covering abstracts, introductions, results, discussion, conclusion, and titles.
+- `references/` serves targeted roles: phrase families, move templates, and style guardrails.
+- The skill distinguishes between `research papers` and `methods papers`.
+- `Core argument ownership` is treated as a fundamental rule rather than an incidental reminder.
 
-## 当前变化
-
-- 主 `SKILL.md` 已按第一份 PDF 的架构重写：论文类型、读者工作流、沙漏结构、写作顺序、各部分职责、intellectual debt 以及 AI/ethics 边界。
-- 全文级润色可以使用已发表论文范式，覆盖摘要、引言、结果、讨论、结论和标题。
-- `references/` 现在承担更窄的职责：短语族、move template 和风格检查主要来自第二份 PDF。
-- 技能会区分 `research papers` 与 `methods papers`。
-- 技能把 `core argument ownership` 视为核心规则，而不是附带提醒。
-
-## 文件结构
-
-```text
+## File Structure
+```
 nature-polishing/
 ├── SKILL.md
 ├── README.md
+├── manifest.yaml
+├── static/
+│   ├── core/
+│   ├── fragments/
+│   │   ├── journal/
+│   │   ├── language/
+│   │   ├── paper_type/
+│   │   └── section/
 └── references/
-    ├── published-article-patterns.md
+    ├── latex-layout.md
+    ├── nat-comms-2025-diction.md
     ├── phrasebank-playbook.md
+    ├── published-article-patterns.md
     ├── section-moves.md
     ├── style-guardrails.md
-    ├── writing-strategy.md
-    └── latex-layout.md
+    └── writing-strategy.md
 ```
 
-## 适用场景
+## Applicable Scenarios
+- Polishing abstracts, introductions, results, discussion, conclusions, or titles.
+- Polishing methods sections, or handling methods papers that emphasize fair comparison logic.
+- Translating or refining academic drafts into publication-ready English.
+- Tightening section logic prior to submission.
+- Mitigating overclaiming and adjusting phrasing where evidence strength does not match claims.
+- Making text sound more like top-tier journal English without fabricating content.
+- Fixing LaTeX typesetting and layout issues: loose or sparse pages, stranded headings, figures that do not fill the page or split across pages, `Float too large` warnings, multi-panel figure arrangements, sparse Supplementary Information pages, etc.
 
-- 润色摘要、引言、结果、讨论、结论或标题。
-- 润色 methods section，或处理强调公平比较逻辑的 methods paper。
-- 将中文学术文本翻译成可投稿英文。
-- 投稿前收紧章节逻辑。
-- 降低过度声称，修正证据强度不匹配的措辞。
-- 在不编造内容的前提下，让文本更像高水平期刊英文。
-- 修复 LaTeX 排版问题：页面过松、标题孤立、图片未填满页面或跨页、`Float too large`、多面板图排列、Supplementary Information 页面稀疏等。
+## Design Intent
+This skill aims to:
+- Preserve facts, citation intent, and author responsibility.
+- Use core writing strategies as the primary guiding principles.
+- Improve rhetorical order at the paragraph level.
+- Keep sentences concise, clear, and readable.
+- Use reference files strictly as a phrase and style support layer.
+- Avoid generic AI phrasing and unsupported claims.
 
-## 设计意图
+## Reference Files
+- `section-moves.md`: Section sequence and move patterns.
+- `published-article-patterns.md`: Curated writing patterns from Nature and Nature Communications.
+- `phrasebank-playbook.md`: Hedging, transition, evidence, limitation, and future work expressions.
+- `style-guardrails.md`: British English style, articles, abbreviations, units, register, and overclaim control.
+- `writing-strategy.md`: Paragraph and section level argumentation logic.
+- `latex-layout.md`: LaTeX float and page layout guidelines, including top-alignment, `\clearpage` + `[H]` title-figure units, `placeins` caveats, redrawing wide/short figures at the source, multi-panel stacking, and diagnostic contact sheets.
 
-该技能应当：
-
-- 保留事实、引用意图和作者责任。
-- 以第一份 PDF 作为主导写作策略。
-- 改善段落层面的修辞顺序。
-- 保持句子短、清楚、可读。
-- 只把第二份 PDF 作为短语和参考层。
-- 避免通用 AI 腔和无支撑声称。
-
-## 参考文件
-
-- `section-moves.md`：各章节顺序与 move pattern。
-- `published-article-patterns.md`：精选 Nature 与 Nature Communications 论文写法。
-- `phrasebank-playbook.md`：hedging、过渡、证据、局限和未来工作表达。
-- `style-guardrails.md`：英式风格、冠词、缩写、单位、语域和过度声称控制。
-- `writing-strategy.md`：段落与章节层面的论证逻辑。
-- `latex-layout.md`：LaTeX 浮动体和页面排版，包括顶端对齐、`\clearpage` + `[H]` 标题-图片单元、`placeins` 注意点、源头重绘又宽又矮的图、多面板堆叠，以及渲染后生成 contact sheet 的诊断流程。
-
-## 注意事项
-
-- 该技能用于润色和结构重组，不用于编造科学内容。
-- 主要策略规则位于 `SKILL.md`；参考文件不应覆盖这些规则。
-- 参考文件有意保持选择性，用于辅助判断，而不是鼓励套话堆砌。
+## Important Notes
+- This skill is intended for polishing and structural refactoring, not for inventing scientific content.
+- Primary strategic rules reside in `SKILL.md`; reference files should never override these core rules.
+- Reference files are intentionally selective, designed to assist judgment rather than encourage boilerplate repetition.

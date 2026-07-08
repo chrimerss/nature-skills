@@ -35,7 +35,7 @@ Every academic data source is classified by reliability tier to guide automated 
 | Google Scholar | HTML scrape | CAPTCHA blocks, IP bans |
 | Web of Science | Institution proxy required | Access varies |
 | Scopus | Institution proxy required | Access varies |
-| CNKI / 万方 | No programmatic access | Chinese only, manual download |
+| Regional databases | No programmatic access | Regional only, manual download |
 
 ## Fallback Routing Rules
 
@@ -59,4 +59,4 @@ For every literature search or citation verification:
 | Preprints / CS / physics | arXiv | bioRxiv / medRxiv | Google Scholar |
 | Exhaustive review | PubMed + CrossRef + arXiv | Semantic Scholar + bioRxiv/medRxiv | WoS / Scopus |
 | Citation verification | CrossRef (DOI) → PubMed (PMID) | Semantic Scholar | Google Scholar |
-| Chinese literature | — | — | CNKI / 万方 (manual) |
+| Regional databases/literature | — | — | Regional databases (manual) |

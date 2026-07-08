@@ -62,10 +62,10 @@ than figures.
 - Keep the `Fig. N |` title short and nominal; no numbers/results in the figure
   *title* line (numbers live in the panels and stats).
 
-## 中文图注要点
+## Key caption rules
 
-- 结构铁律:`图 N | 加粗名词短语总题` → `a/b/c` 现在时电报式分面 → 统计(n、误差、检验)写进图注 → "Source data are provided as a Source Data file." 套语。
-- 时态:视觉事实用现在时,制作方法用过去时。
-- 自足:颜色/形状映射、样本量、关键数值(PDB/RMSD/单位)都写进图注,使其脱离正文可读。
-- 进阶:图注末句可给一句推断结论,但须确有面板支撑。
-- 综述图注:聚合他人系统时逐子图一句话定性,并标注"adapted with permission from refs… by Springer Nature"授权。
+- Structural rule: `Fig. N | Bold noun phrase title` → `a/b/c` telegraphic present tense panels → statistics (n, error bar, test) in caption → "Source data are provided as a Source Data file." boilerplate.
+- Tense: present tense for visual facts, past tense for experimental methods.
+- Self-contained: color/shape mapping, sample sizes, and key values (PDB/RMSD/units) must be in the caption so it can be understood without reading the main text.
+- Advanced: the final sentence of the caption may state an inferred conclusion, provided it is directly supported by a panel.
+- Review legends: when aggregating systems from others, describe each sub-panel in one sentence and include copyright attribution such as "adapted with permission from refs… by Springer Nature".

@@ -20,14 +20,15 @@ Usage:
     # By topic
     python3 academic_search.py "deep potential molecular dynamics" [--limit 10] [--year-from 2020] [--sort cited_by_count|relevance_score|publication_date]
     # By author (resolves the name to OpenAlex author IDs, merging same-name/same-institution entries)
-    python3 academic_search.py --author "Wanshui Han"
+    # By author (resolves the name to OpenAlex author IDs)
+    python3 academic_search.py --author "Author Name"
     # By author + topic within that author's works
-    python3 academic_search.py "wave load" --author "Wanshui Han" --sort publication_date
-    # By author CONSTRAINED to an institution (disambiguates common/romanised names)
-    python3 academic_search.py --author "Shenghua Zhou" --affiliation "Hong Kong"
+    python3 academic_search.py "wave load" --author "Author Name" --sort publication_date
+    # By author CONSTRAINED to an institution (disambiguates common names)
+    python3 academic_search.py --author "Name" --affiliation "University"
     # List every same-name author cluster, then pick the right institution / ID
-    python3 academic_search.py --author "Shenghua Zhou" --list-authors
-    # By ORCID (unambiguous, best for common Chinese names)
+    python3 academic_search.py --author "Name" --list-authors
+    # By ORCID (unambiguous, best for common names)
     python3 academic_search.py --orcid 0000-0002-1825-0097
     # By exact author ID (skip name resolution)
     python3 academic_search.py --author-id A5055881494
@@ -126,8 +127,8 @@ def fetch_author_candidates(name: str, per_page: int = 50) -> list[dict]:
 def resolve_author(name: str, affiliation: str | None = None) -> dict | None:
     """Resolve an author name to OpenAlex author ID(s).
 
-    OpenAlex often splits one real person into several records, and common
-    (e.g. romanised Chinese) names collide across unrelated people. We therefore:
+    OpenAlex often splits one real person into several records, and in 
+    scientific literature, names collide across unrelated people. We therefore:
       1. optionally keep only candidates whose affiliation matches `affiliation`
          (case-insensitive substring over the last-known institution); then
       2. pick the most prolific institution-bearing candidate as the anchor; then

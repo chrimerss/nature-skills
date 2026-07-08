@@ -46,12 +46,9 @@ axes:
 
   language:
     detect: |
-      Detect the source language of the draft. Use zh-to-en when the draft
-      is Chinese or shows strong Chinese-influenced English structure.
-      Otherwise use en.
+      Detect the source language of the draft. Use en.
     values:
       en:             static/fragments/language/en.md
-      zh-to-en:       static/fragments/language/zh-to-en.md
     default: en
     multi: false
 
@@ -81,5 +78,5 @@ references:
       path: references/style-guardrails.md
     - condition: needs deeper writing-strategy principles
       path: references/writing-strategy.md
-    - condition: needs LaTeX layout/typesetting help (排版) — loose or sparse pages, stranded section headings, figures that don't fill the page or split across pages, "Float too large", multi-panel figure arrangement, or Supplementary Information that looks empty
+    - condition: needs LaTeX layout/typesetting help — loose or sparse pages, stranded section headings, figures that don't fill the page or split across pages, "Float too large", multi-panel figure arrangement, or Supplementary Information that looks empty
       path: references/latex-layout.md

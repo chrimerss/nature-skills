@@ -1,6 +1,6 @@
 # LaTeX layout & float typesetting for Nature-style manuscripts
 
-Deep reference for **typesetting/layout** requests (排版): loose pages, stranded
+Deep reference for **typesetting/layout** requests: loose pages, stranded
 headings, figures that don't fill the page, "Float too large", page-splitting
 figures, Supplementary Information that looks sparse. This is about *placement*,
 not prose. Load it when the user asks to fix layout, spacing, figure placement,
@@ -27,7 +27,7 @@ layout from the `.tex` alone. Measure, don't guess.
 
 ---
 
-## 1. The "loose / 松散" float page — top-align the glue
+## 1. The "loose" float page — top-align the glue
 
 **Symptom:** a page holding only floats (two tables, or a figure) has a big band of
 whitespace in the middle / above, content seemingly centered with gaps.

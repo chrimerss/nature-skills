@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Transform a scientific paper or paper-derived notes into a complete Chinese, figure-integrated PPTX presentation package with a Nature-style reporting logic.
+Transform a scientific paper or paper-derived notes into a complete, figure-integrated PPTX presentation package with a Nature-style reporting logic.
 
 The skill must not stop at an outline or script. The expected end product is a real `.pptx` deck. Keep supporting files minimal unless the user asks for more traceability.
 
@@ -49,4 +49,4 @@ Avoid by default:
 
 The skill may receive: a full paper PDF; supplementary figures or tables; Word or markdown converted paper text; abstract + results + figure legends; structured reading notes; manually pasted article content; an `input/source.md` file; or a user-provided PPTX template.
 
-Default output language is simplified Chinese unless the user requests otherwise. Preserve important technical terms, abbreviations, gene/protein names, model names, dataset names, equations, and statistical terms in English when needed, and keep them consistent via the Terminology Ledger.
+Default output language is English. Keep technical terms, abbreviations, gene/protein names, model names, dataset names, equations, and statistical terms consistent via the Terminology Ledger.

@@ -39,5 +39,5 @@ Promote from `Beta` to `Stable` only after:
 
 - at least two real anonymized revision packages are tested with author permission;
 - no fabricated actions, line numbers, statistics, or citations are observed;
-- Chinese-note workflows produce usable English response drafts and Chinese confirmation notes;
+- author-note workflows produce usable English response drafts and confirmation notes;
 - edge cases such as conflicting reviewers and impossible experiments remain traceable.

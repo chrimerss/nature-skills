@@ -1,11 +1,11 @@
-"""字段校验模块。
+"""Field validation module.
 
-对用户填写的配置字段做实时可达性探测：
-- sso_domain: DNS 解析 + TCP 443 + HTTPS 证书
-- carsi_entry: HTTP GET 探测
-- ezproxy_url: HTTP GET 探测登录表单
+Performs real-time reachability checks on user-configured fields:
+- sso_domain: DNS resolution + TCP 443 + HTTPS certificate
+- carsi_entry: HTTP GET check
+- ezproxy_url: HTTP GET check for login form
 
-所有校验函数返回 (ok: bool, message: str)。
+All validation functions return (ok: bool, message: str).
 """
 
 from __future__ import annotations
@@ -17,27 +17,27 @@ import urllib.request
 
 
 def validate_sso_domain(domain: str, timeout: float = 5.0) -> tuple[bool, str]:
-    """校验 SSO 域名：DNS 解析 + TCP 443 + HTTPS 证书。
+    """Validate SSO domain: DNS resolution + TCP 443 + HTTPS certificate.
 
-    返回 (是否通过, 说明消息)。
+    Returns (is_valid, message).
     """
     domain = domain.strip().lower()
     if not domain:
-        return False, "域名为空"
+        return False, "Domain is empty"
 
-    # 去掉协议前缀
+    # Remove protocol prefix
     for prefix in ("https://", "http://"):
         if domain.startswith(prefix):
             domain = domain[len(prefix):]
     domain = domain.split("/")[0]
 
-    # DNS 解析
+    # DNS resolution
     try:
         addrs = socket.getaddrinfo(domain, 443, socket.AF_UNSPEC, socket.SOCK_STREAM)
     except socket.gaierror:
-        return False, f"DNS 解析失败：{domain}，请检查域名拼写"
+        return False, f"DNS resolution failed: {domain}, please check domain spelling"
 
-    # TCP 443 连接 + TLS 握手
+    # TCP 443 connection + TLS handshake
     last_err = ""
     for family, socktype, proto, _, sockaddr in addrs:
         try:
@@ -46,23 +46,23 @@ def validate_sso_domain(domain: str, timeout: float = 5.0) -> tuple[bool, str]:
                 with ctx.wrap_socket(sock, server_hostname=domain) as ssock:
                     cert = ssock.getpeercert()
                     if cert is None:
-                        return False, f"HTTPS 证书无效：{domain}"
-            return True, f"SSO 域名可达：https://{domain}"
+                        return False, f"HTTPS certificate invalid: {domain}"
+            return True, f"SSO domain reachable: https://{domain}"
         except (socket.timeout, ConnectionRefusedError, OSError) as e:
             last_err = str(e)
             continue
 
-    return False, f"无法连接到 https://{domain}（443 端口）：{last_err}"
+    return False, f"Cannot connect to https://{domain} (port 443): {last_err}"
 
 
 def validate_carsi_entry(url: str, timeout: float = 8.0) -> tuple[bool, str]:
-    """校验 CARSI 入口：HTTP GET 探测。
+    """Validate CARSI entry: HTTP GET check.
 
-    判断标准：返回 2xx/3xx，且页面内容含「CARSI」「Shibboleth」或 SSO 跳转特征。
+    Criteria: returns 2xx/3xx, and page content contains 'CARSI', 'Shibboleth', or SSO redirect characteristics.
     """
     url = url.strip()
     if not url:
-        return False, "CARSI 入口 URL 为空"
+        return False, "CARSI entry URL is empty"
 
     if not url.startswith(("http://", "https://")):
         url = "https://" + url
@@ -80,35 +80,35 @@ def validate_carsi_entry(url: str, timeout: float = 8.0) -> tuple[bool, str]:
             body = resp.read(4096).decode("utf-8", errors="ignore").lower()
 
             if status >= 400:
-                return False, f"CARSI 入口返回 HTTP {status}"
+                return False, f"CARSI entry returned HTTP {status}"
 
-            # 内容特征检查
-            keywords = ["carsi", "shibboleth", "idp", "sso", "login", "登录", "统一身份"]
+            # Content feature check
+            keywords = ["carsi", "shibboleth", "idp", "sso", "login"]
             matched = [k for k in keywords if k in body]
             if matched:
-                return True, f"CARSI 入口可达，检测到特征：{', '.join(matched[:3])}"
+                return True, f"CARSI entry reachable, detected features: {', '.join(matched[:3])}"
 
-            # 3xx 跳转也算通过（可能跳到 SSO）
+            # 3xx redirect also passes (may redirect to SSO)
             if 300 <= status < 400:
                 location = resp.headers.get("Location", "")
-                return True, f"CARSI 入口跳转到：{location}"
+                return True, f"CARSI entry redirects to: {location}"
 
-            return True, f"CARSI 入口可达（HTTP {status}），但未检测到明显 SSO 特征"
+            return True, f"CARSI entry reachable (HTTP {status}), but no obvious SSO features detected"
 
     except urllib.error.URLError as e:
-        return False, f"CARSI 入口不可达：{e.reason}"
+        return False, f"CARSI entry unreachable: {e.reason}"
     except Exception as e:
-        return False, f"CARSI 入口探测异常：{e}"
+        return False, f"CARSI entry check exception: {e}"
 
 
 def validate_ezproxy_url(url: str, timeout: float = 8.0) -> tuple[bool, str]:
-    """校验 EZproxy 地址：HTTP GET 探测登录表单。
+    """Validate EZproxy address: HTTP GET check for login form.
 
-    判断标准：页面含 password 输入框。
+    Criteria: page contains password input field.
     """
     url = url.strip()
     if not url:
-        return False, "EZproxy URL 为空"
+        return False, "EZproxy URL is empty"
 
     if not url.startswith(("http://", "https://")):
         url = "https://" + url
@@ -126,43 +126,43 @@ def validate_ezproxy_url(url: str, timeout: float = 8.0) -> tuple[bool, str]:
             body = resp.read(8192).decode("utf-8", errors="ignore").lower()
 
             if status >= 400:
-                return False, f"EZproxy 返回 HTTP {status}"
+                return False, f"EZproxy returned HTTP {status}"
 
-            if "password" in body or "密码" in body:
-                return True, "EZproxy 登录页可达，检测到密码输入框"
+            if "password" in body or "passwd" in body:
+                return True, "EZproxy login page reachable, detected password input field"
 
-            return True, f"EZproxy 页面可达（HTTP {status}），但未检测到登录表单"
+            return True, f"EZproxy page reachable (HTTP {status}), but login form not detected"
 
     except urllib.error.URLError as e:
-        return False, f"EZproxy 不可达：{e.reason}"
+        return False, f"EZproxy unreachable: {e.reason}"
     except Exception as e:
-        return False, f"EZproxy 探测异常：{e}"
+        return False, f"EZproxy check exception: {e}"
 
 
 def validate_school_name(name: str) -> tuple[bool, str]:
-    """校验学校名称基本格式。"""
+    """Validate institution name basic format."""
     name = name.strip()
     if len(name) < 2:
-        return False, "学校名称太短"
+        return False, "Institution name too short"
     if len(name) > 100:
-        return False, "学校名称太长"
+        return False, "Institution name too long"
     return True, name
 
 
 def validate_libraries(libraries: list[str]) -> tuple[bool, str]:
-    """校验数据库清单。"""
+    """Validate database list."""
     if not libraries:
-        return False, "数据库清单不能为空"
+        return False, "Database list cannot be empty"
     if len(libraries) > 50:
-        return False, "数据库清单过长"
-    return True, f"已选择 {len(libraries)} 个数据库"
+        return False, "Database list too long"
+    return True, f"Selected {len(libraries)} databases"
 
 
-# 已知数据库清单（用于向导多选提示）
+# Known database list (for wizard multi-select hints)
 KNOWN_DATABASES = [
-    "知网 (CNKI)",
-    "万方",
-    "维普",
+    "CNKI",
+    "Wanfang",
+    "VIP",
     "Web of Science",
     "Scopus",
     "IEEE Xplore",
@@ -179,16 +179,16 @@ KNOWN_DATABASES = [
     "EBSCO",
     "ProQuest",
     "JSTOR",
-    "中国知网",
+    "PubMed",
 ]
 
 
 if __name__ == "__main__":
-    # 自检示例
-    print("=== SSO 域名校验 ===")
+    # Self-check example
+    print("=== SSO Domain Validation ===")
     ok, msg = validate_sso_domain("jaccount.sjtu.edu.cn")
     print(f"  {ok}: {msg}")
 
-    print("\n=== CARSI 入口校验 ===")
+    print("\n=== CARSI Entry Validation ===")
     ok, msg = validate_carsi_entry("https://www.carsi.edu.cn/")
     print(f"  {ok}: {msg}")

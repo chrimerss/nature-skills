@@ -54,7 +54,7 @@ Pattern markers: gap *"However, DE can be inefficient when mutations exhibit …
 - **Hook**, three forms: importance declaration (*"The biological brain is remarkable in its ability to…"*); definition framing (*"Protein engineering is an optimization problem, where…"*); domain-then-obstacle (benchmark default: broad use → *"Despite its promises, progress … is impeded due to the absence of … benchmarks."*).
 - **Gap** signal words cluster tightly: **However / remains / Unfortunately / underexplored / the scarcity of … hinder / Without X, Y cannot be …**. High-end move: quantify the scarcity — *"merely 124 (3.0%) have … structures in the PDB."*
 - **Contribution**: `Here we…` / `In this work, we…`, usually with a `(Fig. 1)` pointer; multiple contributions as `First… Second… Finally…`.
-- Make the **choice of system/problem explicit** — *"We chose this model system because…"* — this satisfies the "科学问题要科学" expectation: the question must be motivated, not assumed.
+- Make the **choice of system/problem explicit** — *"We chose this model system because…"* — this satisfies the "rigorous problem motivation" expectation: the question must be motivated, not assumed.
 
 ## 4. Results narrative
 
@@ -86,10 +86,10 @@ Pattern markers: gap *"However, DE can be inefficient when mutations exhibit …
 | Stance | assert findings | weigh + outlook | argue + normative `should` | rhetorical, value-driven |
 | Close | Discussion + limits | `Conclusions and outlook` + governance call | roadmap / conditions | call to action |
 
-## 8. 中文迁移要点
+## 8. Key Drafting Takeaways
 
-- 保留信息链:`现象（现在时）→ 然而/目前仍/尚不清楚 → 本文提出 X → 带一个硬核数字的结果 → 意义升华`。
-- 标题按体裁切模板:方法文用名词短语、卖点文用陈述句、工具用"系统名:功能"、论辩文可用疑问句;**标题不放数字与结论**。
-- gap 必带信号词(然而/不幸的是/仍是挑战/鲜有研究/缺乏);高级写法用数字量化稀缺。
-- 贡献句显式给出选题理由("之所以选该体系,是因为…"),呼应"科学问题要科学"。
-- 对冲词(可能/提示/很可能)只用于意义句;少用"显著"——对应英文 `significantly` 在本语料 0 次,改用"明显/大幅/相当"(notably/substantially/considerably)。
+- Maintain a rigorous information chain: `observation (present tense) → however/remains/unclear → here we show X → hard quantitative result → significance`.
+- Match title structure to genre: noun phrases for method papers, declarative statements for empirical advances, `System: Function` for tools, or questions for perspectives; **avoid putting numbers or overbroad conclusions in titles**.
+- Use explicit signal words for gaps (however/unfortunately/remains a challenge/underexplored); quantify scarcity with exact numbers where possible.
+- Ensure contribution statements explicitly state the rationale for choosing the specific system or problem.
+- Limit hedging words (may/suggest/likely) to interpretation and implication sentences. Avoid overusing subjective intensifiers like `significantly` without statistical rigor; prefer objective descriptors like `notably`, `substantially`, or `considerably`.

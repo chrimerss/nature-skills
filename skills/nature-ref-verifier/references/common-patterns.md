@@ -1,96 +1,96 @@
-# 参考文献验证常见问题模式
+# Common Reference Verification Issues and Patterns
 
-本文档记录了学术参考文献中常见的元数据错误模式，供校验时参考。
+This document records common metadata error patterns in academic references as a reference during verification.
 
-## 1. 卷年与 DOI 年不一致
+## 1. Volume Year vs. DOI Year Discrepancies
 
-**根因：** DOI 编号中的年份通常是收稿年或稿件编号年，而引用应以期刊卷年为准。
+**Root Cause:** The year in a DOI number is typically the submission year or manuscript assignment year, whereas the citation should be based on the official journal volume year.
 
-| 模式 | 说明 | 示例 |
-|------|------|------|
-| DOI 含年 < 卷年 | 稿件编号早于正式出版 | DOI 含 2024，卷为 2025 → 引用 **2025** |
-| DOI 含年 > 卷年 | 稿件跨年处理 | DOI 含 2025，实际见刊 2026 → 引用 **2026** |
-| 上线年 ≠ 卷年 | 年底上线、次年年卷 | 上线 2024-12-31，卷为 2025 → 引用 **2025** |
+| Pattern | Description | Example |
+|---|---|---|
+| DOI year < Volume year | Manuscript assigned prior to official publication | DOI contains 2024, Vol is 2025 → Cite **2025** |
+| DOI year > Volume year | Cross-year processing | DOI contains 2025, published in 2026 → Cite **2026** |
+| Online year ≠ Volume year | Online at year-end, assigned to next year's volume | Online 2024-12-31, Vol is 2025 → Cite **2025** |
 
-**判断规则：** 优先以期刊官方卷年为准；无卷号时以上线年为准。
+**Rule:** Prioritize the official journal volume year; if no volume number exists, use the online publication year.
 
-## 2. 作者名问题
+## 2. Author Name Issues
 
-### 2.1 第一作者完全编造
+### 2.1 First Author Completely Fabricated
 
-AI 生成引用时最常见的"幻觉"——作者与 DOI 实际作者完全不同，属于最严重错误。
+The most common "hallucination" in AI-generated citations—the author is completely different from the actual DOI author. This is a critical error.
 
-**检测方法：** 通过 DOI 查 CrossRef / IEEE，对比第一作者姓氏。
+**Detection Method:** Query CrossRef / IEEE via DOI and compare the first author's surname.
 
-### 2.2 作者顺序颠倒
+### 2.2 Reversed Author Order
 
-数据库导出或手动整理时，可能将非第一作者放到首位。
+When exporting from databases or manually compiling, non-first authors may mistakenly be placed first.
 
-**检测方法：** 以官方期刊页面的作者顺序为准。
+**Detection Method:** Verify against the author order on the official journal publication page.
 
-### 2.3 中文作者名形近字混淆
+### 2.3 Author Name Typo / Character Confusion
 
-- `廷` ↔ `延`、`健` ↔ `建`、`浩` ↔ `皓` 等形近字容易写错
-- 以知网/万方的官方记录为准
+- Visually similar letters or characters may be miswritten during manual data entry
+- Verify against the publisher's official record
 
-### 2.4 西班牙语/葡萄牙语双姓
+### 2.4 Spanish / Portuguese Dual Surnames
 
-双姓（父姓+母姓）有多种缩写方式，**都算正确**：
+Dual surnames (paternal + maternal) have multiple acceptable abbreviation styles, **all of which are valid**:
 - `Álvarez López Y` = `López Y Á` = `Alvarez Lopez Y`
 
-### 2.5 "等"与完整作者列表
+### 2.5 "et al." vs. Full Author List
 
-中文引用中用"等"是可以接受的。如果列出全部作者（适合 3-5 人时），应确保顺序与原文一致。
+Using "et al." in citations is acceptable where formatting guidelines permit. If listing all authors (recommended for 3–5 authors), ensure the order matches the original publication exactly.
 
-## 3. 页码错误
+## 3. Page Number Errors
 
-常发生在以下场景：
-- 预印本 vs 正式出版的页码不同
-- 会议论文的早期版本 vs 最终版本
-- 同一篇论文在期刊和会议录中有不同页码
-- 手动录入时串行（如上一行的页码粘到了下一行）
+Commonly occurs in the following scenarios:
+- Preprint page numbers vs. official publication page numbers
+- Early conference paper versions vs. final proceedings versions
+- Same paper appearing in both journal special issues and conference proceedings with different pagination
+- Data entry slips (e.g., copying pagination from an adjacent row)
 
-**检测方法：** 以期刊/会议官网为准，不轻信数据库导出。
+**Detection Method:** Rely on official journal/conference websites rather than raw database exports.
 
-## 4. DOI 问题
+## 4. DOI Issues
 
-### 4.1 DOI 指向不同论文
+### 4.1 DOI Pointing to a Different Paper
 
-DOI 格式正确但指向完全不同的文献——通常是因为编号写错了一位（如 482157→482187）。
+The DOI format is valid but points to a completely different paper—typically due to a single-digit typo (e.g., 482157 → 482187).
 
-**检测方法：** 用 DOI 查 CrossRef，对比返回的标题是否一致。
+**Detection Method:** Look up the DOI on CrossRef and check whether the returned title matches.
 
-### 4.2 IEEE 老文献 DOI 404
+### 4.2 Older IEEE DOIs Returning 404
 
-2000 年以前的 IEEE 论文，DOI 在 Crossref 中常返回 404，但在 IEEE Xplore 中可查。**不应标记为错误**。
+For IEEE papers published before 2000, CrossRef queries often return 404, but they are searchable on IEEE Xplore. **Do not mark these as errors**.
 
-### 4.3 中文 DOI 不在 Crossref
+### 4.3 Regional DOIs Missing in CrossRef
 
-中文期刊的 DOI 注册在 CNKI 系统而非 Crossref，API 查询必然返回空。需通过 CNKI/万方验证。
+Certain regional journals register DOIs in local or national systems rather than CrossRef, so CrossRef API queries return empty. Verify via the journal's official database or web search.
 
-### 4.4 同一论文多个 DOI
+### 4.4 Multiple DOIs for the Same Paper
 
-预印本、正式出版、OA 版本可能有不同 DOI，优先使用正式出版版本的 DOI。
+Preprint, official publication, and OA versions may have different DOIs. Prioritize the official publication DOI.
 
-## 5. 会议论文年份
+## 5. Conference Paper Years
 
-- 同一篇论文在会议录和期刊特刊中可能有不同页码和年份
-- 会议名称可能有多个别名，应以 IEEE/官方名称为准
-- 年份取实际开会年份，不是论文集出版年份
+- The same paper may have different years and pagination in conference proceedings versus journal special issues
+- Conferences may have multiple acronyms or aliases; use the official IEEE/publisher name
+- Use the actual conference year, not the proceedings publication year
 
-## 6. 学位论文
+## 6. Theses and Dissertations
 
-- 2000 年代前的学位论文很多未数字化
-- 中文硕士论文引用格式：`作者. 论文名[D]. 学校, 年份.`
-- 页码可省略
-- 万方数据库的学位论文覆盖率通常高于知网
+- Many theses published before the 2000s are not digitized
+- Standard thesis citation format: `Author. Title [D]. Institution, Year.`
+- Page numbers may be omitted
+- Specialized thesis databases often provide better coverage than general search engines
 
-## 7. 产品手册/技术报告
+## 7. Product Manuals / Technical Reports
 
-- 用 `[Z]`（其他文献）标记
-- 验证方法：确认产品/机构确实存在、官网可访问
-- 年份用参考版本的发布年份
+- Marked with `[Z]` (other documents) in standard citation schemas
+- Verification method: Confirm the product/organization exists and the official webpage or document is accessible
+- Use the release year of the referenced version
 
-## 8. 出版社名称历史变更
+## 8. Historical Publisher Name Changes
 
-IEE（Institution of Electrical Engineers）在 2006 年与 IEE 合并为 IET（Institution of Engineering and Technology）。2006 年前出版的书籍应标 **IEE**，而非 IET。两个名称都指向同一机构，但引用时应尊重历史名称。
+For example, IEE (Institution of Electrical Engineers) merged to form IET (Institution of Engineering and Technology) in 2006. Books or papers published before 2006 should be cited as **IEE**, not IET. Both names refer to the same lineage, but citations should respect historical accuracy.

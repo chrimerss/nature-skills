@@ -9,25 +9,25 @@ Use:
 - black strokes and white fills;
 - rectangular process nodes;
 - solid directional arrows;
-- figure numbers such as `图1`;
+- figure numbers such as `Fig. 1`;
 - step identifiers such as `S1`, `S2`, and `S3`;
-- concise Chinese operation labels.
+- concise English operation labels.
 
 Write the final node as the concrete result of the method. Examples include:
 
-- `输出缺陷检测结果`;
-- `获得故障检测结果`;
-- `输出目标探测结果`;
-- `获得电池健康状态估计结果`;
-- `输出目标类别和目标位置`.
+- `Output defect detection result`;
+- `Obtain fault diagnosis result`;
+- `Output target detection result`;
+- `Obtain battery health state estimation result`;
+- `Output target category and bounding box`.
 
-Keep the result name identical to the independent claim. Do not use invented umbrella terms such as `技术结果`.
+Keep the result name identical to the independent claim. Do not use invented umbrella terms such as `technical result`.
 
 ## Abstract Figure
 
 Use the main overall method flowchart as the abstract figure unless another single figure better represents the principal technical solution.
 
-The same figure may and normally should also appear in the specification as `图1`. Reuse the same drawing file, figure number, node labels, and arrows. Do not generate separate "abstract" and "specification" versions that differ in wording or flow.
+The same figure may and normally should also appear in the specification as `Fig. 1`. Reuse the same drawing file, figure number, node labels, and arrows. Do not generate separate "abstract" and "specification" versions that differ in wording or flow.
 
 The abstract figure must:
 
@@ -42,8 +42,8 @@ Avoid:
 - color as the only carrier of meaning;
 - gradients, shadows, decorative icons, or photographic backgrounds;
 - unsupported branches or modules;
-- effect-only nodes such as "提高准确率";
-- vague final nodes such as `输出技术结果`, `获得处理结果`, or `输出最终结果`;
+- effect-only nodes such as "Improve accuracy";
+- vague final nodes such as `Output technical result`, `Obtain processing result`, or `Output final result`;
 - dense equations or experimental results inside nodes;
 - inconsistent terminology between the figure and claims.
 

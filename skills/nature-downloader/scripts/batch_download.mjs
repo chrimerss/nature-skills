@@ -10,7 +10,7 @@
 //   node batch_download.mjs --dois 10.x/a,10.y/b --out <dir> [--si]
 //   node batch_download.mjs --title "<exact title>" --out <dir> [--open-access]
 //   node batch_download.mjs --pdf-url "https://..." --title "<title>" --out <dir>
-//   node batch_download.mjs --title "<中文题名>" --out <dir> [--cnki-url <entry>] [--cnki-format pdf|any]
+//   node batch_download.mjs --title "<chinese title>" --out <dir> [--cnki-url <entry>] [--cnki-format pdf|any]
 //   options: [--proxy http://127.0.0.1:3456] [--debug] [--legacy-status]
 //
 // Boundaries: uses only the user's already-authenticated browser session.

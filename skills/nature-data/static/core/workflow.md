@@ -25,8 +25,8 @@ Repository and citation actions
 Missing information / risk flags
 - [specific flags or "None"]
 
-中文核对
-- [用中文列出作者需要确认的字段或 "无"]
+Author Confirmation
+- [List fields requiring author confirmation in English or "None"]
 ```
 
 When auditing an existing statement, lead with blocking issues first, then provide a revised version.

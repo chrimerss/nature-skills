@@ -16,7 +16,7 @@ Create search queries at three levels:
 2. `synonym`: alternate names and abbreviations
 3. `broad`: field context if no direct paper is found
 
-For Chinese claims, translate the scientific concepts, not the sentence literally. Keep acronyms and
+When formulating queries from complex claims, extract the core scientific concepts into search terms, not the sentence literally. Keep acronyms and
 standard nomenclature unchanged.
 
 ## Support grading

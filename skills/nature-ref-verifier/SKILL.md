@@ -1,177 +1,175 @@
 ---
 name: nature-ref-verifier
 description: >-
-  对学术文献逐条执行多源交叉验证，逐字段对比作者、标题、年份、卷期、页码，
-  标记卷年/DOI年冲突、作者顺序异常、页码偏差等问题，输出结构化验证报告。
-  可批量处理整篇论文/开题报告的参考文献列表，也可单条校验，支持与 Zotero 同步修正。
+  Performs multi-source cross-verification on academic references entry by entry. Compares authors, titles, years, volumes, issues, and pages field by field, flagging conflicts such as volume-year/DOI-year discrepancies, author sequence anomalies, and page number errors, and outputs a structured verification report.
+  Can process reference lists from full manuscripts or research proposals in batch, or verify single entries, supporting synchronized corrections with Zotero.
 ---
 
-# nature-ref-verifier — 学术参考文献多源验证技能
+# nature-ref-verifier — Multi-Source Academic Reference Verification Skill
 
-## 触发词
+## Triggers
 
-`verify references`、`校验文献`、`check references`、`核对参考文献`、`文献验证`、`ref check`
+`verify references`, `check references`, `reference verification`, `ref check`
 
-## 适用场景
+## Applicable Scenarios
 
-- 开题报告/论文提交前，对全部参考文献做最终核查
-- 收到审稿意见指出引用错误时，精准定位问题
-- 从旧项目迁移参考文献到新论文时，批量验证有效性
-- Zotero 库定期健康检查
+- Final verification of all references before submitting a proposal or manuscript
+- Pinpointing issues when editorial or reviewer feedback highlights citation errors
+- Batch validating effectiveness when migrating references from older projects to new papers
+- Regular health checks for Zotero libraries
 
-## 工作流
+## Workflow
 
-### Step 1: 解析输入
+### Step 1: Parse Input
 
-支持三种输入格式：
+Supports three input formats:
 
-**A. 整篇论文/开题报告**
-- 提取所有 `[N]` 编号的参考文献列表
-- 自动识别每条的 DOI（如有）
+**A. Full Manuscript / Proposal**
+- Extracts reference lists formatted with `[N]` numbering
+- Automatically identifies DOIs for each entry (if present)
 
-**B. 单条参考文献**
-- 用户直接粘贴一条引用文本
-- 或传入 Zotero item key
+**B. Single Reference Entry**
+- User directly pastes a single citation string
+- Or passes a Zotero item key
 
-**C. BibTeX 文件**
-- 直接解析 `.bib`，逐条校验
+**C. BibTeX File**
+- Directly parses `.bib` files and verifies entry by entry
 
-### Step 2: 多源并行查询
+### Step 2: Multi-Source Parallel Query
 
-对每条文献，并行查询以下来源（可用哪些取决于环境配置）：
+For each reference, queries the following sources concurrently (availability depends on environment configuration):
 
-| 来源 | 适用文献 | 典型覆盖率 |
-|------|---------|-----------|
-| **Crossref** | 有 DOI 的外文期刊 | ~70%（IEEE 老文献、中文期刊常有缺失）|
-| **IEEE Xplore** | IEEE 期刊/会议 | IEEE DOI 404 时的备选 |
-| **WebSearch (Bing/Google)** | 无 DOI 或来源缺失的文献 | 兜底方案 |
-| **CNKI/万方** (kimi-datasource / webbridge) | 中文期刊、学位论文 | 中文文献必查 |
-| **Zotero 本地库** (zotero-mcp) | 已入库文献 | 快速比对已有数据 |
+| Source | Applicable References | Typical Coverage |
+|---|---|---|
+| **Crossref** | English journal papers with DOIs | ~70% (older IEEE papers or local journals often missing) |
+| **IEEE Xplore** | IEEE journals / conferences | Fallback when IEEE DOIs return 404 |
+| **WebSearch (Bing/Google)** | References without DOIs or missing from sources | Fallback solution |
+| **Academic Databases** | Regional or institutional theses/journals | Essential for specialized regional literature |
+| **Zotero Local Library** | Existing library entries | Fast comparison against local data |
 
-**查询策略：** 优先用 DOI 查 Crossref，失败后降级用标题+作者搜 Web。
+**Query Strategy:** Prioritize DOI lookup via Crossref; on failure, downgrade to web search using title + authors.
 
-### Step 3: 字段级对比
+### Step 3: Field-Level Comparison
 
-对每条文献执行以下对比矩阵，按严重程度分为三级：
+Executes the following comparison matrix for each entry, categorized into three severity levels:
 
-#### 🔴 Critical（必须修正）
+#### 🔴 Critical (Must Fix)
 
-| 检查项 | 说明 | 典型案例 |
-|--------|------|---------|
-| 作者**姓名/顺序**不一致 | 第一作者不同、顺序颠倒、完全编造 | Smogavec→Leckebusch、Vainikainen→Mikhnev |
-| **页码**差异 ≥5 | 页码完全不匹配 | Noon: 1309-1319→1444-1449 |
-| **标题核心词**不一致 | 非大小写/标点差异 | Iwasaki T→Wu K H、Zhang W→Zhu M H |
-| DOI 指向不同论文 | DOI 存在但标题/作者不对应 | Abidi 1995: 10.1109/4.482157→10.1109/4.482187 |
+| Check Item | Description | Typical Case |
+|---|---|---|
+| Author **Name/Order** Mismatch | Different first author, reversed order, completely fabricated | Smogavec→Leckebusch, Vainikainen→Mikhnev |
+| **Page** Discrepancy ≥5 | Page numbers completely mismatched | Noon: 1309-1319→1444-1449 |
+| **Title Core Word** Mismatch | Non-case/punctuation differences | Iwasaki T→Wu K H, Zhang W→Zhu M H |
+| DOI Pointing to Different Paper | DOI exists but title/author does not correspond | Abidi 1995: 10.1109/4.482157→10.1109/4.482187 |
 
-#### 🟡 Warning（建议核对）
+#### 🟡 Warning (Suggest Checking)
 
-| 检查项 | 说明 | 典型案例 |
-|--------|------|---------|
-| **卷年** ≠ DOI 年 | 卷归属年份与 DOI 编号年不一致 | Dadrass 卷2025/上线2024、Ni 卷2022/DOI含2020 |
-| 作者**中间名缺失/多余** | "Rabiner L" vs "Rabiner L R" | 一般不影响检索 |
-| **期号**缺失 | 脚本有卷无期 | Smogavec 2025: 17→17(10) |
-| 页码偏差 ≤4 | 细微差异 | Leckebusch 15-24→15-25 |
-| 出版社名写法差异 | "IET" vs "IEE" | 历史名称变更 |
+| Check Item | Description | Typical Case |
+|---|---|---|
+| **Volume Year** ≠ DOI Year | Volume attribution year differs from DOI registration year | Dadrass Vol 2025/Online 2024, Ni Vol 2022/DOI 2020 |
+| Author **Middle Name Missing/Extra** | "Rabiner L" vs "Rabiner L R" | Generally does not affect retrieval |
+| **Issue Number** Missing | Volume present without issue | Smogavec 2025: 17→17(10) |
+| Page Discrepancy ≤4 | Minor differences | Leckebusch 15-24→15-25 |
+| Publisher Name Variation | "IET" vs "IEE" | Historical name changes |
 
-#### 🟢 Info（仅供参考）
+#### 🟢 Info (For Reference Only)
 
-| 检查项 | 说明 |
-|--------|------|
-| 标题大小写不同 | Title Case vs Sentence case |
-| 期刊名缩写 vs 全称 | "IEEE Trans. AES" vs "IEEE Transactions on Aerospace and Electronic Systems" |
-| 标点/连接词差异 | "and" vs "&" 等 |
+| Check Item | Description |
+|---|---|
+| Title Case Differences | Title Case vs Sentence case |
+| Journal Abbreviation vs Full Name | "IEEE Trans. AES" vs "IEEE Transactions on Aerospace and Electronic Systems" |
+| Punctuation/Conjunction Differences | "and" vs "&", etc. |
 
-### Step 4: 置信度评估
+### Step 4: Confidence Evaluation
 
-每条文献最终给出一个综合置信度：
+Assigns an overall confidence rating to each reference entry:
 
-| 等级 | 含义 |
-|------|------|
-| ✅ **Verified** | 多源一致，无需修改 |
-| ⚠️ **Check suggested** | 存在 🟡 级差异，需人工判断 |
-| ❌ **Needs fix** | 存在 🔴 级差异，必须更正 |
-| ❓ **Unverifiable** | 所有来源均无法查到（如内部报告、老旧学位论文）|
+| Level | Meaning |
+|---|---|
+| ✅ **Verified** | Consistent across multiple sources, no changes needed |
+| ⚠️ **Check suggested** | Contains 🟡 level discrepancies, requires manual judgment |
+| ❌ **Needs fix** | Contains 🔴 level discrepancies, must be corrected |
+| ❓ **Unverifiable** | Cannot be found across any sources (e.g., internal reports, older theses) |
 
-### Step 5: 输出报告
+### Step 5: Output Report
 
-支持以下输出格式：
+Supports the following output formats:
 
-**Markdown 摘要报告：**
+**Markdown Summary Report:**
 ```markdown
-## 验证结果：56 条文献
+## Verification Results: 56 References
 
 - ✅ Verified: 42
 - ⚠️ Check suggested: 8
 - ❌ Needs fix: 4
 - ❓ Unverifiable: 2
 
-### ❌ 必须修正
-| # | 问题 | 当前值 | 正确值 | 来源 |
-|---|------|--------|--------|------|
-| [6] | 作者错误 | Smogavec P | Leckebusch J | Wiley |
-| [42] | 作者顺序颠倒 | Vainikainen P… | Mikhnev V A… | IEEE |
+### ❌ Must Fix
+| # | Issue | Current Value | Correct Value | Source |
+|---|---|---|---|---|
+| [6] | Author Error | Smogavec P | Leckebusch J | Wiley |
+| [42] | Reversed Author Order | Vainikainen P… | Mikhnev V A… | IEEE |
 
-### ⚠️ 建议核对
-| # | 问题 | 详情 |
-|---|------|------|
-| [18] | 卷年/DOI年不一致 | 卷年2025，DOI年2024 |
+### ⚠️ Suggest Checking
+| # | Issue | Details |
+|---|---|---|
+| [18] | Volume Year / DOI Year Discrepancy | Volume year 2025, DOI year 2024 |
 ```
 
-**BibTeX Patch：** 直接生成修正后的 `.bib` 文件内容。
+**BibTeX Patch:** Directly generates corrected `.bib` file contents.
 
-**Zotero 更新指令：** 生成可执行的 `zotero-cli edit` 命令列表，用于批量修正 Zotero 库。
+**Zotero Update Instructions:** Generates executable commands for updating entries in batch.
 
-## 多来源交叉验证策略
+## Multi-Source Cross-Verification Strategy
 
 ```text
                    ┌─────────────┐
-                   │  用户输入    │
-                   │  DOI/标题   │
+                   │ User Input  │
+                   │ DOI / Title │
                    └──────┬──────┘
                           │
                           ▼
                    ┌─────────────┐
-                   │  字段拆分    │
-                   │ author/title │
+                   │ Field Split │
+                   │ author/title│
                    │ year/vol/pg │
                    └──────┬──────┘
                           │
            ┌──────────────┼──────────────┐
            ▼              ▼              ▼
     ┌──────────┐   ┌──────────┐   ┌──────────┐
-    │ CrossRef │   │  IEEE   │   │ WebSearch│
-    │  (DOI)  │   │ Xplore  │   │ (Bing/GG)│
+    │ CrossRef │   │  IEEE    │   │ WebSearch│
+    │  (DOI)   │   │ Xplore   │   │ (Bing/GG)│
     └────┬─────┘   └────┬─────┘   └────┬─────┘
          │              │              │
          ▼              ▼              ▼
     ┌──────────────────────────────────────┐
-    │       字段级对比 + 差异评级          │
-    │  author / title / year / vol / issue │
+    │  Field-Level Comparison + Rating     │
+    │ author / title / year / vol / issue  │
     │       pages / DOI / journal          │
     └────────────────┬─────────────────────┘
                      │
                      ▼
             ┌────────────────┐
-            │  置信度评估     │
+            │   Confidence   │
             │ ✅ ⚠️ ❌ ❓    │
             └────────────────┘
 ```
 
-## 已知局限与应对
+## Known Limitations and Mitigations
 
-| 局限 | 应对 |
-|------|------|
-| **中文 DOI 不在 Crossref 中** | 降级到 CNKI/万方（通过 webbridge 或 WebSearch）|
-| **IEEE 老文献 DOI 返回 404** | 用 IEEE Xplore 直接搜（其 DOI 不在 Crossref 注册）|
-| **学位论文无 DOI** | 用 CNKI / 万方 / ProQuest 验证标题+作者+年份 |
-| **产品手册/专利** | 不验证元数据，只确认来源可访问 |
-| **谷歌学术搜不到部分文献** | 切换搜索引擎（Bing、百度学术、Semantic Scholar）|
+| Limitation | Mitigation |
+|---|---|
+| **Regional DOIs missing in Crossref** | Downgrade to academic search or general web search |
+| **Older IEEE DOIs return 404** | Search directly via IEEE Xplore (DOIs not registered in Crossref) |
+| **Theses lacking DOIs** | Verify title + author + year via specialized thesis databases |
+| **Product Manuals / Patents** | Skip metadata verification, confirm only accessibility of source |
+| **Google Scholar missing certain papers** | Switch search engines (Bing, Semantic Scholar) |
 
-## 环境依赖
+## Environment Dependencies
 
-以下工具为可选，有则启用、无则降级：
+The following tools are optional; enable if present, downgrade if unavailable:
 
-- `zotero-cli` / `zotero-mcp`：Zotero 库读写
-- `kimi-datasource`（scholar）：学术搜索
-- `kimi-webbridge`：带登录态的 CNKI 查询
-- 基础 WebSearch / FetchURL：通用兜底
+- `zotero-cli` / `zotero-mcp`: Zotero library read/write
+- `academic-search`: Academic database search
+- General WebSearch / FetchURL: General fallback

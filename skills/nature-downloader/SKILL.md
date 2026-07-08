@@ -26,9 +26,9 @@ Verified routes are examples, not defaults. Every institution should start from 
 For a brand-new user, ask for a library resource URL first:
 
 ```text
-请发你平时进入图书馆电子资源/数据库的平台链接。
-可以是资源门户、数据库列表、Web of Science 入口、某个数据库详情页，
-或跳转到统一身份认证的登录链接。
+Please share the platform link you normally use to access your library's electronic resources/databases.
+This can be a resource portal, database list, Web of Science portal, database detail page,
+or a login link redirecting to unified authentication.
 ```
 
 Then infer the authorization route from the URL before saving config:
@@ -62,7 +62,7 @@ LIT_DL_CONFIG_DIR=/path/to/configdir
 
 The downloader reads this config automatically. If `discovery.web_of_science_url` is present, `scripts/batch_download.mjs` uses it as the Web of Science entry; otherwise it falls back to `https://webofscience.clarivate.cn/wos/woscc/basic-search`.
 
-For Chinese literature, the downloader also reads `discovery.cnki_url` when present. If absent, `scripts/batch_download.mjs --title "<中文题名>"` falls back to `https://kns.cnki.net/kns8s/defaultresult/index`.
+For Chinese literature, the downloader also reads `discovery.cnki_url` when present. If absent, `scripts/batch_download.mjs --title "<title>"` falls back to `https://kns.cnki.net/kns8s/defaultresult/index`.
 
 ## Resource URL Triage
 
@@ -231,11 +231,11 @@ node scripts/batch_download.mjs --dois "10.1007/s00122-021-03957-1,10.1111/pbi.1
 # by exact open-access title (arXiv fallback, useful for DOI-less papers):
 node scripts/batch_download.mjs --title "Attention Is All You Need" --open-access --out "<project>"
 # by Chinese exact title (default CNKI route):
-node scripts/batch_download.mjs --title "乡村振兴背景下数字治理研究" --out "<project>"
+node scripts/batch_download.mjs --title "Digital Governance under Rural Revitalization" --out "<project>"
 # by Chinese exact title, PDF only:
-node scripts/batch_download.mjs --title "乡村振兴背景下数字治理研究" --cnki-format pdf --out "<project>"
+node scripts/batch_download.mjs --title "Digital Governance under Rural Revitalization" --cnki-format pdf --out "<project>"
 # by Chinese exact title with a library-provided CNKI entry:
-node scripts/batch_download.mjs --title "乡村振兴背景下数字治理研究" --cnki-url "https://kns.cnki.net/kns8s/defaultresult/index" --out "<project>"
+node scripts/batch_download.mjs --title "Digital Governance under Rural Revitalization" --cnki-url "https://kns.cnki.net/kns8s/defaultresult/index" --out "<project>"
 # by known PDF URL:
 node scripts/batch_download.mjs --pdf-url "https://arxiv.org/pdf/1706.03762" --title "Attention Is All You Need" --out "<project>"
 # add --si only when the user asked for supporting information
@@ -263,12 +263,12 @@ Web of Science hosts to recognize: `webofscience.clarivate.cn`, `www.webofscienc
 4. Open the matching record and read it with `/eval`.
 5. Click the full-text route, in this order of preference:
    - `Free Full Text` / `Open Access` if present
-   - library resolver links: `Find it at`, `SFX`, `OpenURL`, `Full Text Links`, `查看全文`, `Full Text available via`, database/provider names such as Ovid
+   - library resolver links: `Find it at`, `SFX`, `OpenURL`, `Full Text Links`, `View Full Text`, `Full Text available via`, database/provider names such as Ovid
    - publisher full-text link: `View Full Text`, the publisher name, or `View PDF`
    - The full-text link should inherit the institutional session, so the publisher often grants access without a second login. If a second institutional handoff appears, complete it once.
 6. On the publisher page, find the PDF link (`PDF`, `View PDF`, `Download PDF`, `pdfft`, `/doi/pdf/`) and save it with `scripts/browser_pdf_downloader.mjs`.
-7. If the full-text resolver opens readable HTML full text but no valid PDF is exposed, save the HTML/text, mark `full_text_html_available`, and tell the user plainly: "已获取 HTML 全文，但当前授权路径没有可下载 PDF." Do not mislabel an HTML page as a PDF; if a PDF probe returns HTML, move it to diagnostics and explain that no valid PDF was downloaded.
-8. If the resolver/provider explicitly says the institution has no entitlement, mark `library_no_permission` and tell the user: "当前图书馆资源没有该文献全文权限." Do not hide this behind `failed_after_retry`.
+7. If the full-text resolver opens readable HTML full text but no valid PDF is exposed, save the HTML/text, mark `full_text_html_available`, and tell the user plainly: "HTML full text obtained, but no downloadable PDF is available under current entitlement." Do not mislabel an HTML page as a PDF; if a PDF probe returns HTML, move it to diagnostics and explain that no valid PDF was downloaded.
+8. If the resolver/provider explicitly says the institution has no entitlement, mark `library_no_permission` and tell the user: "The institutional library does not have full-text entitlement for this reference." Do not hide this behind `failed_after_retry`.
 9. **Do not download Supporting Information by default.** Only fetch SI if the user explicitly asked; otherwise just note whether SI exists (see Supporting Information below).
 10. Record the route taken (OA source or WoS → SFX/OpenURL/full-text provider → publisher/database) in the manifest.
 
@@ -335,13 +335,13 @@ The agent may click a saved-login confirmation button only when all conditions a
 
 ```text
 1. The page is on an expected institutional, library, federation, or database domain for the user's configured route.
-2. The user has explicitly authorized this action in the current conversation, for example: "可以点这个机构登录确认按钮".
-3. The visible action is clearly a login/confirm/continue button, such as 登录, 登 录, 确认登录, 继续登录, Continue, Proceed, or Sign in.
+2. The user has explicitly authorized this action in the current conversation, for example: "You can click the institutional login confirmation button".
+3. The visible action is clearly a login/confirm/continue button, such as Login, Confirm Login, Continue Login, Continue, Proceed, or Sign in.
 4. There is no visible CAPTCHA, Cloudflare challenge, QR-only login, SMS/OTP field, push-approval prompt, password reset prompt, consent-to-share-new-data prompt, or account/security warning.
 5. The agent does not read, reveal, copy, store, type, or modify credentials.
 ```
 
-A federation/WAYF/机构选择 page carries no credentials and may be selected when the institution is unambiguous and the user has authorized it. If any condition is unclear, pause and ask the user to handle that tab. Do not repeatedly click login; one click is enough to test whether the saved-login state works.
+A federation/WAYF/institution selection page carries no credentials and may be selected when the institution is unambiguous and the user has authorized it. If any condition is unclear, pause and ask the user to handle that tab. Do not repeatedly click login; one click is enough to test whether the saved-login state works.
 
 Create or update `carsi_retry.tsv` whenever institutional authentication blocks a batch. Use this header:
 
@@ -394,7 +394,7 @@ Useful options:
 
 ## Supporting Information
 
-**Do not download supporting information by default — download the main PDF only.** Fetch SI only when the user explicitly asks for it (e.g. "连补充材料一起下", "include SI", "download supplementary", "把补充材料也下了"). When you skip SI, still glance at the landing page and record in the manifest whether SI appears to exist (`si_status = available_not_downloaded`) so the user can ask for it later; do not spend extra navigation just to enumerate the files.
+**Do not download supporting information by default — download the main PDF only.** Fetch SI only when the user explicitly asks for it (e.g. "include SI", "download supplementary", "also download supplementary files"). When you skip SI, still glance at the landing page and record in the manifest whether SI appears to exist (`si_status = available_not_downloaded`) so the user can ask for it later; do not spend extra navigation just to enumerate the files.
 
 When the user does ask for supporting information, use this method:
 
@@ -457,7 +457,7 @@ FirstAuthor_Year_Journal_short-title_SI.pdf
 For project work, keep a folder like:
 
 ```text
-文献自动下载/
+literature-automatic-download/
   manifest.tsv
   PDFs/
   SupportingInformation/
@@ -486,7 +486,7 @@ If a page shows publisher bot verification, CAPTCHA, Cloudflare, QR login, SMS/O
 - Record `publisher_verification_waiting_user` in `publisher_verification.tsv`, or `sciencedirect_robot_check` for ScienceDirect.
 - Continue only after the user says the browser step is complete.
 
-If a page shows institutional SSO, CAS, CARSI/Shibboleth, OpenAthens, SAML, federation/WAYF/机构选择, database login, or IP-login options:
+If a page shows institutional SSO, CAS, CARSI/Shibboleth, OpenAthens, SAML, federation/WAYF/institution selection, database login, or IP-login options:
 
 - Do not ask for or accept credentials in chat.
 - If the user has explicitly authorized it and the browser has already filled credentials, click the visible login/confirm button once.
@@ -495,7 +495,7 @@ If a page shows institutional SSO, CAS, CARSI/Shibboleth, OpenAthens, SAML, fede
 
 If the aggregation entry shows no full-text link:
 
-- Try the publisher's own `Institutional login` / `机构登录` / CARSI/Shibboleth/OpenAthens route and select the user's institution when authorized.
+- Try the publisher's own `Institutional login` / `CARSI/Shibboleth/OpenAthens` route and select the user's institution when authorized.
 - Try the DOI on the publisher page once an institutional session exists.
 - Check open-access copies only from legitimate sources.
 - Record `no_authorized_pdf_found` rather than seeking unauthorized mirrors.
@@ -521,4 +521,4 @@ These items depend on the user's live institution/library session and should be 
 
 1. The exact institutional login, federation, proxy, WebVPN, or database hosts that appear in the address bar.
 2. The base URL / link pattern of the library aggregation or database entries the user actually uses.
-3. Whether a federation/WAYF/机构选择, IP-login, or database-login step appears, and whether the user authorizes selecting the unambiguous institution/login option.
+3. Whether a federation/WAYF/institution selection, IP-login, or database-login step appears, and whether the user authorizes selecting the unambiguous institution/login option.

@@ -51,7 +51,7 @@ Use only:
 - `Science`
 - `Cell`
 
-This is appropriate when the user says "只看正刊", "主刊", "flagship only", or explicitly excludes
+This is appropriate when the user says "flagship only", "main journals", or explicitly excludes
 subjournals.
 
 ## Official source notes

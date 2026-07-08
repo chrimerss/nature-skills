@@ -1,6 +1,6 @@
 ---
 name: nature-writing
-description: Draft, restructure, or plan Nature-style manuscript sections from author-provided claims, results, figures, notes, or Chinese drafts. Use when the user wants to write or rebuild an abstract, introduction, related-work, method, experiments, discussion, conclusion, title, or full manuscript argument rather than only polish finished prose. Also trigger on general academic-writing requests even without the word "Nature", such as writing a paper from scratch, drafting a manuscript/section, structuring a paper, and Chinese phrasings like 学术写作、科研写作、论文写作、写论文、写paper、SCI写作、帮我写论文、搭论文框架、起草论文、写引言/摘要/讨论.
+description: Draft, restructure, or plan Nature-style manuscript sections from author-provided claims, results, figures, notes, or rough drafts. Use when the user wants to write or rebuild an abstract, introduction, related-work, method, experiments, discussion, conclusion, title, or full manuscript argument rather than only polish finished prose. Also trigger on general academic-writing requests even without the word "Nature", such as writing a paper from scratch, drafting a manuscript/section, or structuring a paper.
 version: 1.0.0
 author: Community contribution, refactored into static/dynamic layers
 ---
@@ -9,7 +9,7 @@ author: Community contribution, refactored into static/dynamic layers
 
 This skill is split into two layers:
 
-- A **static layer** under `static/` that holds versioned, reusable content fragments (core stance + workflow, paper-type playbooks, per-section drafting guidance, language-specific rules, per-journal style).
+- A **static layer** under `static/` that holds versioned, reusable content fragments (core stance + workflow, paper-type playbooks, per-section drafting guidance, per-journal style).
 - A **dynamic layer** (this file plus `manifest.yaml`) that detects the request's axes and loads only the fragments needed for the current job.
 
 Do not try to apply the drafting logic from memory or from this router. Always load fragments from disk as described below.
@@ -20,7 +20,7 @@ Follow these five steps every time the skill is invoked.
 
 ### 1. Load the manifest and the core layer
 
-Read [manifest.yaml](manifest.yaml). It declares the axes (`paper_type`, `section`, `language`, `journal`), the allowed values, and the file paths each value maps to.
+Read [manifest.yaml](manifest.yaml). It declares the axes (`paper_type`, `section`, `journal`), the allowed values, and the file paths each value maps to.
 
 Also read every file listed under `always_load`. These hold the default stance, writing workflow, and output format that apply to every drafting job.
 
@@ -30,7 +30,6 @@ For each axis in the manifest, decide the value using the manifest's `detect:` h
 
 - `paper_type` — research / methods / hypothesis / algorithmic / review. Default: research.
 - `section` — abstract / intro / related-work / method / experiments / discussion / conclusion / title. May be multiple. Ask the user if it is ambiguous and matters for the draft.
-- `language` — en or zh-to-en. Detect from the user's notes themselves.
 - `journal` — nature / nat-comms / generic. Default: generic. If the user names a Nature subjournal, treat it as `nature`.
 
 State the detected axis values in one short line to the user before drafting, so they can correct you cheaply.
@@ -49,7 +48,6 @@ Apply the loaded fragments in this priority order:
 2. Paper-type playbook — argument chain, drafting order.
 3. Section-specific drafting rules and structure.
 4. Journal-specific framing and constraints.
-5. Language-specific sentence and paragraph rules (apply last).
 
 Run the 8-step workflow in `core/workflow.md` end-to-end. Do not skip steps 1-3 (planning) just because the user asked for prose immediately — write the one-sentence argument first.
 

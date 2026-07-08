@@ -83,7 +83,7 @@ The script checks common structural and language issues directly from PPTX XML:
 - main evidence images that are too small for presentation use,
 - repeated near-miss alignment between objects,
 - text-heavy shapes likely to overflow,
-- AI-template phrases such as `一句话总结`, `最有价值的后续方向`, and `不是……而是……`,
+- AI-template phrases such as `In summary`, `Most valuable future direction`, and `Not just X, but Y`,
 - slide count, media count, and notes count.
 
 Also perform these checks in code or manually when the generation stack allows it:
@@ -93,7 +93,7 @@ Also perform these checks in code or manually when the generation stack allows i
 - count non-empty notes slides if notes were planned,
 - check every shape's left/top/right/bottom stays within the slide canvas,
 - flag text-heavy slides by character count and number of text boxes,
-- flag any text box whose estimated text length is too large for its width/height, especially mixed Chinese-English strings,
+- flag any text box whose estimated text length is too large for its width/height, especially long text strings,
 - flag long unbroken tokens or labels that may overflow narrow boxes,
 - count repeated layout patterns and flag decks that reuse the same composition too often,
 - flag images whose displayed size is too small for their role,

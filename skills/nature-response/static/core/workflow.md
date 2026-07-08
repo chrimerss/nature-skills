@@ -2,7 +2,7 @@
 
 ## Accepted inputs
 
-The skill may receive: pasted editorial decision or revision-invitation email; editor decision letter; reviewer comments; previous response draft; manuscript change notes; tracked-change summary; line or page numbers; figure, table, and supplement list; author notes in Chinese or English; journal name and article type; manuscript title; author list; manuscript ID; original manuscript text or LaTeX source; requested cover-letter or LaTeX output format.
+The skill may receive: pasted editorial decision or revision-invitation email; editor decision letter; reviewer comments; previous response draft; manuscript change notes; tracked-change summary; line or page numbers; figure, table, and supplement list; author notes; journal name and article type; manuscript title; author list; manuscript ID; original manuscript text or LaTeX source; requested cover-letter or LaTeX output format.
 
 If reviewer boundaries or comment segmentation are ambiguous, flag the ambiguity instead of inventing reviewer structure.
 
@@ -61,7 +61,4 @@ Manuscript change checklist
 
 Missing information / risk flags
 - [specific unresolved items or "None"]
-
-中文核对
-- [when the user writes in Chinese; otherwise omit unless useful]
 ```

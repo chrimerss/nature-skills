@@ -58,12 +58,12 @@ def main() -> int:
         shutil.copy2(paper, project / "paper" / paper.name)
 
     intake = {
-        "target_jurisdiction": "中国发明专利",
+        "target_jurisdiction": "United States / International / General Patent",
         "requested_deliverable": "full-draft",
-        "publication_status": "[TO CONFIRM: 论文是否已经公开]",
+        "publication_status": "[TO CONFIRM: whether paper is already published or publicly disclosed]",
         "publication_dates": [],
-        "inventorship": "[TO CONFIRM: 按实际技术贡献确认发明人]",
-        "ownership": "[TO CONFIRM: 确认申请人和权属]",
+        "inventorship": "[TO CONFIRM: confirm inventors based on actual technical contribution]",
+        "ownership": "[TO CONFIRM: confirm applicant and ownership rights]",
         "source_files": [],
     }
     intake_path = project / "work" / "00-intake.json"
@@ -76,12 +76,12 @@ def main() -> int:
     notes = project / "supplementary" / "inventor-notes.md"
     if not notes.exists():
         notes.write_text(
-            "# 发明人补充说明\n\n"
-            "- 实际技术贡献：\n"
-            "- 与论文不同的工程实现：\n"
-            "- 可替代方案和参数范围：\n"
-            "- 首次公开时间与方式：\n"
-            "- 希望重点保护的内容：\n",
+            "# Inventor Supplementary Notes\n\n"
+            "- Actual technical contributions:\n"
+            "- Engineering implementations differing from paper:\n"
+            "- Alternative embodiments and parameter ranges:\n"
+            "- Date and method of first public disclosure:\n"
+            "- Key aspects to protect:\n",
             encoding="utf-8",
         )
 

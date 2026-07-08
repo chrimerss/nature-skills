@@ -1,46 +1,46 @@
 # researchwrite
 
-Proposal-first 科研写作状态机。不是"帮我写论文"——它强制执行写作前的论证架构，写完跑四层 QA pipeline。
+A proposal-first scientific writing state machine. This is not a generic "write a paper for me" tool—it enforces argumentation architecture prior to drafting, followed by a four-layer QA pipeline.
 
-## 这是什么
+## What is it?
 
-三个模式 + 四层质量闸门：
+Three modes + four quality gates:
 
 ```
-你的输入                  模式           做什么
+Your Input                  Mode           What it does
 ─────────────            ─────          ──────────────────
-题目、方向、模糊想法  →  compose       9步：从 research canon 到 .docx 导出
-已有段落/章节          →  revise        9步：差距分析 → 对比润色前后
-已有草稿 + 要扩写      →  hybrid        compose + revise 组合
+Title, direction, vague idea →  compose       9 steps: from research canon to .docx export
+Existing paragraphs/sections →  revise        9 steps: gap analysis → compare before/after
+Existing draft + expansion   →  hybrid        combination of compose + revise
 ```
 
-写完后自动跑 QA：
+Automated QA pipeline after drafting:
 
 ```
-Gate 2: professor 专家审查（内容层）
-  ├── 论文 → 方法论专家 + 领域专家
-  ├── proposal → 可行性专家 + 创新性专家
-  └── 综述 → 覆盖面专家 + 批判深度专家
+Gate 2: professor Expert Review (Content Layer)
+  ├── Paper → Methodology Expert + Domain Expert
+  ├── Proposal → Feasibility Expert + Innovation Expert
+  └── Review → Coverage Expert + Critical Depth Expert
       ↓
-Gate 1: avoid-ai-writing（语言层，仅英文）
+Gate 1: avoid-ai-writing (Language Layer, English only)
       ↓
-Gate 3: 自动校验（citation？可复现？编号连续？）
+Gate 3: Automated Validation (Citations present? Reproducible? Consecutive numbering?)
       ↓
-Gate 4: 评分阈值（≥7.0 通过，<7.0 定向回退 ≤3 轮）
+Gate 4: Scoring Threshold (≥7.0 passes, <7.0 targeted rollback ≤3 rounds)
 ```
 
-## 核心原则
+## Core Principles
 
-| # | 原则 | 说明 |
+| # | Principle | Description |
 |---|------|------|
-| 1 | 证据先于文字 | 起草前必须建立 research_canon 和 evidence_table |
-| 2 | 论证先于章节 | 写正文前必须完成 argument_map |
-| 3 | 契约先于段落 | 每节需要 purpose / allowed claims / forbidden claims |
-| 4 | 动态专家 | 按失败模式召唤对应审查专家 |
-| 5 | 内容先于语言 | 诊断科学逻辑后再做语言打磨 |
-| 6 | 该停就停 | 平台期、证据缺失是停止理由 |
+| 1 | Evidence before prose | Must establish research_canon and evidence_table before drafting |
+| 2 | Argument before sections | Must complete argument_map before writing main body text |
+| 3 | Contracts before paragraphs | Each section requires defined purpose / allowed claims / forbidden claims |
+| 4 | Dynamic experts | Summon domain experts tailored to specific failure modes |
+| 5 | Content before language | Diagnose scientific logic before performing language polishing |
+| 6 | Stop when appropriate | Plateaus and missing evidence are valid reasons to stop |
 
-## 安装
+## Installation
 
 ```bash
 # Hermes / Claude Code
@@ -48,53 +48,53 @@ git clone https://github.com/Jiahao8595/research-pipeline.git
 cp -r research-pipeline/researchwrite ~/.hermes/skills/
 ```
 
-安装后 `/reload-skills`。
+After installation, run `/reload-skills`.
 
-**前置依赖：**
+**Dependencies:**
 
 ```bash
-hermes skills install brainstorm     # 入口追问
-hermes skills install professor      # 动态专家审查
-hermes skills install avoid-ai-writing  # 英文去 AI 味
-hermes skills install docx           # Word 文档导出
+hermes skills install brainstorm     # Entry-point follow-up questioning
+hermes skills install professor      # Dynamic expert review
+hermes skills install avoid-ai-writing  # English anti-AI-slop
+hermes skills install docx           # Word document export
 ```
 
-## 使用示例
+## Usage Examples
 
 ```
-# 从零写 proposal
-"用 researchwrite 帮我写一个关于钙钛矿稳定性优化的研究计划"
+# Write a proposal from scratch
+"Use researchwrite to draft a research proposal on perovskite stability optimization"
 
-# 审查已有文本
-"用 researchwrite 审查这段 discussion，paper 挡位"
+# Review existing text
+"Use researchwrite to review this discussion section, paper gear"
 
-# 快速扫读
-"快速扫一下这个摘要"（只标记问题，不全跑 QA）
+# Quick scan
+"Quickly scan this abstract" (marks issues only without running full QA)
 ```
 
-## 四挡位
+## Four Gears
 
-| 挡位 | 场景 | 阈值 | 说明 |
+| Gear | Scenario | Threshold | Description |
 |------|------|:---:|------|
-| `paper` | 投稿论文 | 7.0 | 全跑 |
-| `proposal` | 研究方案/开题 | 7.0 | 全跑 |
-| `internal` | 内部汇报 | 5.0 | 跳过专家审查 |
-| `quick` | 快速扫读 | — | 只标记 P0 问题 |
+| `paper` | Journal submission | 7.0 | Full run |
+| `proposal` | Research proposal | 7.0 | Full run |
+| `internal` | Internal report | 5.0 | Skip expert review |
+| `quick` | Quick scan | — | Mark P0 issues only |
 
-## 文件结构
+## File Structure
 
 ```
 researchwrite/
-├── SKILL.md                       ← 技能入口
-├── README.md                      ← 本文件
+├── SKILL.md                       ← Skill entry point
+├── README.md                      ← This file
 ├── references/
-│   ├── evaluation-rubric.md       ← 8 维 × 4 锚点评分体系
-│   ├── stopping-rules.md          ← 迭代终止条件
-│   ├── foundation-files.md        ← 建立 foundation 五文件
-│   └── validation-checklist.md    ← 自动校验清单
+│   ├── evaluation-rubric.md       ← 8 dimensions × 4 anchor scoring system
+│   ├── stopping-rules.md          ← Iteration stopping conditions
+│   ├── foundation-files.md        ← Establishing foundation files
+│   └── validation-checklist.md    ← Automated validation checklist
 ├── scripts/
-│   └── build_proposal_docx.py     ← .md → .docx 构建脚本
-└── templates/                     ← 空模板（新建项目用）
+│   └── build_proposal_docx.py     ← .md → .docx build script
+└── templates/                     ← Empty templates (for new projects)
     ├── 00_scope.md
     ├── 01_research_canon.md
     ├── 02_evidence_table.md
@@ -105,8 +105,8 @@ researchwrite/
     └── revision_brief.md
 ```
 
-> **完整 reference 文件**（compose/revise/hybrid 模式详解、专家分派、导出归档、综述框架等 12 份）未包含在公开版本中。如需获取，请通过 [GitHub issue](https://github.com/Jiahao8595/research-pipeline/issues) 或邮件联系作者。
+> **Complete reference files** (detailed explanations of compose/revise/hybrid modes, expert dispatch, export archiving, review frameworks, etc., 12 files total) are not included in the public release. Contact the author via [GitHub issue](https://github.com/Jiahao8595/research-pipeline/issues) or email if needed.
 
-## 作者
+## Author
 
-十五 (JL Lab) — 基于博士研究实战构建的写作框架。
+JL Lab — A writing framework built on doctoral research practice.

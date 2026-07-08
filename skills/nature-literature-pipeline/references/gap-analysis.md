@@ -3,9 +3,9 @@
 ## When to use
 
 When the user asks to confirm whether a specific research topic has been explored:
-- "搜一下 XX 体系有没有人做过"
-- "确认这个方向是不是空白"
-- "看看这个四元系有没有文献"
+- "Check if anyone has studied the XX system"
+- "Confirm whether this research direction is a gap"
+- "See if there is any literature on this quaternary system"
 
 ## Workflow (4 steps)
 
@@ -30,13 +30,13 @@ If direct hits = 0, decompose the system into sub-systems:
 | MgCl₂-NaCl-ZnCl₂ (ternary) | keyword | studied / not studied |
 
 Classify hits into three tiers:
-- **直接相关**: exact quaternary system → if 0, confirmed gap
-- **边缘相关**: contains 2-3 of 4 components → extract key data (method, salt composition, findings)
-- **无关**: only 1 component → skip
+- **Directly relevant**: exact quaternary system → if 0, confirmed gap
+- **Partially relevant**: contains 2-3 of 4 components → extract key data (method, salt composition, findings)
+- **Irrelevant**: only 1 component → skip
 
 ### Step 3: Extract edge papers
 
-For each 边缘相关 paper, extract:
+For each partially relevant paper, extract:
 - Full citation (authors, journal, year, DOI if available)
 - Salt composition used
 - Method (CV, DSC, XRD, simulation, etc.)
@@ -47,13 +47,13 @@ For each 边缘相关 paper, extract:
 
 Write to `outputs/literature/<topic>_gap_report.md` with these sections:
 
-1. **核心结论** — one sentence: confirmed gap or partial overlap
-2. **子体系文献全景** — table per sub-system with representative works
-3. **边缘相关文献** — extracted details from edge papers
-4. **空白分析** — why nobody did it + why it's worth doing
-5. **论文 gap statement 草稿** — English paragraph ready for introduction
-6. **建议下一步** — concrete experimental/computational next steps
-7. **搜索方法论记录** — all search terms and hit counts (for reproducibility)
+1. **Core Conclusion** — one sentence: confirmed gap or partial overlap
+2. **Sub-system Literature Overview** — table per sub-system with representative works
+3. **Partially Relevant Literature** — extracted details from edge papers
+4. **Gap Analysis** — why nobody did it + why it's worth doing
+5. **Draft Gap Statement** — English paragraph ready for introduction
+6. **Recommended Next Steps** — concrete experimental/computational next steps
+7. **Search Methodology Log** — all search terms and hit counts (for reproducibility)
 
 ### Cost control
 

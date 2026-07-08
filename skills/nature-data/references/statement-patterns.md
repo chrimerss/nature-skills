@@ -3,7 +3,7 @@
 Use these patterns as starting points. Replace bracketed fields with verified information. Delete
 any sentence that does not apply.
 
-For Chinese users, treat the Chinese line under each pattern as author-facing guidance, not as
+Treat the Note under each pattern as author-facing guidance, not as
 submission text. Submit the English statement unless the journal explicitly asks otherwise.
 
 ## Public repository, single dataset
@@ -15,7 +15,7 @@ contains [brief contents: e.g. raw measurements, processed tables, figure source
 and analysis inputs].
 ```
 
-中文对应：本研究的原始/处理后/源数据已存储在某个正式仓库，并有登录号、DOI 或永久链接。
+Note: State clearly that raw/processed/source data are stored in a formal repository with accession number, DOI, or permanent link.
 
 ## Public repository, multiple datasets
 
@@ -25,7 +25,7 @@ The datasets generated in this study are available as follows: [dataset family 1
 and figure source data in [Repository/Supplementary Data file] under [identifier or file name].
 ```
 
-中文对应：不同类型数据分别放在不同仓库或文件中，需要逐一说明，不能笼统写“数据见附件”。
+Note: When different dataset types are stored in different repositories or files, describe each separately rather than stating "data available in supplements".
 
 ## Data in paper and supplementary files only
 
@@ -37,7 +37,7 @@ All data supporting the findings of this study are included in the paper, its Su
 Information, and Source Data files. [Name exact Supplementary Tables/Data files when possible.]
 ```
 
-中文对应：只有当支撑结论的数据确实都在正文、补充材料和 Source Data 中时才这样写。
+Note: Use this only when all data supporting conclusions are genuinely present in the paper, supplements, and Source Data files.
 
 ## Reused public data
 
@@ -47,7 +47,7 @@ This study used publicly available [dataset name/type] from [Repository or sourc
 [data type] data were generated for this part of the analysis.
 ```
 
-中文对应：使用公开数据库时，需要写清数据库名、版本/发布日期/访问日期和编号，并引用数据集。
+Note: When using public databases, specify the database name, version/release/access date, and accession number, and cite the dataset.
 
 ## Mixed generated and reused data
 
@@ -57,7 +57,7 @@ reused in the analysis were obtained from [source 1, identifier/version] and [so
 identifier/version]. Source data for [figures/tables] are provided in [location].
 ```
 
-中文对应：自己产生的数据和复用的公开数据要分开写，避免让读者误以为所有数据都是本研究产生。
+Note: Separate newly generated data from reused public data to avoid implying all data were generated in this study.
 
 ## Controlled-access human or sensitive data
 
@@ -69,7 +69,7 @@ office/repository procedure] at [contact or URL]. Access requires [ethics approv
 agreement/other conditions] and will be reviewed according to [policy or committee name].
 ```
 
-中文对应：涉及人类参与者、隐私或伦理限制时，不能只写“因隐私不可公开”；还要写申请路径和审核条件。
+Note: For human participants or privacy/ethical restrictions, do not simply state "unavailable due to privacy"; specify the request pathway and access conditions.
 
 ## Third-party or licensed data
 
@@ -80,7 +80,7 @@ to [provider/contact/URL]. Derived data that can be shared are available in [rep
 [DOI/accession], subject to [licence or restriction].
 ```
 
-中文对应：第三方授权数据不能由作者重新分发时，要说明数据所有者和读者应向谁申请。
+Note: For third-party licensed data that cannot be redistributed, identify the data owner and where readers should apply.
 
 ## Commercially restricted data
 
@@ -91,7 +91,7 @@ Requests for access may be directed to [company/data owner/contact or URL] and a
 metadata, synthetic data, or source data] in [location] to support interpretation of the results.
 ```
 
-中文对应：企业或商业数据不可公开时，需要说明商业限制、申请对象，以及是否有汇总数据或元数据可公开。
+Note: For proprietary or commercial data, specify the commercial restrictions, the contact for requests, and whether aggregated data or metadata are public.
 
 ## Embargoed data
 
@@ -104,7 +104,7 @@ repository access route]. The data will become publicly available at [DOI/access
 embargo ends.
 ```
 
-中文对应：如果数据暂时不公开，必须已有仓库记录、审稿访问方式和明确解封时间或条件。
+Note: If data are temporarily restricted under embargo, provide an existing repository record, peer-review access mechanism, and explicit release date/conditions.
 
 ## Request-based access with justified restriction
 
@@ -115,7 +115,7 @@ subject to [approval, agreement, or legal condition]. [Public metadata/aggregate
 are available at [location].
 ```
 
-中文对应：“合理请求”只有在说明原因、接收机构、审核条件和可公开元数据后才可接受。
+Note: "Available upon reasonable request" is acceptable only when accompanied by the specific reason, receiving institution, review criteria, and available metadata.
 
 ## No datasets generated or analysed
 
@@ -125,7 +125,7 @@ Use sparingly.
 No datasets were generated or analysed during the current study.
 ```
 
-中文对应：只有确实没有生成或分析任何数据时才能使用，经验研究通常不适用。
+Note: Use only when no datasets were generated or analyzed during the study; typically not applicable to empirical research.
 
 For theory papers, be more specific:
 
@@ -138,7 +138,7 @@ This work is theoretical and does not generate or analyse empirical datasets.
 | Weak wording | Why it fails | Stronger move |
 |---|---|---|
 | Data are available upon request. | No reason, route, eligibility, or durability. | Add restriction reason, responsible access body, conditions, and metadata. |
-| Data are available from the corresponding author on reasonable request. | Often a literal translation of "可向通讯作者合理索取"; not durable or specific enough. | Use an institutional/repository access route and define review conditions. |
+| Data are available from the corresponding author on reasonable request. | Often too vague and informal; not durable or specific enough. | Use an institutional/repository access route and define review conditions. |
 | Data will be uploaded after acceptance. | No current repository or durable identifier. | Deposit before submission or provide a private reviewer link. |
 | All data are in the manuscript. | Often false for figures/statistics. | Name exact source data, supplementary files, and omitted raw data. |
 | Data are proprietary. | Does not say who controls access. | Name owner/provider and access route. |

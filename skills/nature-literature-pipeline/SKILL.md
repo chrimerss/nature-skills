@@ -4,7 +4,7 @@ description: |
   Complete automated literature discovery pipeline: multi-source search → six-dimension scoring → fine reading → formatted delivery → archival.
   Combines a configurable engine with daily cron-driven application layer. Works with Feishu, Telegram, or any messaging platform.
 version: 1.0.0
-author: 十五 (JL Lab)
+author: Shiwu (JL Lab)
 license: MIT
 metadata:
   hermes:
@@ -55,7 +55,7 @@ The agent will configure keywords, delivery target, and archive path automatical
 Then set up a daily cron job:
 
 ```
-Set up a daily literature push at 08:30 Beijing time, 30 candidates, top 5 delivered
+Set up a daily literature push at 08:30 UTC, 30 candidates, top 5 delivered
 ```
 
 ## Architecture
@@ -71,7 +71,7 @@ The skill is organized in two layers:
 
 All domain-specific content is configurable:
 
-- **Keywords** — your research keywords (English + Chinese)
+- **Keywords** — your research keywords in English
 - **Scoring weights** — adjust the six dimensions for your field
 - **Classification rules** — define your own tier system (A-E or custom)
 - **Delivery target** — Feishu group, Telegram channel, email, etc.

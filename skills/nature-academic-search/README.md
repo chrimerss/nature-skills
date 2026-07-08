@@ -1,59 +1,58 @@
-# `nature-academic-search` 技能
+# `nature-academic-search` Skill
 
-`nature-academic-search` 是面向 Claude Code / Codex 工作流的学术检索技能包，集成 CrossRef、PubMed、arXiv、Scopus 和 ScienceDirect 文献数据源。
+`nature-academic-search` is an academic retrieval skill package for agentic coding workflows, integrating CrossRef, PubMed, arXiv, Scopus, and ScienceDirect literature data sources.
 
-## 功能
+## Features
 
-- **多源并发搜索**：默认查询 CrossRef、PubMed、arXiv，并合并返回结果。
-- **按 ID 获取详情**：支持 DOI、PMID、arXiv ID 自动识别。
-- **格式化引用**：支持 APA、Nature、IEEE、Vancouver 等风格。
-- **MeSH 词表查询**：辅助构建精准 PubMed 检索式。
-- **文献管理脚本**：支持 `.nbib`、`.ris`、`.bib`、`.enw` 格式互转。
-- **Scopus / ScienceDirect**：支持论文、作者、机构、期刊、引用概览、PlumX 指标和 ScienceDirect 元数据检索。
-- **严格他引与高影响力引用者审计**：判断引用目标论文的文献是否属于严格他引，排除自引、团队引和明显合作网络引用；可把指定文章的文章名、发表时间、作者名、作者机构、引用数、严格他引数和 DOI 整理成表格；进一步识别院士、校长/院长、杰青/长江、Fellow、高被引学者等高影响力引用者，并提取他们在正文中如何引用目标论文。
+- **Multi-source concurrent search**: Queries CrossRef, PubMed, and arXiv by default, merging the results.
+- **Fetch details by ID**: Supports automatic identification and retrieval by DOI, PMID, or arXiv ID.
+- **Formatted citations**: Supports APA, Nature, IEEE, Vancouver, and other citation styles.
+- **MeSH vocabulary lookup**: Helps construct precise PubMed search strategies.
+- **Literature management scripts**: Supports format conversion across `.nbib`, `.ris`, `.bib`, and `.enw`.
+- **Scopus / ScienceDirect**: Supports searches for papers, authors, affiliations, journals, citation overviews, PlumX metrics, and ScienceDirect article metadata.
+- **Strict independent citation & high-profile citer audits**: Evaluates whether citing papers are strict independent citations by excluding self-citations, team citations, and obvious collaborative network citations; compiles tables containing article title, publication date, authors, affiliations, citation count, strict independent citation count, and DOI; further identifies influential citers (e.g., academy members, institutional leaders, talent awardees, fellows, highly cited researchers) and extracts how they cite the target paper in the full text.
 
-## MCP 运行
+## MCP Execution
 
-插件默认通过 `uv` 启动隔离运行环境：
+The plugin starts an isolated execution environment using `uv` by default:
 
 ```bash
 uv run --no-project --directory <mcp-server> --with "mcp>=1.0.0,<2.0.0" --with "requests>=2.28.0,<3.0.0" --with "toml>=0.10.2,<2.0.0" --with "lxml>=4.9.0,<6.0.0" --with "pybliometrics>=4.4.1,<5.0.0" python academic_search_server.py
 ```
 
-PubMed 需要在环境变量 `PUBMED_EMAIL` 或 `mcp-server/config.toml` 中配置邮箱。Scopus / ScienceDirect 是可选 provider，复用本机 `pybliometrics` 配置，默认读取 `~/.config/pybliometrics.cfg`；不要把 Elsevier API key 写入插件文件。
+PubMed requires configuring an email address in the `PUBMED_EMAIL` environment variable or in `mcp-server/config.toml`. Scopus / ScienceDirect are optional providers that reuse local `pybliometrics` configuration, reading from `~/.config/pybliometrics.cfg` by default; do not store Elsevier API keys directly in plugin files.
 
-`search_papers` 只有在 `sources` 显式包含 `scopus` / `sciencedirect` 时才会调用 Elsevier-backed provider，以避免无意消耗 Elsevier API 配额。
+`search_papers` invokes the Elsevier-backed provider only when `sources` explicitly includes `scopus` / `sciencedirect` to avoid unintentionally consuming Elsevier API quotas.
 
-## MCP 工具
+## MCP Tools
 
-| 工具 | 说明 |
-|------|------|
-| `search_papers` | 默认三源并发搜索；可显式添加 Scopus / ScienceDirect |
-| `get_paper_by_id` | 按 DOI、PMID 或 arXiv ID 获取详情 |
-| `get_citation` | 生成格式化引用 |
-| `lookup_mesh` | 查询 MeSH 词表 |
-| `search_scopus` | Scopus 高级检索 |
-| `get_scopus_abstract` | Scopus 摘要与详情元数据 |
-| `get_scopus_citation_overview` | Scopus 引用概览 |
-| `search_scopus_authors` / `get_scopus_author` | 作者检索与详情 |
-| `search_scopus_affiliations` / `get_scopus_affiliation` | 机构检索与详情 |
-| `search_scopus_serial_titles` / `get_scopus_serial_title` | 期刊与连续出版物检索和详情 |
-| `get_scopus_plumx_metrics` | PlumX 指标 |
-| `search_sciencedirect` | ScienceDirect 检索 |
-| `get_sciencedirect_article_metadata` | ScienceDirect 文章元数据 |
+| Tool | Description |
+|------|-------------|
+| `search_papers` | Default concurrent search across three sources; can explicitly add Scopus / ScienceDirect |
+| `get_paper_by_id` | Fetch details by DOI, PMID, or arXiv ID |
+| `get_citation` | Generate formatted citation string |
+| `lookup_mesh` | Query MeSH vocabulary |
+| `search_scopus` | Scopus advanced search |
+| `get_scopus_abstract` | Scopus abstract and detailed metadata |
+| `get_scopus_citation_overview` | Scopus citation overview |
+| `search_scopus_authors` / `get_scopus_author` | Author search and details |
+| `search_scopus_affiliations` / `get_scopus_affiliation` | Affiliation search and details |
+| `search_scopus_serial_titles` / `get_scopus_serial_title` | Journal and serial title search and details |
+| `get_scopus_plumx_metrics` | PlumX metrics |
+| `search_sciencedirect` | ScienceDirect search |
+| `get_sciencedirect_article_metadata` | ScienceDirect article metadata |
 
-## 严格他引与引用者画像
+## Strict Independent Citations & Citer Profiling
 
-当用户询问 `严格他引`、`他引判定`、`谁引用了我的文章`、`引用我的文章的人有没有大牛`、`文章引用表`、`指定文章引用数`、`严格他引数`、`整理成表格`、`院士引用`、`杰青引用`、`长江学者引用` 或 `Fellow citation` 时，本技能会加载
-`references/workflows/wf6-strict-other-citation-impact-audit.md`。
+When the user asks about strict independent citations, self-citation exclusion, who cited an article, influential citers, article citation tables, or citation tabulation, this skill loads `references/workflows/wf6-strict-other-citation-impact-audit.md`.
 
-该 workflow 的默认标准比普通“非自引”更严格：
+The default standard for this workflow is stricter than general "non-self-citation":
 
-1. 先确认目标论文的 DOI、作者、机构和可用作者 ID。
-2. 汇总 Scopus、Web of Science、Semantic Scholar、OpenAlex、CrossRef 或出版商 cited-by 页面中的 citing papers，并说明覆盖范围。
-3. 排除直接自引、同团队/同课题组引用、明显合作网络引用和元数据不足的情况。
-4. 如果用户要表格，输出 `文章名 / 发表时间 / 作者名 / 作者机构 / 引用数 / 严格他引数 / DOI / 证据备注`。
-5. 对严格他引或可能外部引用者，核验是否存在院士、校长/院长、杰青/长江、Fellow、高被引学者等身份信号。
-6. 从可获取全文中抽取 citation context，判断对方是把目标论文作为背景、方法、对比、延伸、复现、批评还是综述性引用。
+1. First confirm the target paper's DOI, authors, affiliations, and available author IDs.
+2. Compile citing papers from Scopus, Web of Science, Semantic Scholar, OpenAlex, CrossRef, or publisher cited-by pages, noting coverage limits.
+3. Exclude direct self-citations, same-team/same-group citations, obvious collaborative network citations, and cases with insufficient metadata.
+4. If a table is requested, output: `Title / Publication Date / Authors / Affiliations / Total Citations / Strict Independent Citations / DOI / Evidence Notes`.
+5. For strict independent or potential external citers, verify status signals such as academy member, university president/dean, national talent awardee, Fellow, or highly cited researcher.
+6. Extract citation context from accessible full texts to classify whether the target paper is cited as background, method, comparison, extension, reproduction, critique, or review.
 
-所有身份标签都必须附带证据来源；无法确认同一人的情况只能标记为 `unverified`。
+All status labels must be accompanied by evidence sources; cases where identity cannot be confirmed must be marked as `unverified`.

@@ -1,6 +1,6 @@
-# 实验日志示例：热稳定性测试
+# Experiment Log Example: Thermal Stability Testing
 
-以下是一个热稳定性实验的完整日志示例。所有数据均为虚构。
+The following is a complete log example for a thermal stability experiment. All data is fictitious.
 
 ---
 
@@ -8,60 +8,60 @@
 ---
 exp_id: HY-T-260601-001
 date: 2026-06-01
-salt_system: 混合盐体系
+salt_system: Hybrid Salt System
 salt_batch: HY-B1-B001
 salt_composition: "*** (*** wt%)"
-exp_type: 热稳定性
-furnace: 管式炉_1号
+exp_type: Thermal Stability
+furnace: Tube_Furnace_1
 crucible: AL-005
 total_salt_mass_g: 40.0
-temperature_profile: "RT→200°C(4h,脱水)→500°C(8h)→700°C(2h)→炉冷"
+temperature_profile: "RT→200°C(4h, dehydration)→500°C(8h)→700°C(2h)→Furnace cool"
 atmosphere: "Ar (100 mL/min)"
-condensate: "收集到 2.3g 无色液体"
+condensate: "Collected 2.3g colorless liquid"
 absorption_solution: "0.1M NaOH 50mL"
 anomaly: false
 anomaly_ref:
-tags: [热稳定性, 管式炉, Ar气氛]
+tags: [Thermal Stability, Tube Furnace, Ar Atmosphere]
 ---
 
-# 实验目的
+# Objective
 
-评估候选配方 B1 在 Ar 保护气氛下的热稳定性，确定高温段质量损失和分解产物。
+Evaluate the thermal stability of candidate formulation B1 under protective Ar atmosphere, determining high-temperature mass loss and decomposition products.
 
-# 实验步骤
+# Procedure
 
-1. 手套箱中配制 B1 盐 40.0g，转入刚玉坩埚
-2. 管式炉 Ar 气氛（100 mL/min），200°C 干燥 4h（去除吸附水）
-3. 升温至 500°C 恒温 8h，再升温至 700°C 恒温 2h
-4. 出气口接冷凝管 + NaOH 吸收瓶
-5. 各温度段取样记录，炉冷后称重
+1. Prepare 40.0g of B1 salt in the glovebox and transfer to an alumina crucible.
+2. Place in tube furnace under Ar flow (100 mL/min) and dry at 200°C for 4h (to remove adsorbed water).
+3. Heat to 500°C and hold isothermally for 8h, then heat to 700°C and hold for 2h.
+4. Connect exhaust outlet to condenser + NaOH absorption flask.
+5. Sample and record observations at each temperature stage; weigh after furnace cooling.
 
-# 观察
+# Observations
 
-- 200°C 段无明显变化
-- 500°C 段冷凝管收集到 ~2.3g 无色液体（可能是结晶水或低沸点组分）
-- 700°C 段盐颜色由白色变为浅黄，但未见明显分解
-- 冷凝液 pH 约 6（弱酸性）
+- No noticeable change during the 200°C stage.
+- At 500°C, condenser collected ~2.3g of colorless liquid (likely water of crystallization or low-boiling components).
+- At 700°C, salt color changed from white to pale yellow, but no obvious decomposition occurred.
+- Condensate pH was approximately 6 (slightly acidic).
 
-# 结果
+# Results
 
-- 总质量损失：11.5%（以原始质量计）
-- 主要失重发生在 200-500°C 段（脱水），500-700°C 段失重仅 1.2%
-- 残余盐 ICP-OES 分析显示组分比例无明显变化
-- 热稳定性合格
+- Total mass loss: 11.5% (based on initial mass).
+- Mass loss occurred primarily in the 200-500°C range (dehydration); mass loss between 500-700°C was only 1.2%.
+- Residual salt ICP-OES analysis showed no significant change in component ratios.
+- Thermal stability qualified.
 
-# 异常
+# Anomalies
 
-无。
+None.
 
-# 下一步
+# Next Steps
 
-- 对比 B2、B3 候选配方的热稳定性
-- 延长 700°C 恒温时间至 24h 验证长期稳定性
-- Karl Fischer 滴定定量残余水分
+- Compare thermal stability against candidate formulations B2 and B3.
+- Extend 700°C isothermal holding time to 24h to verify long-term stability.
+- Perform Karl Fischer titration to quantify residual moisture.
 
 ---
 
-# 原始材料
+# Raw Materials
 
-`raw/experiments/2026.06.01_B1热稳定性_HY-T-260601-001/`
+`raw/experiments/2026.06.01_B1_Thermal_Stability_HY-T-260601-001/`

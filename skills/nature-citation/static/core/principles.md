@@ -10,10 +10,10 @@ Use this skill to turn manuscript text into a defensible citation export:
 
 Interpret journal scope from the user's wording, but keep the filter strict:
 
-- `Nature系列`: search Nature Portfolio first. Include `Nature`, `Nature [field]`, `Nature Communications`, `Communications [field]`, `Scientific Reports`, and `npj` journals.
+- `Nature series`: search Nature Portfolio first. Include `Nature`, `Nature [field]`, `Nature Communications`, `Communications [field]`, `Scientific Reports`, and `npj` journals.
 - `CNS`: search `Cell`, `Nature`, and `Science` plus their major sister journals.
-- `CNS及其子刊` or `CNS/sister journals`: search only accepted flagship and subjournal titles in Nature Portfolio, the AAAS Science family, and Cell Press.
-- `只要Nature/Science/Cell正刊`: restrict to the flagship journals `Nature`, `Science`, and `Cell`.
+- `CNS and sister journals`: search only accepted flagship and subjournal titles in Nature Portfolio, the AAAS Science family, and Cell Press.
+- `Flagship only`: restrict to the flagship journals `Nature`, `Science`, and `Cell`.
 
 Do not treat merely related journals as in-scope. A title is valid only if it is in the accepted publisher-family whitelist or clearly matches the official naming pattern for that family. If the user needs an exhaustive or submission-critical boundary, verify current official journal pages before finalizing because journal portfolios change. The exact boundary and official source notes are in `references/journal-scope.md`.
 

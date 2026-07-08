@@ -6,7 +6,7 @@ Produce these files when possible:
 
 - `paper.md`
 - `source_map.json`
-- `translation_notes.md`
+- `processing_notes.md`
 - `assets/` for extracted images, crops, or figure snippets
 - `reader.html` only when the user explicitly asks for a browser preview
 
@@ -14,18 +14,16 @@ Produce these files when possible:
 
 When the source is a full paper, include all pages or all extractable sections in the reader. Do not limit the bundle to selected pages, a teaser excerpt, or the abstract unless the user explicitly requests a preview.
 
-`paper.md` is the primary deliverable. It must expose paragraph-level bilingual alignment:
+`paper.md` is the primary deliverable. It must expose structured paragraph-level alignment:
 
 ```markdown
 <a id="S001"></a>
 **Source:** p.1 S001
 
-**Original:** ...
-
-**中文:** ...
+[source paragraph]
 ```
 
-For source material that cannot be extracted or translated confidently, keep the source anchor and write a visible uncertainty note instead of dropping the block.
+For source material that cannot be extracted or processed confidently, keep the source anchor and write a visible uncertainty note instead of dropping the block.
 
 ## `source_map.json`
 
@@ -46,8 +44,7 @@ Keep a stable source map so follow-up questions can cite the same anchors.
       "page": 1,
       "type": "heading|paragraph|caption|table|table_row|note",
       "order": 1,
-      "original_text": "",
-      "translation": "",
+      "content": "",
       "bbox": [0, 0, 0, 0],
       "confidence": "high|medium|low",
       "refs": ["F001", "T001"],
@@ -75,7 +72,7 @@ Keep a stable source map so follow-up questions can cite the same anchors.
   "glossary": [
     {
       "term": "",
-      "translation": "",
+      "definition": "",
       "note": ""
     }
   ]
@@ -87,10 +84,10 @@ Keep a stable source map so follow-up questions can cite the same anchors.
 The Markdown reader should support:
 
 - stable headings in paper order
-- paragraph-level original/Chinese pairs
+- structured paragraph blocks
 - source IDs on every substantive block
 - figure/table cards near the relevant prose
-- English captions and Chinese caption translations
+- clear captions
 - page navigation for full papers
 - terminology notes and uncertainty notes
 
@@ -98,7 +95,7 @@ The Markdown reader should support:
 
 The page should support:
 
-- desktop side-by-side original and translation
+- clean desktop reading layout
 - mobile stacked layout
 - clickable source IDs on every block
 - figure cards near the relevant text
@@ -123,16 +120,14 @@ Do not add a question area unless explicitly requested.
 
 ```markdown
 <a id="F001"></a>
-### Fig. 1. 中文短标题
+### Fig. 1. [short title]
 
 **Placed near:** p.3 S012
 **Source:** p.4 C001
 
 ![Fig. 1](assets/fig1.png)
 
-**Original caption:** ...
-
-**中文图注:** ...
+**Caption:** ...
 
 **Reading note:** ...
 ```

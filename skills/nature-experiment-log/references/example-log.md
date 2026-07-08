@@ -1,6 +1,6 @@
-# 实验日志示例
+# Experiment Log Example
 
-以下是一个材料腐蚀浸泡实验的完整日志示例。所有数据均为虚构，仅展示格式和填写规范。
+The following is a complete log example for a materials immersion corrosion experiment. All data is fictitious and intended solely to demonstrate formatting and recording standards.
 
 ---
 
@@ -8,73 +8,73 @@
 ---
 exp_id: CL-M-260529-001
 date: 2026-05-29
-salt_system: 氯盐
+salt_system: Chloride Salt
 salt_batch: CL-Q1-B001
 salt_composition: "Q1 (*** mol%)"
-exp_type: 腐蚀验证
-furnace: 马弗炉_1号
+exp_type: Corrosion Verification
+furnace: Muffle_Furnace_1
 crucible: AL-001
 total_salt_mass_g: 50.0
-temperature_profile: "RT→300°C(2h,干燥)→500°C(300h)→炉冷"
+temperature_profile: "RT→300°C(2h, drying)→500°C(300h)→Furnace cool"
 atmosphere: Ar
 material: 316L
-material_category: 奥氏体不锈钢
+material_category: Austenitic Stainless Steel
 sample_id: 316L-2026-001
 sample_dimensions_mm: "20×10×2"
-sample_surface: "SiC 1200目"
+sample_surface: "SiC 1200 grit"
 pre_mass_g: 3.4521
 post_mass_g: 3.4489
 mass_loss_g: 0.0032
 corrosion_rate_um_year: ***
 anomaly: false
 anomaly_ref:
-tags: [氯盐, 腐蚀验证, 316L, Q1]
+tags: [Chloride, Corrosion Verification, 316L, Q1]
 ---
 
-# 实验目的
+# Objective
 
-验证候选配方 Q1 在 500°C 下对 316L 奥氏体不锈钢的腐蚀行为，作为四元氯盐体系筛选的基线实验。
+Verify the corrosion behavior of candidate formulation Q1 on 316L austenitic stainless steel at 500°C as a baseline experiment for screening quaternary chloride salt systems.
 
-# 实验步骤
+# Procedure
 
-1. 配制 Q1 盐 50.0g，手套箱中混合均匀
-2. 316L 样品 SiC 1200 目打磨，丙酮超声清洗，干燥称重
-3. 马弗炉 Ar 气氛下 300°C 干燥 2h（去除吸附水）
-4. 升温至 500°C，恒温 300h
-5. 炉冷至室温，取出样品
-6. 去离子水超声清洗，干燥称重
-7. 计算失重和腐蚀速率
+1. Prepare 50.0g of Q1 salt mixture and mix uniformly inside the glovebox.
+2. Polish 316L sample with SiC 1200 grit paper, ultrasonically clean in acetone, dry, and weigh.
+3. Dry in muffle furnace under Ar atmosphere at 300°C for 2h (to remove adsorbed moisture).
+4. Heat to 500°C and maintain isothermally for 300h.
+5. Furnace cool to room temperature and retrieve sample.
+6. Ultrasonically clean in deionized water, dry, and weigh.
+7. Calculate mass loss and corrosion rate.
 
-# 观察
+# Observations
 
-- 盐冷却后呈浅黄色透明玻璃态，无明显分层
-- 样品表面失去金属光泽，呈均匀暗灰色
-- 坩埚内壁无可见腐蚀痕迹
-- 未观察到异常气体释放或飞溅
+- Upon cooling, the salt formed a pale yellow transparent glassy state with no obvious phase separation.
+- Sample surface lost its metallic luster and turned uniform dark gray.
+- No visible corrosion marks on the inner wall of the crucible.
+- No abnormal gas release or splashing observed.
 
-# 结果
+# Results
 
-- 样品质量损失：0.0032 g（0.09%）
-- 表面无明显局部腐蚀或点蚀
-- 待 XRD 和 SEM-EDS 确认腐蚀产物组成
+- Sample mass loss: 0.0032 g (0.09%).
+- No obvious localized corrosion or pitting on the surface.
+- XRD and SEM-EDS pending to confirm corrosion product composition.
 
-# 异常
+# Anomalies
 
-无。
+None.
 
-# 下一步
+# Next Steps
 
-- SEM-EDS 截面分析确认腐蚀层结构和 Cr 贫化
-- XRD 确认腐蚀产物相组成
-- 与 Q2、Q3 候选配方平行实验对比
+- Perform SEM-EDS cross-sectional analysis to confirm corrosion layer structure and Cr depletion.
+- Conduct XRD analysis to identify corrosion product phases.
+- Run parallel comparison experiments with candidate formulations Q2 and Q3.
 
 ---
 
-# 原始材料
+# Raw Materials
 
-原始图片和语音记录归档于：
-`raw/experiments/2026.05.29_Q1腐蚀验证_316L_CL-M-260529-001/`
+Raw image and audio records are archived at:
+`raw/experiments/2026.05.29_Q1_Corrosion_Verification_316L_CL-M-260529-001/`
 
-- `图片/IMG_5291.jpg` — 腐蚀前样品表面
-- `图片/IMG_5292.jpg` — 腐蚀后样品表面
-- `图片/IMG_5293.jpg` — 盐冷却后坩埚内部
+- `Images/IMG_5291.jpg` — Pre-corrosion sample surface
+- `Images/IMG_5292.jpg` — Post-corrosion sample surface
+- `Images/IMG_5293.jpg` — Crucible interior after salt cooling

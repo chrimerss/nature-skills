@@ -13,7 +13,7 @@ Quick guide:
 | Preprints / CS / physics | arXiv | bioRxiv / medRxiv | — |
 | Exhaustive review | PubMed + CrossRef + arXiv | Semantic Scholar + bioRxiv/medRxiv | WoS / Scopus |
 | Citation count sensitive | Semantic Scholar | CrossRef | — |
-| Chinese literature | — | — | CNKI / 万方 (manual) |
+| Regional literature | — | — | Local repositories (manual) |
 
 ## Environment setup
 
@@ -80,5 +80,5 @@ uv run --no-project --directory <mcp-server> --with "mcp>=1.0.0,<2.0.0" --with "
 ## Limitations
 
 - Google Scholar and Semantic Scholar are scraped (not API-backed) — results may vary.
-- Chinese literature (CNKI / 万方) not indexed by CrossRef or PubMed.
+- Regional literature (CNKI / Wanfang) not indexed by CrossRef or PubMed.
 - Citation counts may be delayed (CrossRef updates monthly).

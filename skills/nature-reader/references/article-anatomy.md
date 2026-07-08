@@ -1,16 +1,15 @@
-# Article Anatomy — a reading aid (Nat Commun 2025 CS/AI corpus)
+# Article Anatomy — a reading aid (CS/AI corpus)
 
-Use this file as a **reading aid** while building the bilingual reader, to label
+Use this file as a **reading aid** while building the structured reader, to label
 the *argumentative function* of each block so the reader can locate the gap, the
 contribution, the decisive result, and the self-contained figure legends. It is
-distilled from a 2025 set of 20 open-access *Nature Communications* computer
-science / AI papers across genres.
+distilled from a set of open-access computer science / AI papers across genres.
 
 > This is an aid for **locating structure**, not a license to summarise. The
-> `core/principles.md` contract still holds: translate every block for meaning,
-> keep the bilingual side-by-side, and never degrade to a summary-only output.
+> `core/principles.md` contract still holds: process every block for meaning,
+> keep the structured text blocks, and never degrade to a summary-only output.
 > Use the function labels to help a reader navigate, e.g. in a short orientation
-> note, not to replace the full translation.
+> note, not to replace the full text.
 
 ## Where each function lives
 
@@ -47,11 +46,9 @@ science / AI papers across genres.
 - **Benchmark/framework**: the gap is "the field lacks an agreed standard";
   tables dominate; stresses community / reproducibility / versioning.
 
-## 中文阅读提示
+## Critical Reading Tips
 
-- 给读者的导航可标注每段功能(背景/空白/贡献/结果/局限),帮助快速抓论证骨架;
-  但**不得**因此省略逐段对照翻译或退化为摘要。
-- "然而 / 仍是挑战 / 鲜有研究 / 缺乏 / 没有 X 就无法 Y"是空白信号词;`Here we / 本文`
-  之后是作者自述贡献。
-- 图注通常自足(含 n、误差、检验);若图注末句给出推断结论,标注为"解读"而非"描述"。
-- 先判定体裁(研究论文/综述/观点/评论/基准),再据此理解其组织方式与语气。
+- Labeling the argumentative function of each paragraph (background/gap/contribution/result/limits) helps readers quickly grasp the argumentation skeleton, but **must not** replace or omit paragraph-level structured processing.
+- Words like "However", "remains challenging", "scarcely studied", "lacks", "without X, Y cannot be..." signal research gaps; sentences starting with "Here we..." or "In this work..." state the author's contribution.
+- Figure captions are usually self-contained (including sample size n, error bars, and statistical tests); if the last sentence of a caption presents an inferred conclusion, label it as "Interpretation" rather than "Description".
+- First determine the genre (research article/review/perspective/comment/benchmark), then understand its organizational structure and tone accordingly.

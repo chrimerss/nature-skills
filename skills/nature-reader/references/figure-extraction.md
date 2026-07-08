@@ -10,7 +10,7 @@ Default placement rule:
 
 - crop each figure/table into `assets/` and show it near its first substantive mention in the body text
 - keep the caption attached to the figure/table
-- show both original caption and Chinese caption translation
+- show clear caption text
 - if the caption contains critical details, keep caption and figure together
 - if a table is central to the claim, keep it near the paragraph that interprets it
 - if a figure/table appears before the body discussion in PDF layout, still place it where it best supports the reading flow and add `Placed near: p.X SYYY`
@@ -36,16 +36,14 @@ Figure/table blocks in `paper.md` should use this shape:
 
 ```markdown
 <a id="F001"></a>
-### Fig. 1. [short translated title]
+### Fig. 1. [short title]
 
 **Placed near:** p.3 S012
 **Source:** p.4 C001
 
 ![Fig. 1](assets/fig1.png)
 
-**Original caption:** [caption text]
-
-**中文图注:** [caption translation]
+**Caption:** [caption text]
 
 **Reading note:** [brief explanation of what to inspect in the figure]
 ```

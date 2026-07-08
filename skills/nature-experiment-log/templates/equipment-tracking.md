@@ -1,30 +1,30 @@
-# 设备与试剂追踪
+# Equipment and Reagent Tracking
 
-追踪实验室设备和试剂的编号、状态和维护记录。
+Tracks laboratory equipment, crucible inventory, reagent batches, calibration status, and maintenance records.
 
-## 设备
+## Equipment
 
-| 设备代码 | 名称 | 型号 | 编号 | 状态 | 上次校准 | 备注 |
-|---------|------|------|------|------|---------|------|
-| M1 | 马弗炉 | — | — | 正常 | — | |
-| T1 | 管式炉 | — | — | 正常 | — | |
-| E1 | 电化学工作站 | — | — | 正常 | — | |
+| Equipment Code | Name | Model | ID | Status | Last Calibrated | Notes |
+|---|---|---|---|---|---|---|
+| M1 | Muffle Furnace | — | — | Normal | — | |
+| T1 | Tube Furnace | — | — | Normal | — | |
+| E1 | Electrochemical Workstation | — | — | Normal | — | |
 
-## 坩埚
+## Crucibles
 
-| 编号 | 材质 | 容量 | 使用次数 | 状态 | 备注 |
-|------|------|------|:---:|------|------|
-| AL-001 | 刚玉 | 50ml | 0 | 新 | |
-| AL-002 | 刚玉 | 100ml | 0 | 新 | |
+| ID | Material | Capacity | Usage Count | Status | Notes |
+|---|---|---|:---:|---|---|
+| AL-001 | Alumina | 50ml | 0 | New | |
+| AL-002 | Alumina | 100ml | 0 | New | |
 
-## 试剂
+## Reagents
 
-| 试剂 | 纯度 | 批次 | 库存 | 开封日期 | 备注 |
-|------|------|------|------|---------|------|
+| Reagent | Purity | Batch | Inventory | Opened Date | Notes |
+|---|---|---|---|---|---|
 | — | — | — | — | — | |
 
-## 使用
+## Usage
 
-- 每次实验引用设备代码和坩埚编号
-- 定期更新校准和库存状态
-- 异常设备标记为"停用"
+- Reference equipment codes and crucible IDs in every experiment log.
+- Regularly update calibration and inventory status.
+- Mark malfunctioning equipment as "Out of Service".

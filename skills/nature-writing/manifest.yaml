@@ -14,6 +14,7 @@ always_load:
   - static/core/stance.md
   - static/core/workflow.md
   - static/core/output-format.md
+  - static/fragments/language/en.md
 
 axes:
   paper_type:
@@ -47,17 +48,6 @@ axes:
       conclusion:     static/fragments/section/conclusion.md
       title:          static/fragments/section/title.md
     multi: true
-
-  language:
-    detect: |
-      Detect the source language of the user's notes. Use zh-to-en when the
-      input is Chinese, mixed Chinese-English, or organized as Chinese lab
-      notes. Otherwise use en.
-    values:
-      en:             static/fragments/language/en.md
-      zh-to-en:       static/fragments/language/zh-to-en.md
-    default: en
-    multi: false
 
   journal:
     detect: |
@@ -95,7 +85,5 @@ references:
       path: references/paragraph-flow.md
     - condition: final manuscript self-review, rejection-risk audit, claim-evidence alignment
       path: references/paper-review.md
-    - condition: deeper Chinese-author repair patterns beyond the language fragment
-      path: references/chinese-author-workflow.md
     - condition: user wants concrete abstract/introduction/method examples
       path: references/examples/index.md

@@ -1,37 +1,37 @@
-# 异常记录
+# Anomaly Log
 
-记录实验过程中发现的所有异常，供后续质量控制和故障排查。
+Records all anomalies identified during experiments for quality control and troubleshooting.
 
-## 格式
+## Format
 
 ```yaml
 ---
 date: YYYY-MM-DD
 related_exp: EXP-ID
-anomaly_type: 设备故障 / 操作失误 / 结果异常 / 安全事件
-severity: 低 / 中 / 高
-status: 待处理 / 已处理 / 需复查
+anomaly_type: Equipment Failure / Operation Error / Abnormal Result / Safety Incident
+severity: Low / Medium / High
+status: Pending / Resolved / Needs Review
 ---
 
-## 描述
+## Description
 
-[异常现象的客观描述]
+[Objective description of the anomaly]
 
-## 影响
+## Impact
 
-[对实验结果的影响评估]
+[Assessment of impact on experimental results]
 
-## 处理
+## Action Taken
 
-[已采取的措施]
+[Measures already implemented]
 
-## 备注
+## Notes
 
-[后续建议]
+[Recommendations for future runs]
 ```
 
-## 使用
+## Usage
 
-- 每次实验结束后检查是否有异常
-- 有则追加记录到此文件
-- 定期复查未处理异常
+- Check for anomalies after every experiment.
+- If found, append an entry to this file.
+- Regularly review pending anomalies.

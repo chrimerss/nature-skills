@@ -1,62 +1,62 @@
 # experiment-log
 
-标准化实验日志记录工具。接收图片、语音、文字等原始材料，自动生成带 YAML frontmatter 的结构化日志。
+A standardized experiment logging tool. Ingests raw materials such as images, audio recordings, and text notes, and automatically generates structured logs with YAML frontmatter.
 
-## 这是什么
+## What is this?
 
-不是"帮我记实验"——它是一套标准化的日志管线：接收原始材料 → 提取结构化信息 → 生成唯一 ID → 写出标准格式日志 → 归档原始文件。
+This is not just a generic "note-taking helper" — it is a standardized logging pipeline: ingest raw records → extract structured information → generate unique IDs → write standard formatted logs → archive raw files.
 
-适用于任何需要规范实验记录的研究领域。
+It is applicable to any research field requiring rigorous, traceable experimental records.
 
-## 安装
+## Installation
 
 ```bash
 git clone https://github.com/Jiahao8595/research-pipeline.git
 cp -r research-pipeline/experiment-log ~/.hermes/skills/
 ```
 
-安装后 `/reload-skills`。
+After installation, run `/reload-skills`.
 
-**前置依赖：**
+**Prerequisites:**
 
 ```bash
-hermes skills install feishu-cli-integration   # 飞书消息接收（路径 B）
-hermes skills install obsidian                 # vault 文件管理
+hermes skills install feishu-cli-integration   # For messaging app integration (Path B)
+hermes skills install obsidian                 # For vault file management
 ```
 
-## 使用方式
+## Usage
 
-**路径 A — CLI 直接提交：**
+**Path A — Direct CLI Submission:**
+```text
+"Record an experiment: Performed 316L chloride salt corrosion at 500°C for 300h under Ar atmosphere, weight loss 0.0032g"
 ```
-"记录一个实验：今天在 500°C 做了 316L 的氯盐腐蚀，300h，Ar 气氛，失重 0.0032g"
-```
-附上图片，agent 会 vision_analyze 提取信息并生成标准日志。
+Attach images or transcripts, and the agent will analyze them to extract structured data and generate a standard log.
 
-**路径 B — 飞书提交：**
-把实验照片和语音发到配置好的飞书群，agent 自动扫描并处理。
+**Path B — Messaging Group Submission:**
+Send experimental photos and voice notes to your configured research chat group; the agent will automatically scan and process them.
 
-## 文件结构
+## File Structure
 
-```
+```text
 experiment-log/
-├── SKILL.md                    ← 技能入口
-├── README.md                   ← 本文件
+├── SKILL.md                    ← Skill entry point
+├── README.md                   ← This file
 └── references/
-    └── example-log.md          ← 完整日志示例
+    └── example-log.md          ← Complete log example
 ```
 
-## 核心设计
+## Core Design
 
-- **统一 ID 体系** — 体系代码 + 设备代码 + 日期 + 序号，跨实验可追踪
-- **样品批次追踪** — 同一批样品 ID 一致，dataview 可查
-- **YAML frontmatter** — 结构化数据 + 自由文本，既人可读又机器可查
-- **飞书 CLI 集成** — 手机拍照发群 → 自动入 vault
-- **异常追踪** — 自动检测异常并追加到异常记录
+- **Unified ID System** — System Code + Equipment Code + Date + Sequence Number, enabling cross-experiment tracking.
+- **Sample Batch Tracking** — Consistent sample batch IDs across multiple experiments, queryable via Dataview.
+- **YAML Frontmatter** — Combines structured data with free text for both human readability and machine querying.
+- **Messaging CLI Integration** — Take photos on your phone and send to a group chat → automatically archived into your vault.
+- **Anomaly Tracking** — Automatically detects experimental anomalies and appends them to the anomaly log.
 
-## 自定义
+## Customization
 
-设备代码、体系代码、实验类型目录全部可按你的实验室配置。详见 SKILL.md 中的「自定义指南」。
+Equipment codes, system codes, and experiment type directories can all be customized for your laboratory setup. See the "Customization Guide" in `SKILL.md` for details.
 
-## 作者
+## Author
 
-十五 (JL Lab)
+Community contribution (JL Lab)

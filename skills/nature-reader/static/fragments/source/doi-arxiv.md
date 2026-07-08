@@ -7,6 +7,6 @@ The user gave a bare DOI or arXiv id/link that must be resolved before reading.
   - DOI → the publisher landing page, then the open-access PDF or HTML if lawfully available.
 - After resolving, this becomes a `pdf-text`, `scanned-pdf`, or `html` job — load that fragment and follow it for extraction. This fragment only covers retrieval.
 - Capture bibliographic metadata (title, authors, venue, year, DOI/arXiv id) for the `paper.md` metadata header.
-- Prefer the open-access version (arXiv, author copy, PMC) when the version of record is paywalled. Note which version was read in `translation_notes.md`, since arXiv and published versions can differ.
+- Prefer the open-access version (arXiv, author copy, PMC) when the version of record is paywalled. Note which version was read in `processing_notes.md`, since arXiv and published versions can differ.
 - If the identifier cannot be resolved or only the abstract is reachable, build a draft reader from what is available and clearly mark the rest as not retrieved. Do not fabricate body text.
 - Apply the copyright caution to the resolved artifact.

@@ -1,29 +1,29 @@
 # nature-downloader
 
 <p align="center">
-  <img src="assets/banner.jpg" alt="nature-downloader — 补齐 nature 工作流缺失的 PDF 落地环节" width="100%">
+  <img src="assets/banner.jpg" alt="nature-downloader — Completing the missing PDF retrieval step in the Nature workflow" width="100%">
 </p>
 
-`nature-downloader` 是一个合法机构权限下的学术全文/PDF 下载 skill。它把两部分能力合在一起：
+`nature-downloader` is an academic full-text/PDF download skill operating under legitimate institutional entitlements. It integrates two primary capabilities:
 
-- **首次资源入口配置**：先记录用户实际使用的图书馆电子资源链接，再识别学校、SSO/CARSI/EZproxy/WebVPN/资源聚合平台信息，配置保存到 `~/.config/lit-dl/school.json`。
-- **真实全文落地**：通过用户已经登录的 Chrome 会话和 web-access CDP proxy，复用本人的图书馆/CARSI/出版社访问权限，把能合法访问的 PDF 保存到项目文件夹；如果馆藏只提供 HTML 全文，则保存 HTML/文本并明确说明没有 PDF。
-- **中文文献默认知网**：按中文题名下载时，默认优先走用户已登录/已授权的 CNKI/知网页面；可通过学校配置或 `--cnki-url` 指定图书馆提供的知网入口。
-- **开放获取优先**：若文献本身是开放获取或开源期刊文章，直接走合法开放 PDF；若图书馆资源明确无权限，直接告诉用户。
+- **Initial Resource Portal Setup**: Records the electronic resource portal link actually used by the researcher, identifies the university, SSO/CARSI/EZproxy/WebVPN/resource aggregation platform information, and saves the configuration to `~/.config/lit-dl/school.json`.
+- **Authentic Full-Text Retrieval**: Reuses the user's logged-in Chrome session via a web-access CDP proxy to download legally accessible PDFs into the project folder. If the library subscription only provides HTML full text, it saves the HTML/text and explicitly notes that no PDF is available.
+- **Chinese Literature Defaulting to CNKI**: When downloading by Chinese title, it defaults to using the user's logged-in/authorized CNKI portal; a dedicated library CNKI portal can be specified via school configuration or `--cnki-url`.
+- **Open Access Priority**: If an article is Open Access or published in an open journal, it retrieves the legal OA PDF directly. If the institutional library explicitly lacks entitlement, it informs the user directly.
 
-它不绕过付费墙，不使用镜像站，不破解验证码，不读取或导出 cookies、密码、localStorage、session 文件。遇到 jAccount/CARSI、验证码、Cloudflare、短信/OTP、人机验证时，会停下让用户本人在 Chrome 里完成。
+It does NOT bypass paywalls, use mirror sites, break CAPTCHAs, or read/export cookies, passwords, localStorage, or session files. When encountering SSO/CARSI logins, CAPTCHAs, Cloudflare checks, SMS/OTP, or human verification, it pauses and prompts the user to complete the step in Chrome.
 
-## 快速使用
+## Quick Start
 
-把下面这句话复制给 agent，即可让它自动完成首次配置引导：
+Copy the following instruction to your agent to automatically guide you through initial setup:
 
 ```text
-请使用 nature-downloader 帮我完成首次图书馆资源配置：先向我索要图书馆电子资源/数据库入口链接，识别授权路径并保存配置；如果需要登录，请引导我在 Chrome 中完成统一身份认证/CARSI 登录；最后运行配置展示和连通性自检，确认后续可复用该图书馆资源下载文献。
+Please use the nature-downloader skill to help me complete initial library resource setup: ask me for my library's electronic resource/database portal link, identify the authorization path, and save the configuration; if login is needed, guide me to complete SSO/CARSI authentication in Chrome; finally, run configuration display and connectivity health check to confirm that the library resource can be reused for literature downloading.
 ```
 
-### 1. 配置资源入口
+### 1. Configure Resource Portal
 
-全新用户优先提供图书馆电子资源/数据库入口链接，而不是先填学校名：
+For new users, prioritize providing the library electronic resource/database portal link rather than entering a university name:
 
 ```bash
 python3 scripts/configure_school.py infer "https://whu.metaersp.cn/personalIndex"
@@ -31,136 +31,136 @@ python3 scripts/configure_school.py url "https://whu.metaersp.cn/personalIndex"
 python3 scripts/configure_school.py show
 ```
 
-`infer` 只判断授权路径不保存，`url` 会写入配置。比如武汉大学 `whu.metaersp.cn` 会被识别为资源聚合门户，后续需要登录时再跳转到 `cas.whu.edu.cn`。
+`infer` only evaluates the authorization path without saving; `url` writes to the configuration. For example, Wuhan University's `whu.metaersp.cn` will be identified as a resource aggregation portal, redirecting to `cas.whu.edu.cn` when login is required.
 
-如果没有资源入口链接，再用预设学校兜底：
+If no resource portal link is available, use preset universities as a fallback:
 
 ```bash
-python3 scripts/configure_school.py preset 上海交通大学
+python3 scripts/configure_school.py preset ShanghaiJiaoTongUniversity
 python3 scripts/configure_school.py show
 ```
 
-查看可用预设：
+View available presets:
 
 ```bash
 python3 scripts/configure_school.py list
 ```
 
-运行连通性自检：
+Run connectivity health check:
 
 ```bash
 python3 scripts/configure_school.py health --force
 ```
 
-配置路径默认是 `~/.config/lit-dl/school.json`。测试或多 profile 场景可以用 `LIT_DL_CONFIG_DIR=/path/to/configdir` 覆盖。
+The default configuration path is `~/.config/lit-dl/school.json`. For testing or multi-profile scenarios, override it using `LIT_DL_CONFIG_DIR=/path/to/configdir`.
 
-### 2. 准备浏览器登录态
+### 2. Prepare Browser Login State
 
-1. 在 Chrome 里打开本校图书馆或学术资源聚合入口。
-2. 用本人账号完成统一身份认证/CARSI 登录。
-3. 确认 Web of Science 或目标出版商页面能在 Chrome 中正常看到全文入口。
-4. 打开 `chrome://inspect/#remote-debugging`，允许当前浏览器实例远程调试。
-5. 启动 web-access CDP proxy。
+1. Open your university library or academic resource aggregation portal in Chrome.
+2. Complete SSO/CARSI login using your institutional credentials.
+3. Confirm that Web of Science or target publisher pages display full-text links normally in Chrome.
+4. Open `chrome://inspect/#remote-debugging` and allow remote debugging for the current browser instance.
+5. Start the web-access CDP proxy.
 
-### 3. 下载文献
+### 3. Download Literature
 
-按 DOI 下载：
+Download by DOI:
 
 ```bash
 node scripts/batch_download.mjs \
   --dois "10.1007/s00122-021-03957-1,10.1111/pbi.14066" \
-  --out "./文献自动下载"
+  --out "./literature-automatic-download"
 ```
 
-按中文题名下载，默认走知网：
+Download by Chinese title (defaults to CNKI):
 
 ```bash
 node scripts/batch_download.mjs \
-  --title "乡村振兴背景下数字治理研究" \
-  --out "./文献自动下载"
+  --title "Digital Governance under Rural Revitalization" \
+  --out "./literature-automatic-download"
 ```
 
-如果只要 PDF、不要 CAJ，加 `--cnki-format pdf`。这样在知网没有明确 PDF 下载入口时，脚本会报出未找到可授权 PDF，而不会保存 `.caj`：
+If you only want PDF and not CAJ, add `--cnki-format pdf`. When CNKI has no explicit PDF download button, the script will report that no authorized PDF was found rather than saving `.caj`:
 
 ```bash
 node scripts/batch_download.mjs \
-  --title "乡村振兴背景下数字治理研究" \
+  --title "Digital Governance under Rural Revitalization" \
   --cnki-format pdf \
-  --out "./文献自动下载"
+  --out "./literature-automatic-download"
 ```
 
-如果学校图书馆提供了专用知网入口，可显式指定：
+If the university library provides a dedicated CNKI portal, specify it explicitly:
 
 ```bash
 node scripts/batch_download.mjs \
-  --title "乡村振兴背景下数字治理研究" \
+  --title "Digital Governance under Rural Revitalization" \
   --cnki-url "https://kns.cnki.net/kns8s/defaultresult/index" \
-  --out "./文献自动下载"
+  --out "./literature-automatic-download"
 ```
 
-按主题从 Web of Science 检索并下载前 N 篇：
+Search by topic on Web of Science and download the top N papers:
 
 ```bash
 node scripts/batch_download.mjs \
   --topic "rice blast resistance gene" \
   --count 10 \
-  --out "./文献自动下载"
+  --out "./literature-automatic-download"
 ```
 
-按精确题名下载开放获取论文（适合 arXiv 论文、无 DOI 论文）：
+Download Open Access papers by exact title (suitable for arXiv papers or papers without DOIs):
 
 ```bash
 node scripts/batch_download.mjs \
   --title "Attention Is All You Need" \
   --open-access \
-  --out "./文献自动下载"
+  --out "./literature-automatic-download"
 ```
 
-已知 PDF 地址时直接下载并验证：
+Download and verify directly when the PDF address is known:
 
 ```bash
 node scripts/batch_download.mjs \
   --pdf-url "https://arxiv.org/pdf/1706.03762" \
   --title "Attention Is All You Need" \
-  --out "./文献自动下载"
+  --out "./literature-automatic-download"
 ```
 
-默认只下载主 PDF。只有明确需要补充材料时才加：
+By default, only the main PDF is downloaded. Include supporting information only when explicitly requested:
 
 ```bash
-node scripts/batch_download.mjs --dois "10.xxxx/example" --out "./文献自动下载" --si
+node scripts/batch_download.mjs --dois "10.xxxx/example" --out "./literature-automatic-download" --si
 ```
 
-输出目录：
+Output directory:
 
 ```text
-文献自动下载/
+literature-automatic-download/
   PDFs/
   SupportingInformation/
 ```
 
-脚本会输出 JSON 状态，常见状态包括 `downloaded`、`open_access_downloaded`、`full_text_html_available`、`library_no_permission`、`carsi_waiting_user`、`publisher_verification_waiting_user`、`sciencedirect_robot_check`、`no_authorized_pdf_found`、`failed_after_retry`。当状态是 `full_text_html_available` 时，表示已拿到可读 HTML 全文，但当前授权路径没有有效 PDF，回复用户时必须说清楚；当状态是 `library_no_permission` 时，表示当前图书馆资源没有该文献全文权限，也必须直接说明。
+The script outputs JSON status. Common statuses include `downloaded`, `open_access_downloaded`, `full_text_html_available`, `library_no_permission`, `carsi_waiting_user`, `publisher_verification_waiting_user`, `sciencedirect_robot_check`, `no_authorized_pdf_found`, and `failed_after_retry`. When the status is `full_text_html_available`, it indicates that readable HTML full text was retrieved but no valid PDF is available under the current entitlement; this must be clearly explained to the user. When the status is `library_no_permission`, it indicates that the institutional library lacks full-text entitlement for the reference, which must also be explicitly stated.
 
-## 当前实现边界
+## Current Implementation Boundaries
 
-- 已实现：学校配置、配置文件读写、预设库、连通性自检、Web of Science 入口配置读取、Chrome 登录态下 PDF 下载、PDF 文件头验证、状态码体系。
-- 已实现：中文题名默认 CNKI/知网路由，复用 Chrome 中已有的图书馆/知网登录态下载可授权访问的 PDF/CAJ；可用 `--cnki-format pdf` 限制为只下载 PDF。
-- 已验证路径：以上海交通大学/SJTU + Web of Science + CARSI/Chrome 会话为主要真实下载路径。
-- 新用户首配策略：优先从图书馆资源入口链接识别授权链路；学校预设只作为兜底。
-- 已验证开放获取路径：`--title "Attention Is All You Need" --open-access` 会精确匹配 arXiv 标题并下载 PDF。
-- 工作流策略：开放获取文章直接下载；非开放获取文章走已配置图书馆资源；馆藏无权限时明确告知用户。
-- 可扩展路径：其他学校可通过 `data/schools.yaml` 配置 SSO/CARSI 和 `discovery.web_of_science_url`。
-- 不承诺：无登录态下载、绕过出版社限制、自动处理验证码/OTP/Cloudflare、无限批量下载。
-- 注意：`--topic` 是 Web of Science 主题检索，不保证精确题名命中；精确题名优先使用 `--title`。
+- Implemented: School configuration, config file I/O, preset library, connectivity health checks, Web of Science portal config reading, PDF download under Chrome login state, PDF header verification, status code system.
+- Implemented: Chinese title defaulting to CNKI routing, reusing Chrome library/CNKI login state to download authorized PDF/CAJ; `--cnki-format pdf` can be used to restrict downloads to PDF only.
+- Verified Path: Shanghai Jiao Tong University (SJTU) + Web of Science + CARSI/Chrome session as the primary real-world download path.
+- New User Setup Policy: Prioritizes identifying authorization chains from library resource portal links; school presets serve as a fallback.
+- Verified Open Access Path: `--title "Attention Is All You Need" --open-access` accurately matches arXiv titles and downloads PDFs.
+- Workflow Strategy: Open Access articles are downloaded directly; non-OA articles route through configured library resources; lack of institutional entitlement is explicitly communicated to the user.
+- Extensible Paths: Other universities can be configured via `data/schools.yaml` for SSO/CARSI and `discovery.web_of_science_url`.
+- Out of Scope: Downloading without login state, bypassing publisher restrictions, automated handling of CAPTCHA/OTP/Cloudflare, unlimited batch downloading.
+- Note: `--topic` performs a Web of Science topic search and does not guarantee exact title matching; prioritize `--title` for exact titles.
 
-## 依赖
+## Dependencies
 
 ```bash
 pip install -r requirements.txt
-node --version  # 推荐 Node.js 22+
+node --version  # Node.js 22+ recommended
 ```
 
-## 验证
+## Verification
 
 ```bash
 python3 -m unittest discover -s tests/python
@@ -169,4 +169,4 @@ node --check scripts/batch_download.mjs
 node --check scripts/browser_pdf_downloader.mjs
 ```
 
-详见 `SKILL.md` 了解完整工作流、安全边界、状态码体系和失败处理。
+See `SKILL.md` for the complete workflow, security boundaries, status code system, and failure handling.
